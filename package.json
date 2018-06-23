@@ -7,12 +7,22 @@
   },
   "dependencies": {
     "body-parser": "~1.18.2",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.15.5",
+    "express-session": "^1.15.6",
+    "flash": "^1.1.0",
+    "method-override": "^2.3.10",
+    "moment": "^2.22.2",
     "morgan": "~1.9.0",
     "node-sass-middleware": "0.9.8",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-kakao": "0.0.5",
+    "passport-local": "^1.0.0",
     "pug": "2.0.0-beta11",
+    "querystring": "^0.2.0",
     "serve-favicon": "~2.4.5"
   }
 }
