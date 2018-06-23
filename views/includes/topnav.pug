@@ -1,0 +1,29 @@
+.header.clearfix
+  nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+    .container
+      a.navbar-brand(href="/") Medic Top
+      button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbarsExampleDefault", aria-controls="navbarsExampleDefault", aria-expanded="false", aria-label="Toggle navigation")
+        span.navbar-toggler-icon
+
+      #navbarsExampleDefault.collapse.navbar-collapse
+        ul.navbar-nav.ml-auto
+          li.nav-item
+            a.nav-link(href="") 111
+          li.nav-item
+            a.nav-link(href="") 222
+          li.nav-item
+            a.nav-link(href="") 333
+          if (!currentUser) 
+            li.nav-item
+              a.nav-link(href='') 444
+            li.nav-item
+              a.nav-link(href='') 555
+          else
+            li.nav-item
+              a.nav-link(href=``) 666
+            li.nav-item
+              a.nav-link(href='') 666-2
+          li.nav-item
+            a.nav-link(href='') 777
+            
+          
