@@ -10,20 +10,21 @@ var flash = require('connect-flash');
 var passport = require('passport');
 //var passportConfig = require('./lib/passport-config');
 
-var mysql = require('mysql'); 
+var mysql = require('mysql');
 var conn = mysql.createConnection({
-  host     : '58.123.136.107',
-  port     : '3308',
-  user     : 'web',
-  password : 'mju12345',
- // database : 'arduino'
+  host: '58.123.136.107',
+  port: '3308',
+  user: 'web',
+  password: 'mju12345',
+  // database : 'arduino'
 });
 conn.connect();
 
-/*-----------------url require-----------------*/ 
+/*-----------------url require-----------------*/
 var index = require('./routes/index');
 var users = require('./routes/users');
-/*-----------------url require-----------------*/ 
+var introduce = require('./routes/introduce');
+/*-----------------url require-----------------*/
 var app = express();
 
 // view를 뭘로 쓸지 결정 - pug, html 등
@@ -44,7 +45,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(methodOverride('_method', {methods: ['POST', 'GET']}));
+app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
@@ -66,18 +67,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 /*-----------------url route-----------------*/
 app.use('/', index);
 app.use('/users', users);
+app.use('/introduce', introduce);
 /*-----------------url route-----------------*/
 
 
 
 // 에러처리
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);
