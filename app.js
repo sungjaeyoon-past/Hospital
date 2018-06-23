@@ -9,7 +9,16 @@ var methodOverride = require('method-override');
 var flash = require('connect-flash');
 var passport = require('passport');
 //var passportConfig = require('./lib/passport-config');
-//var mysql = require('mysql'); 보고 추가 http://expressjs.com/ko/guide/database-integration.html#mysql
+
+var mysql = require('mysql'); 
+var conn = mysql.createConnection({
+  host     : '58.123.136.107',
+  port     : '3308',
+  user     : 'web',
+  password : 'mju12345',
+ // database : 'arduino'
+});
+conn.connect();
 
 /*-----------------url require-----------------*/ 
 var index = require('./routes/index');
@@ -22,6 +31,14 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.locals.moment = require('moment');
 app.locals.querystring = require('querystring');
+
+//db connect
+/*
+connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+  if (err) throw err;
+  console.log('The solution is: ', rows[0].solution);
+});*/
+
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
