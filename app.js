@@ -8,7 +8,8 @@ var session = require('express-session');
 var methodOverride = require('method-override');
 var flash = require('connect-flash');
 var passport = require('passport');
-//var passportConfig = require('./lib/passport-config');
+var configAuth = require('./config/auth');
+
 
 var mysql = require('mysql');
 var conn = mysql.createConnection({
@@ -62,6 +63,17 @@ app.use(session({
 app.use(flash()); // flash message를 사용할 수 있도록
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(function(req, res, next) {
+  console.log("REQ USER", req.user);
+  res.locals.currentUser = req.user;
+  res.locals.flashMessages = req.flash();
+  next();
+});
+
+configAuth(passport);
 
 
 /*-----------------url route-----------------*/
