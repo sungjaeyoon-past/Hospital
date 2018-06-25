@@ -25,6 +25,7 @@ conn.connect();
 var index = require('./routes/index');
 var users = require('./routes/users');
 var introduce = require('./routes/introduce');
+var calender = require('./routes/calender');
 /*-----------------url require-----------------*/
 var app = express();
 
@@ -33,13 +34,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.locals.moment = require('moment');
 app.locals.querystring = require('querystring');
-
-//db connect
-/*
-connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-  if (err) throw err;
-  console.log('The solution is: ', rows[0].solution);
-});*/
 
 
 app.use(logger('dev'));
@@ -79,6 +73,7 @@ configAuth(passport);
 /*-----------------url route-----------------*/
 app.use('/', index);
 app.use('/users', users);
+app.use('/calender',calender);
 app.use('/introduce', introduce);
 /*-----------------url route-----------------*/
 

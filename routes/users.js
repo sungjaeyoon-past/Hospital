@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
+//var User= db user table 
 
+//로그인이 되있는지 확인하는 함수
 function needAuth(req, res, next) {
   if (req.isAuthenticated()) {
     next();
@@ -10,6 +12,7 @@ function needAuth(req, res, next) {
   }
 }
 
+//회원가입시 폼에 입력값이 제대로 들어갔는지 확인하는 함수
 function validateForm(form, options) {
   var name = form.name || "";
   var email = form.email || "";
@@ -41,10 +44,12 @@ function validateForm(form, options) {
 
 /* GET users listing. */
 router.get('/', needAuth, function(req, res, next) {
+
   User.find({}, function(err, users) {
     if (err) {
       return next(err);
     }
+
     res.render('users/index');
   });
 });
@@ -99,6 +104,7 @@ router.put('/:id', function(req, res, next) {
   });
 });
 
+//계정삭제 
 router.delete('/:id', function(req, res, next) {
   User.findOneAndRemove({_id: req.params.id}, function(err) {
     if (err) {
@@ -108,6 +114,7 @@ router.delete('/:id', function(req, res, next) {
     res.redirect('/users');
   });
 });
+
 
 router.get('/:id', function(req, res, next) {
   User.findById(req.params.id, function(err, user) {
