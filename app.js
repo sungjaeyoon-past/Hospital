@@ -26,6 +26,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var introduce = require('./routes/introduce');
 var calender = require('./routes/calender');
+var statistics = require('./routes/statistics');
 /*-----------------url require-----------------*/
 var app = express();
 
@@ -75,6 +76,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/calender',calender);
 app.use('/introduce', introduce);
+app.use('/statistics',statistics);
 /*-----------------url route-----------------*/
 
 
