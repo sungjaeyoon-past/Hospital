@@ -17,9 +17,16 @@ var conn = mysql.createConnection({
   port: '3308',
   user: 'web',
   password: 'mju12345',
-  // database : 'arduino'
+  database : 'medic'
 });
 conn.connect();
+
+conn.query('SELECT * FROM patient',function(err, rows, fields) {
+  if (!err)
+    console.log('The solution is: ', rows);
+  else
+    console.log('Error while performing Query.', err);
+});
 
 /*-----------------url require-----------------*/
 var index = require('./routes/index');

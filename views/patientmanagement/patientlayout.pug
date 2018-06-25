@@ -12,13 +12,10 @@ head
   link(rel='stylesheet' href='/assets/css/material-dashboard.css')
 body
     include ../includes/topnavemp
-    
-    button.btn.btn-primary(type='button') Primary
-
     nav.navbar.navbar-expand-lg.bg-rose(style="margin-top:18px;")
         .container
             .navbar-translate
-                a.navbar-brand(href='/presentation.html') 환자 관리
+                a.navbar-brand(href='/patientmanagement') 환자 관리
                 |             
                 button.navbar-toggler(type='button', data-toggle='collapse', aria-expanded='false', aria-label='Toggle navigation')
                     span.navbar-toggler-icon
@@ -30,21 +27,83 @@ body
             .collapse.navbar-collapse
                 ul.navbar-nav
                     li.nav-item
-                        a.nav-link(href='#pablo') 환자 추가
+                        a.nav-link(href='/patientmanagement/new') 환자 추가
                         |                 
                     li.nav-item
-                        a.nav-link(href='#pablo') 환자 삭제
-                        |
-                    li.nav-item
-                        a.nav-link(href='#pablo') 환자 수정
-                        |            
+                        a.nav-link(href='/patientmanagement/list') 환자 목록
+                        |           
             form.form-inline.ml-auto
                 .form-group.has-white
                     input.form-control(type='text', placeholder='Search')
                     |                 
                 button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
                     i.material-icons search
+        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    .container
+        .row
+            .col-md-6.col-sm-6
+                .card.card-stats
+                    .card-header.card-header-warning.card-header-icon
+                        .card-icon
+                            i.material-icons content_copy
+                        p.card-category Used Space
+                        h3.card-title
+                            | 49/50 
+                            small GB
+                    .card-footer
+                        .stats
+                            i.material-icons.text-danger warning
+                            a(href='#pablo') Get More Space...
+            .col-md-6.col-sm-6
+                .card.card-stats
+                    .card-header.card-header-success.card-header-icon
+                        .card-icon
+                            i.material-icons store
+                        p.card-category Revenue
+                        h3.card-title $34,245
+                    .card-footer
+                        .stats
+                            i.material-icons date_range
+                            |  Last 24 Hours
+    .container 
+        .row
+            .col-md-6
+                .card
+                .card-header.card-chart.card-header-warning
+                    #dailySalesChart.ct-chart
+                .card-body
+                    h4.card-title Daily Sales
+                    p.card-category
+                    span.text-success
+                    i.fa.fa-long-arrow-up
+                    |  55%
+                    |  increase in today sales.
+                .card-footer
+                    .stats
+                    i.material-icons access_time
+                    |  updated 4 minutes ago
+            .col-md-6
+                .card
+                .card-header.card-chart.card-header-success
+                    #completedTasksChart.ct-chart
+                .card-body
+                    h4.card-title Completed Tasks
+                    p.card-category Last Campaign Performance
+                .card-footer
+                    .stats
+                    i.material-icons access_time
+                    |  updated 2 minutes ago
 
+
+
+
+
+
+    
+    
+    
+    
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Core JS Files
     script(src='/assets/js/core/jquery.min.js')
     script(src='/assets/js/core/popper.min.js')
@@ -59,3 +118,5 @@ body
     script(src='/assets/js/plugins/demo.js')
     // Material Dashboard Core initialisations of plugins and Bootstrap Material Design Library
     script(src='/assets/js/material-dashboard.js?v=2.1.0')
+    script.
+        $('#dailySalesChart').initDocumentationCharts();
