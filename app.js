@@ -28,6 +28,11 @@ var introduce = require('./routes/introduce');
 var calender = require('./routes/calender');
 var employee =require('./routes/employee');
 var statistics = require('./routes/employee/statistics');
+var monitor=require('./routes/monitor');
+var patientmanagement=require('./routes/patientmanagement');
+var surveyschedule = require('./routes/surveyschedule');
+var workschedule = require('./routes/workschedule');
+var superadmin = require('./routes/superadmin');
 /*-----------------url require-----------------*/
 var app = express();
 
@@ -79,6 +84,11 @@ app.use('/calender',calender);
 app.use('/introduce', introduce);
 app.use('/employee',employee);
 app.use('/statistics',statistics);
+app.use('/monitor',monitor);
+app.use('/patientmanagement',patientmanagement);
+app.use('/surveyschedule',surveyschedule);
+app.use('/workschedule',workschedule);
+app.use('/superadmin',superadmin);
 /*-----------------url route-----------------*/
 
 
