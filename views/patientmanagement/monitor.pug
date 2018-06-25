@@ -1,0 +1,52 @@
+extends ../layoutemp
+
+block content
+    table.table
+      thead
+        tr
+          th.text-center #
+          th Name
+          th Job Position
+          th Since
+          th.text-right Salary
+          th.text-right Actions
+      tbody
+        tr
+          td.text-center 1
+          td Andrew Mike
+          td Develop
+          td 2013
+          td.text-right &euro; 99,225
+          td.td-actions.text-right
+            button.btn.btn-info(type='button' rel='tooltip')
+              i.material-icons person
+            button.btn.btn-success(type='button' rel='tooltip')
+              i.material-icons edit
+            button.btn.btn-danger(type='button' rel='tooltip')
+              i.material-icons close
+        tr
+          td.text-center 2
+          td John Doe
+          td Design
+          td 2012
+          td.text-right &euro; 89,241
+          td.td-actions.text-right
+            button.btn.btn-info.btn-round(type='button' rel='tooltip')
+              i.material-icons person
+            button.btn.btn-success.btn-round(type='button' rel='tooltip')
+              i.material-icons edit
+            button.btn.btn-danger.btn-round(type='button' rel='tooltip')
+              i.material-icons close
+        tr
+          td.text-center 3
+          td Alex Mike
+          td Design
+          td 2010
+          td.text-right &euro; 92,144
+          td.td-actions.text-right
+            button.btn.btn-info.btn-simple(type='button' rel='tooltip')
+              i.material-icons person
+            button.btn.btn-success.btn-simple(type='button' rel='tooltip')
+              i.material-icons edit
+            button.btn.btn-danger.btn-simple(type='button' rel='tooltip')
+              i.material-icons close
