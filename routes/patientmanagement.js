@@ -4,6 +4,7 @@ const catchErrors = require('../lib/async-error');
 
 /* GET home page. */
 router.get('/', catchErrors(async (req, res, next) => {
+<<<<<<< HEAD
   res.render('patientmanagement/main');
 }));
 
@@ -52,6 +53,9 @@ router.delete('/:id', catchErrors(async (req, res, next) => {
   //id 값을 찾아서 ddelete
   //저장 성공실패여부
   res.render('patientmanagement/main');
+=======
+  res.render('patientmanagement/patientmain');
+>>>>>>> c707b66c8c6f780f57862b65b8f0e45612656469
 }));
 
 module.exports = router;
