@@ -10,20 +10,19 @@
           li.nav-item
             a.nav-link(href="/introduce") 소개
           li.nav-item
-            a.nav-link(href="") 환자관리
+            a.nav-link(href="/users/new") 회원가입
           li.nav-item
             a.nav-link(href="/calender") 일정
-          li.nav-item
-            a.nav-link(href='') 예약 및 확인
           if (!currentUser) 
             li.nav-item
-              a.nav-link(href='/users') 로그인
-            li.nav-item
-              a.nav-link(href='') 
+              a.nav-link(href='/users') 로그인 
           else
             li.nav-item
               a.nav-link(href=``) 로그아웃
             li.nav-item
-              a.nav-link(href='') 내정보
+              a.nav-link(href='/users/') 내정보 
+              //아직작성x
+          li.nav-item
+            a.nav-link(href='/employee') 직원
             
           
