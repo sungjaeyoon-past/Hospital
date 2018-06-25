@@ -26,7 +26,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var introduce = require('./routes/introduce');
 var calender = require('./routes/calender');
-var statistics = require('./routes/statistics');
+var statistics = require('./routes/employee/statistics');
 /*-----------------url require-----------------*/
 var app = express();
 
