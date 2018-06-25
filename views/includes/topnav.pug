@@ -1,0 +1,29 @@
+link(rel='stylesheet', href='/stylesheets/topnav.css')
+.header.clearfix
+  nav.navbar.navbar-expand-md.navbar-dark.bg-info.fixed-top
+    .container
+      a.navbar-brand(href="/") Medic Top
+      button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbarsExampleDefault", aria-controls="navbarsExampleDefault", aria-expanded="false", aria-label="Toggle navigation")
+        span.navbar-toggler-icon
+
+      #navbarsExampleDefault.collapse.navbar-collapse
+        ul.navbar-nav.ml-auto
+          li.nav-item
+            a.nav-link(href="/introduce") 소개
+          li.nav-item
+            a.nav-link(href="/users/new") 회원가입
+          li.nav-item
+            a.nav-link(href="/calender") 일정
+          if (!currentUser) 
+            li.nav-item
+              a.nav-link(href='/users') 로그인 
+          else
+            li.nav-item
+              a.nav-link(href=``) 로그아웃
+            li.nav-item
+              a.nav-link(href='/users/') 내정보 
+              //아직작성x
+          li.nav-item
+            a.nav-link(href='/employee') 직원
+            
+          
