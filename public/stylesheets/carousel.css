@@ -3,6 +3,7 @@
 /* Padding below the footer and lighter body text */
 
 body {
+    margin-top: 0px;
     padding-top: 3rem;
     padding-bottom: 3rem;
     padding-right: 0px;
