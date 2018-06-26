@@ -21,12 +21,13 @@ var conn = mysql.createConnection({
 });
 conn.connect();
 
+/*쿼리 예시문입니당~~
 conn.query('SELECT * FROM patient',function(err, rows, fields) {
   if (!err)
     console.log('The solution is: ', rows);
   else
     console.log('Error while performing Query.', err);
-});
+});*/
 
 /*-----------------url require-----------------*/
 var index = require('./routes/index');
