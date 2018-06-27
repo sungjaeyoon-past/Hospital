@@ -36,6 +36,28 @@ body
           .card-footer
             .stats
               a(href='/statistics/temperatureGraph') 앙 기모띠!
+  .row
+    .card.text-center
+      .card-header.card-header-primary
+        ul.nav.nav-tabs
+          li.nav-item.active(role='presentation')
+            a.nav-link(href="#diaper",data-toggle="tab") 기저귀
+          li.nav-item(role='presentation')
+            a.nav-link(href="#linger",data-toggle="tab") 링거
+          li.nav-item(role='presentation')
+            a.nav-link(href="#weight_sensor",data-toggle="tab") 낙상
+      .card-body
+        .tab-content
+          #diaper.tab-pane.fade
+            p something
+          #linger.tab-pane.fade
+            p just like
+          #weight_sensor.tab-pane.fade
+            p this
+    
+
+                
+
  
 
   // Core JS Files
