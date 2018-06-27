@@ -46,36 +46,45 @@ body
                     .card-header.card-header-warning.card-header-icon
                         .card-icon
                             i.material-icons content_copy
-                        p.card-category Used Space
+                        p.card-category 등록된 환자수
                         h3.card-title
-                            | 49/50 
-                            small GB
+                            | 49
+                            small 명
                     .card-footer
                         .stats
                             i.material-icons.text-danger warning
-                            a(href='#pablo') Get More Space...
+                            a(href='#pablo') 환자 등록
             .col-md-6.col-sm-6
                 .card.card-stats
                     .card-header.card-header-success.card-header-icon
                         .card-icon
                             i.material-icons store
-                        p.card-category Revenue
-                        h3.card-title $34,245
+                        p.card-category 입실 환자수
+                        h3.card-title 
+                            | 49
+                            small 명
                     .card-footer
                         .stats
                             i.material-icons date_range
-                            |  Last 24 Hours
+                            a(href='#pablo')  환자 모니터링
 
         .row
-            .col-md-6
+            .col-md-12
                 each patient in patients
-                    .alert.alert-primary(role='alert')
-                        | 환자 이름 :
-                        #{patient.name}
-                        .br
-                        | 환자 번호 :
-                        #{patient.personal_number}
-
+                    .alert.alert-success(role='alert', style="margin-bottom:10px; text-align: center;")
+                        .row
+                            .col-md-3
+                                 .alert.alert-warning(role='alert')
+                                    | 환자 이름 :
+                                    #{patient.name}
+                            .col-md-3(style="margin-top:30px;")
+                                | 주민번호  :
+                                #{patient.personal_number}
+                            .col-md-3(style="margin-top:30px;")
+                                | 핸드폰번호 :
+                                #{patient.phone_number}
+                            .col-md-2(style="margin-top:30px;")
+                                a(href=`/patientmanagement/show/${patient.personal_number}`) 상세 보기
 
 
 

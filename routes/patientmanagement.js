@@ -11,14 +11,8 @@ var conn = mysql.createConnection({
 conn.connect();
 const catchErrors = require('../lib/async-error');
 
-/* GET home page. */
+
 router.get('/', catchErrors(async (req, res, next) => {
-  conn.query('SELECT name FROM patient',function(err, rows, fields) {
-    if (!err)
-      console.log(rows);
-    else
-      console.log(err);
-  });
   res.render('patientmanagement/main');
 }));
 
@@ -28,15 +22,15 @@ router.get('/', catchErrors(async (req, res, next) => {
   res.render('');
 }));*/
 
-//---------------------환자 목록---------------------------------------------
+
 router.get('/list', catchErrors(async (req, res, next) => {
   var personList = [];
-  conn.query('SELECT * FROM patient', function (err, rows, fields) {
+  conn.query('SELECT * FROM patient', (err, rows, fields) =>{
     var person;
     if (err)
       console.log("에러:"+err);
     else {
-      for (var i = 0; i < rows.length; i++) {
+      for (var i in rows) {
         var person = {
           'name': rows[i].name,
           'personal_number': rows[i].personal_number,
@@ -46,25 +40,42 @@ router.get('/list', catchErrors(async (req, res, next) => {
         }
         personList.push(person);
       }
-      console.log(personList);
       res.render('patientmanagement/list', { patients: personList });
     }
   });
 }));
 
-//----------------------환자 상세정보-----------------------------------------
-router.get('/:id', catchErrors(async (req, res, next) => {
+router.get('/show/:id', catchErrors(async (req, res, next) => {
   //환자상세정보 디비에서 가져옴
-  res.render('patientmanagement/show');
+  var requestPatient=req.params.id;
+  var personList = [];
+  conn.query('SELECT * FROM patient WHERE personal_number='+requestPatient, (err, rows, fields) =>{
+    var person;
+    if (err)
+      console.log("에러:"+err);
+    else {
+      for (var i in rows) {
+        var person = {
+          'name': rows[i].name,
+          'personal_number': rows[i].personal_number,
+          'phone_number': rows[i].phone_number,
+          'gender': rows[i].gender,
+          'patient_id': rows[i].patient_id,
+        }
+        personList.push(person);
+      }
+      res.render('patientmanagement/show', { patients: personList });
+    }
+  });
 }));
 
-//----------------------환자 추가----------------------------------------------
 router.get('/new', catchErrors(async (req, res, next) => {
   res.render('patientmanagement/new');
 }));
 
 router.post('/new', catchErrors(async (req, res, next) => {
   //디비에 저장
+
   //저장 성공실패여부
   res.render('patientmanagement/main');
 }));

@@ -38,13 +38,66 @@ body
                     |                 
                 button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
                     i.material-icons search
+    .container
+        .row
+            .col-md-12
+                |환자 추가 
+        .row
+            .col-md-12
+                .input-group
+                    .input-group-prepend
+                        span.input-group-text
+                        i.material-icons group
+                    input.form-control(type='text', placeholder=' 추가할 환자 이름 입력')
+        .row(style="margin-top:3%;")
+            .col-md-6
+                .input-group
+                    .input-group-prepend
+                        span.input-group-text
+                    input.form-control(type='text', placeholder=' 핸드폰 번호')
+            .col-md-6
+                .input-group
+                    .input-group-prepend
+                        span.input-group-text
+                    input.form-control(type='text', placeholder=' 환자 ')    
+        .row(style="margin-left:4%; margin-top:3%;")
+            .col-md-6
+                .form-check.form-check-radio.form-check-inline
+                    label.form-check-label
+                        input#inlineRadio1.form-check-input(type='radio', name='inlineRadioOptions', value='option1')
+                        |  남성
+                        span.circle
+                        span.check
+                    .form-check.form-check-radio.form-check-inline
+                    label.form-check-label
+                        input#inlineRadio2.form-check-input(type='radio', name='inlineRadioOptions', value='option2')
+                        |  여성
+                        span.circle
+                        span.check
+            h1.page-header 회원가입
+                form(action='/users', method='POST')
+                .form-group
+                    label(for='name') Name
+                    input.form-control(type='text', id='name', name='name', placeholder='Your name')
+                .form-group
+                    label(for='email') Email address
+                    input.form-control(type='email', id='email', name='email', placeholder='Email')
+                .form-group
+                    label(for='password') Password
+                    input.form-control(type='password', id='password', name='password', placeholder='Password')
+                .form-group
+                    label(for='password_confirmation') Password 확인
+                    input.form-control(type='password', id='password_confirmation', name='password_confirmation', placeholder='Password')
+                div.form-actions
+                    a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
+                    | 
+                    button.btn.btn-primary(type='submit') 회원가입
+        .row
+            .col-md-2
+                button.btn.btn-primary(type='submit' ,style="margin-left:20%; margin-top:20%;") 환자 추가
 
-    
-    .input-group
-        .input-group-prepend
-            span.input-group-text
-                i.fa.fa-group
-            input.form-control(type='text', placeholder='With Font Awesome Icons')
+
+                
 
 
 

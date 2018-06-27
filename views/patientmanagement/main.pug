@@ -38,7 +38,6 @@ body
                     |                 
                 button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
                     i.material-icons search
-        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     .container
         .row
             .col-md-6.col-sm-6
@@ -46,25 +45,51 @@ body
                     .card-header.card-header-warning.card-header-icon
                         .card-icon
                             i.material-icons content_copy
-                        p.card-category Used Space
+                        p.card-category 등록된 환자수
                         h3.card-title
-                            | 49/50 
-                            small GB
+                            | 49
+                            small 명
                     .card-footer
                         .stats
                             i.material-icons.text-danger warning
-                            a(href='#pablo') Get More Space...
+                            a(href='#pablo') 환자 등록
             .col-md-6.col-sm-6
                 .card.card-stats
                     .card-header.card-header-success.card-header-icon
                         .card-icon
                             i.material-icons store
-                        p.card-category Revenue
-                        h3.card-title $34,245
+                        p.card-category 입실 환자수
+                        h3.card-title 
+                            | 49
+                            small 명
                     .card-footer
                         .stats
                             i.material-icons date_range
-                            |  Last 24 Hours
+                            a(href='#pablo')  환자 모니터링
+        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    .container 
+        .row    
+            .col-md-4
+                .card.text-center(style='width: 20rem;')
+                    .card-body
+                        h4.card-title add patient list
+                        p.card-text
+                            img(src="/images/introduce/img_injeIntro02.jpg" style=" max-width: 100%; width: 50px;")
+                        a.btn.btn-primary(href='#') 환자 추가
+            .col-md-4
+                .card.text-center(style='width: 20rem;')
+                    .card-body
+                        h4.card-title show patients list
+                        p.card-text
+                            img(src="/images/introduce/img_injeIntro02.jpg" style=" max-width: 100%; width: 50px;")
+                        a.btn.btn-primary(href='#') 환자 목록 보기
+            .col-md-4
+                .card.text-center(style='width: 20rem;')
+                    .card-body
+                        h4.card-title monitoring patients
+                        p.card-text
+                            img(src="/images/introduce/img_injeIntro02.jpg" style=" max-width: 100%; width: 50px;")
+                        a.btn.btn-primary(href='#') 환자 모니터링
 
 
 
