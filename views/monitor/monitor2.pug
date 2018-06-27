@@ -21,17 +21,7 @@ html
     script(type='text/javascript' language='javascript' src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
     script.
       $(document).ready(function() {
-      updateTable();
-      } );
-      function updateTable(){
-      $('#example').DataTable().clear();
-      $('#example').DataTable().destroy();
-      writeTable();
-      setTimeout("updateTable()", 2000);
-      }
-      function writeTable(){
-      $('#example').DataTable( {
-      "destroy":true,
+      var table =$('#example').DataTable( {
       "ajax": {
       "url": "/monitor/json",
       "dataType":"json",
@@ -39,20 +29,25 @@ html
       },
       "columns": [
       { "data": "name" },
-      { "data": "personal_number" },
-      { "data": "phone_number" },
-      { "data": "gender" },
-      { "data": "patient_id" }
-      ]
+      { "data": "patient_id" },
+      { "data": "hospital_room" },
+      { "data": "temperature" },
+      { "data": "humidity" },
+      { "data": "attention" }
+      ],
+      "order":([5,"desc"])
       } );
-      }
-
-    
-    table#example.table.table-striped.table-bordered(style='width:100%')
-      thead
-        tr
-          th Name
-          th personal_number
-          th phone_number
-          th gender
-          th patient_id
+      setInterval(function(){
+          table.ajax.reload();
+        }, 3000);
+      } );
+    .center-block
+      table#example.table.table-striped.table-bordered(style='width:100%')
+        thead
+          tr
+            th 이름
+            th 환자번호
+            th 병실
+            th 병실 온도
+            th 병실 습도
+            th 주의 사항

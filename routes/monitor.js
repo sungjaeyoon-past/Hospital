@@ -14,11 +14,12 @@ conn.connect();
 /* GET home page. */
 
 /*
-  먼저 CON에서 쿼리문을 따와서 JSON객체를 만들고(완료)
-  JSON객체를 다른 URL로 해서 주고(완료)
-  AJAX로 값을 받음(완료)
-  그 URL을 주기적으로 참고하여 TABLE을 그림(https://datatables.net/examples/data_sources/ajax.html)
-  그리고 주기적으로 다시 그려줌(AJAX TIMEOUT - 2초:미완료-http://link2me.tistory.com/1139)
+  먼저 CON에서 쿼리문을 따와서 JSON객체를 만들고
+  JSON객체를 다른 URL로 해서 주고
+  AJAX로 값을 받음
+  그 URL을 주기적으로 참고하여 TABLE을 그림
+  그리고 주기적으로 정보 갱신(AJAX RELOAD)
+  만약 진짜 realtime구현하려면 timestamp값 대조로 가능
 */
 router.get('/', catchErrors(async (req, res, next) => {
   res.render('monitor/monitor2');
@@ -28,18 +29,23 @@ router.get('/', catchErrors(async (req, res, next) => {
 router.get('/json', catchErrors(async (req, res, next) => {
   //환자상세정보 디비에서 가져옴
   var personList = [];
-  conn.query('SELECT * FROM patient', function (err, rows, fields) {
+  await conn.query('SELECT * FROM monitoring', function (err, rows, fields) {
     var person;
     if (err)
       console.log('Error while performing Query.', err);
     else {
       for (var i = 0; i < rows.length; i++) {
+        var attention = "";
+        if (rows[i].is_empty == 1) attention += "링거"
+        if (rows[i].is_wet == 1) attention += "기저귀"
+        if (rows[i].weight_sensor == 1) attention += "낙상"
         var person = {
           'name': rows[i].name,
-          'personal_number': rows[i].personal_number,
-          'phone_number': rows[i].phone_number,
-          'gender': rows[i].gender,
           'patient_id': rows[i].patient_id,
+          'hospital_room': rows[i].hospital_room,
+          'temperature': rows[i].temperature,
+          'humidity': rows[i].humidity,
+          'attention': attention,
         }
         personList.push(person);
       }
