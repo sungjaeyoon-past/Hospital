@@ -1,4 +1,5 @@
 doctype html
+
 head
   title Hello, world!
   // Required meta tags
@@ -10,20 +11,45 @@ head
   link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css')
   // Material Dashboard CSS
   link(rel='stylesheet' href='/assets/css/material-dashboard.css')
-h1 Hello, world!
-button.btn.btn-primary(type='button') Primary
+  
+  style.
+      body{
+        margin-top:75px;
+      } 
 
-// Core JS Files
-script(src='/assets/js/core/jquery.min.js')
-script(src='/assets/js/core/popper.min.js')
-script(src='/assets/js/bootstrap-material-design.js')
-// Notifications Plugin, full documentation here: http://bootstrap-notify.remabledesigns.com/
-script(src='/assets/js/plugins/bootstrap-notify.js')
-// Charts Plugin, full documentation here: https://gionkunz.github.io/chartist-js/
-script(src='/assets/js/core/chartist.min.js')
-// Plugin for Scrollbar documentation here: https://github.com/utatti/perfect-scrollbar
-script(src='/assets/js/plugins/perfect-scrollbar.jquery.min.js')
-// Demo init
-script(src='/assets/js/plugins/demo.js')
-// Material Dashboard Core initialisations of plugins and Bootstrap Material Design Library
-script(src='/assets/js/material-dashboard.js?v=2.1.0')
+
+body
+  block top-nav
+    include ../includes/topnavemp
+  .row
+    each room in rooms
+      .col-lg-3.col-md-6.col-sm-6
+        .card.card-stats
+          .card-header.card-header-warning.card-header-icon
+            .card-icon
+              i.material-icons local_hospital
+            p.card-category #{room.room_no}
+            h3.card-title
+              |#{room.temperature+"'C"}
+              br   
+              |#{room.humidity+"%"} 
+          .card-footer
+            .stats
+              a(href='/statistics/temperatureGraph') 앙 기모띠!
+ 
+
+  // Core JS Files
+  script(src='/assets/js/core/jquery.min.js')
+  script(src='/assets/js/core/popper.min.js')
+  script(src='/assets/js/core/bootstrap-material-design.min.js')
+  // Notifications Plugin, full documentation here: http://bootstrap-notify.remabledesigns.com/
+  script(src='/assets/js/plugins/bootstrap-notify.js')
+  // Charts Plugin, full documentation here: https://gionkunz.github.io/chartist-js/
+  script(src='/assets/js/plugins/chartist.min.js')
+  // Plugin for Scrollbar documentation here: https://github.com/utatti/perfect-scrollbar
+  script(src='/assets/js/plugins/perfect-scrollbar.jquery.min.js')
+  // Demo init
+  script(src='/assets/demo/demo.js')
+  // Material Dashboard Core initialisations of plugins and Bootstrap Material Design Library
+  script(src='/assets/js/material-dashboard.js?v=2.1.0')
+  script(type='text/javascript' language='javascript' src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
