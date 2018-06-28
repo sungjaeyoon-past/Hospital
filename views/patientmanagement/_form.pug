@@ -1,0 +1,27 @@
+.row
+    .col-md-12
+        .input-group.mb-3
+            .input-group-prepend
+                span#basic-addon1.input-group-text 환자 이름                    
+            input.form-control(type='text', placeholder='이름을 입력해주세요!',name='name')
+.row
+    .col-md-6
+        .input-group.mb-3
+            .input-group-prepend
+                span#basic-addon1.input-group-text 핸드폰번호
+            input.form-control(type='text', placeholder='형식: 01012345678', aria-label='phone_number', name='phone_number', aria-describedby='basic-addon1')
+    .col-md-6
+        .input-group.mb-3
+            .input-group-prepend
+                span#basic-addon1.input-group-text 주민번호
+            input.form-control(type='text', placeholder='형식: 9410101234567', aria-label='personal_number',name='personal_number', aria-describedby='basic-addon1')
+.row
+    .col-md-5
+        .form-check
+            input#exampleRadios1.form-check-input(type='radio', name='gender', value='option1', checked='')
+            label.form-check-label(for='male')
+                | 남성
+        .form-check
+            input#exampleRadios2.form-check-input(type='radio', name='gender', value='option2')
+            label.form-check-label(for='female')
+                | 여성

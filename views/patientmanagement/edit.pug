@@ -1,92 +1,16 @@
-doctype html
-head
-  title Hello, world!
-  // Required meta tags
-  meta(charset='utf-8')
-  meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport')
-  meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')
-  // Fonts and icons
-  link(rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons')
-  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css')
-  // Material Dashboard CSS
-  link(rel='stylesheet' href='/assets/css/material-dashboard.css')
-body
+extends ../layoutemp
+
+block content
     include ../includes/topnavemp
-    nav.navbar.navbar-expand-lg.bg-rose(style="margin-top:70px;")
-        .container
-            .navbar-translate
-                a.navbar-brand(href='/patientmanagement') 환자 관리
-                |             
-                button.navbar-toggler(type='button', data-toggle='collapse', aria-expanded='false', aria-label='Toggle navigation')
-                    span.navbar-toggler-icon
-                    |                 
-                    span.navbar-toggler-icon
-                    |                 
-                    span.navbar-toggler-icon
-                    |         
-            .collapse.navbar-collapse
-                ul.navbar-nav
-                    li.nav-item
-                        a.nav-link(href='/patientmanagement/new') 환자 추가
-                        |                 
-                    li.nav-item
-                        a.nav-link(href='/patientmanagement/list') 환자 목록
-                        |           
-            form.form-inline.ml-auto
-                .form-group.has-white
-                    input.form-control(type='text', placeholder='Search')
-                    |                 
-                button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
-                    i.material-icons search
-        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     .container
-        .row
-            .col-md-6.col-sm-6
-                .card.card-stats
-                    .card-header.card-header-warning.card-header-icon
-                        .card-icon
-                            i.material-icons content_copy
-                        p.card-category Used Space
-                        h3.card-title
-                            | 49/50 
-                            small GB
-                    .card-footer
-                        .stats
-                            i.material-icons.text-danger warning
-                            a(href='#pablo') Get More Space...
-            .col-md-6.col-sm-6
-                .card.card-stats
-                    .card-header.card-header-success.card-header-icon
-                        .card-icon
-                            i.material-icons store
-                        p.card-category Revenue
-                        h3.card-title $34,245
-                    .card-footer
-                        .stats
-                            i.material-icons date_range
-                            |  Last 24 Hours
-
-
-
-
-
-
-    
-    
-    
-    
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Core JS Files
-    script(src='/assets/js/core/jquery.min.js')
-    script(src='/assets/js/core/popper.min.js')
-    script(src='/assets/js/bootstrap-material-design.js')
-    // Notifications Plugin, full documentation here: http://bootstrap-notify.remabledesigns.com/
-    script(src='/assets/js/plugins/bootstrap-notify.js')
-    // Charts Plugin, full documentation here: https://gionkunz.github.io/chartist-js/
-    script(src='/assets/js/core/chartist.min.js')
-    // Plugin for Scrollbar documentation here: https://github.com/utatti/perfect-scrollbar
-    script(src='/assets/js/plugins/perfect-scrollbar.jquery.min.js')
-    // Demo init
-    script(src='/assets/js/plugins/demo.js')
-    // Material Dashboard Core initialisations of plugins and Bootstrap Material Design Library
-    script(src='/assets/js/material-dashboard.js?v=2.1.0')
+        .row(style="margin-top:20px;")
+            .col-md-12
+                h1
+                    |환자 추가
+        br
+        form(action=`/patientmanagement/${patient.personal_number}?_method=PUT`)
+            input(type="hidden", name="_method", value="PUT")
+            include ./_form
+            .row
+                .col-md-1
+                        button.btn.btn-primary(type='submit' ,style="margin-left:20%; margin-top:20%;") 저장

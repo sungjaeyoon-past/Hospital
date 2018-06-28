@@ -1,86 +1,51 @@
-doctype html
-head
-  title Hello, world!
-  // Required meta tags
-  meta(charset='utf-8')
-  meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport')
-  meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')
-  // Fonts and icons
-  link(rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons')
-  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css')
-  // Material Dashboard CSS
-  link(rel='stylesheet' href='/assets/css/material-dashboard.css')
-body
-    include ../includes/topnavemp
-    nav.navbar.navbar-expand-lg.bg-rose(style="margin-top:70px;")
-        .container
-            .navbar-translate
-                a.navbar-brand(href='/patientmanagement') 환자 관리
-                |             
-                button.navbar-toggler(type='button', data-toggle='collapse', aria-expanded='false', aria-label='Toggle navigation')
-                    span.navbar-toggler-icon
-                    |                 
-                    span.navbar-toggler-icon
-                    |                 
-                    span.navbar-toggler-icon
-                    |         
-            .collapse.navbar-collapse
-                ul.navbar-nav
-                    li.nav-item
-                        a.nav-link(href='/patientmanagement/new') 환자 추가
-                        |                 
-                    li.nav-item
-                        a.nav-link(href='/patientmanagement/list') 환자 목록
-                        |           
-            form.form-inline.ml-auto
-                .form-group.has-white
-                    input.form-control(type='text', placeholder='Search')
-                    |                 
-                button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
-                    i.material-icons search
-        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    .container
+extends ../layoutemp
+
+block content
+    .container(style="margin-top:3%;")
+        h1 환자 정보
+        .alert.alert-secondary
+            .row
+                .col-md-12
+                    | 환자 이름:
+                    #{patient.name}
+            br
+            .row
+                .com-md-12(style="margin-left:1.5%;")
+                    | 주민 번호:
+                    #{patient.personal_number}
+            br
+            .row
+                .col-md-12
+                    | 핸드폰 번호:
+                    #{patient.phone_number}   
+            br
+            .row
+                .col-md-12
+                    | 성별:
+                    if !patient.gender
+                        | 남성
+                    else
+                        | 여성    
+
+        h2 입원
+        .alert.alert-info
+            .row
+                .col-md-12
+                    | 허미;
+
+        h3 진료기록
+        .alert.alert-info
+            .row
+                .col-md-12
+                    | 허미;
         .row
-            h1.page-header 회원가입
-                form(action='/users', method='POST')
-                .form-group
-                    label(for='name') Name
-                    input.form-control(type='text', id='name', name='name', placeholder='Your name')
-                .form-group
-                    label(for='email') Email address
-                    input.form-control(type='email', id='email', name='email', placeholder='Email')
-                .form-group
-                    label(for='password') Password
-                    input.form-control(type='password', id='password', name='password', placeholder='Password')
-                .form-group
-                    label(for='password_confirmation') Password 확인
-                    input.form-control(type='password', id='password_confirmation', name='password_confirmation', placeholder='Password')
-                div.form-actions
-                    a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
-                    | 
-                    button.btn.btn-primary(type='submit') 회원가입 
+            .col-md-1
+                a.button.btn.btn-primary(href=`/patientmanagement/edit/${patient.personal_number}`)
+                    | 정보 수정
+            .col-md-1
+                a.btn.btn-danger(href=`/patientmanagement/${patient.personal_number}?_method=DELETE`)
+                    | 정보 삭제
 
 
+            
 
-
-
-
-    
-    
-    
-    
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Core JS Files
-    script(src='/assets/js/core/jquery.min.js')
-    script(src='/assets/js/core/popper.min.js')
-    script(src='/assets/js/bootstrap-material-design.js')
-    // Notifications Plugin, full documentation here: http://bootstrap-notify.remabledesigns.com/
-    script(src='/assets/js/plugins/bootstrap-notify.js')
-    // Charts Plugin, full documentation here: https://gionkunz.github.io/chartist-js/
-    script(src='/assets/js/core/chartist.min.js')
-    // Plugin for Scrollbar documentation here: https://github.com/utatti/perfect-scrollbar
-    script(src='/assets/js/plugins/perfect-scrollbar.jquery.min.js')
-    // Demo init
-    script(src='/assets/js/plugins/demo.js')
-    // Material Dashboard Core initialisations of plugins and Bootstrap Material Design Library
-    script(src='/assets/js/material-dashboard.js?v=2.1.0')
