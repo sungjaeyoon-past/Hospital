@@ -103,19 +103,62 @@ router.post('/new', catchErrors(async (req, res, next) => {
   res.redirect('/patientmanagement');
 }));
 
-//------------------------환자 정보수정------------------------------------------
-router.get('/:id/edit', catchErrors(async (req, res, next) => {
-  //정보보여줌
-  res.redirect('/patientmanagement');
+//완성
+router.get('/edit/:id', catchErrors(async (req, res, next) => {
+  var requestPatient = req.params.id;
+  await conn.query('SELECT * FROM patient WHERE personal_number=' + requestPatient, (err, rows, fields) => {
+    var person;
+    if (err)
+      console.log("에러:" + err);
+    else {
+      for (var i in rows) {
+        var person = {
+          'name': rows[i].name,
+          'personal_number': rows[i].personal_number,
+          'phone_number': rows[i].phone_number,
+          'gender': rows[i].gender,
+          'patient_id': rows[i].patient_id,
+        }
+      }
+      console.log(person);
+      res.render('patientmanagement/edit', { patient:person });
+    }
+  });
 }));
 
+//
 router.put('/:id', catchErrors(async (req, res, next) => {
-  //id 값을 찾아서 업데이트
-  //저장 성공실패여부
+  var name=req.body.name;
+  var phone_number = req.body.phone_number;
+  var personal_number=req.body.personal_number;
+  var gender=0;
+  if(req.body.gender='female'){gender=1;}
+  
+  var original_personal_number;
+  await conn.query("SELECT * FROM patient WHERE personal_number="+ personal_number,(err, rows, fields) =>{
+    if (err)
+      console.log("에러:" + err);
+    else
+      original_personal_number=rows[0].personal_number;
+  });
+
+  console.log(original_personal_number);
+  var insertSql="UPDATE patient SET name='"+
+  name+"', personal_number='"+
+  personal_number+"', phone_number='"+
+  phone_number+"', gender="+
+  gender + "WHERE personal_number="+original_personal_number;
+
+  await conn.query(insertSql,(err, rows, fields) =>{
+    if (err)
+      console.log("에러:" + err);
+    else
+      console.log(insertSql +"변경 완료");
+  });
   res.redirect('/patientmanagement');
 }));
 
-//---------------------------환자 삭제-------------------------------------------
+//완성
 router.delete('/:id', catchErrors(async (req, res, next) => {
   var insertSql="DELETE FROM patient WHERE personal_number = '"+req.params.id+"'";
   await conn.query(insertSql,(err, rows, fields) =>{
