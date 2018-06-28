@@ -6,7 +6,7 @@ var conn = mysql.createConnection({
   port: '3308',
   user: 'web',
   password: 'mju12345',
-  database : 'medic'
+  database: 'medic'
 });
 conn.connect();
 const catchErrors = require('../lib/async-error');
@@ -25,10 +25,10 @@ router.get('/', catchErrors(async (req, res, next) => {
 
 router.get('/list', catchErrors(async (req, res, next) => {
   var personList = [];
-  conn.query('SELECT * FROM patient', (err, rows, fields) =>{
+  conn.query('SELECT * FROM patient', (err, rows, fields) => {
     var person;
     if (err)
-      console.log("에러:"+err);
+      console.log("에러:" + err);
     else {
       for (var i in rows) {
         var person = {
@@ -47,12 +47,12 @@ router.get('/list', catchErrors(async (req, res, next) => {
 
 router.get('/show/:id', catchErrors(async (req, res, next) => {
   //환자상세정보 디비에서 가져옴
-  var requestPatient=req.params.id;
+  var requestPatient = req.params.id;
   var personList = [];
-  conn.query('SELECT * FROM patient WHERE personal_number='+requestPatient, (err, rows, fields) =>{
+  conn.query('SELECT * FROM patient WHERE personal_number=' + requestPatient, (err, rows, fields) => {
     var person;
     if (err)
-      console.log("에러:"+err);
+      console.log("에러:" + err);
     else {
       for (var i in rows) {
         var person = {

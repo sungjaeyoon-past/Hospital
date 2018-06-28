@@ -34,10 +34,10 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var introduce = require('./routes/introduce');
 var calender = require('./routes/calender');
-var employee =require('./routes/employee');
+var employee = require('./routes/employee');
 var statistics = require('./routes/statistics');
-var monitor=require('./routes/monitor');
-var patientmanagement=require('./routes/patientmanagement');
+var monitor = require('./routes/monitor');
+var patientmanagement = require('./routes/patientmanagement');
 var surveyschedule = require('./routes/surveyschedule');
 var workschedule = require('./routes/workschedule');
 var superadmin = require('./routes/superadmin');
@@ -75,7 +75,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   console.log("REQ USER", req.user);
   res.locals.currentUser = req.user;
   res.locals.flashMessages = req.flash();
@@ -88,15 +88,15 @@ configAuth(passport);
 /*-----------------url route-----------------*/
 app.use('/', index);
 app.use('/users', users);
-app.use('/calender',calender);
+app.use('/calender', calender);
 app.use('/introduce', introduce);
-app.use('/employee',employee);
-app.use('/statistics',statistics);
-app.use('/monitor',monitor);
-app.use('/patientmanagement',patientmanagement);
-app.use('/surveyschedule',surveyschedule);
-app.use('/workschedule',workschedule);
-app.use('/superadmin',superadmin);
+app.use('/employee', employee);
+app.use('/statistics', statistics);
+app.use('/monitor', monitor);
+app.use('/patientmanagement', patientmanagement);
+app.use('/surveyschedule', surveyschedule);
+app.use('/workschedule', workschedule);
+app.use('/superadmin', superadmin);
 /*-----------------url route-----------------*/
 
 
