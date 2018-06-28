@@ -18,12 +18,12 @@ router.get('/', catchErrors(async (req, res, next) => {
 //사용자 목록, db에서 유저정보 받아옴
 router.get('/list', catchErrors(async (req, res, next) => {
   var empList = [];
-  await conn.query('SELECT * FROM employee', function (err, rows, fields) {
+  conn.query('SELECT * FROM employee', function (err, rows, fields) {
     var emp;
     if (err)
       console.log('Error', err);
     else {
-      for (var i = 0; i < rows.length; i++) {
+      for (var i in rows) {
         var emp = {
           'employee_id': rows[i].employee_id,
           'name': rows[i].name,
@@ -35,7 +35,7 @@ router.get('/list', catchErrors(async (req, res, next) => {
         }
         empList.push(emp);
       }
-      res.render('superadmin/list', {emp: empList});
+      res.render('superadmin/list', {employee: empList});
     }
   });
 }));

@@ -27,7 +27,7 @@ body
           |
         button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
           i.material-icons search
- 
+    
   .container
     .row
       .col-md-6.col-sm-6
@@ -37,27 +37,40 @@ body
               i.material-icons store
             p.card-category 수정 가능한 유저
             h3.card-title
-              | 5
+              | 1
           .card-footer
             .stats
               i.material-icons warning
               a(href='/superadmin/edit') 정보 수정
 
     .row
-        .col-lg-6.col-md-12
-            .card.card-stats
-                .card-header.card-header-success
-                    h4.card-title
-                    | 유저 목록
-                    p.card-category not have any new employee yet
-                .card-body.table-responsive
-                    table.table.table-hover
-                        thead.text-success
-                            tr
-                                td id
-                                td 이름 
-                                td 식별번호 
-                                td 전화번호 
-                                td 성별
-                                td 직급 
-                                td 비밀번호
+        .col-lg-12.col-md-20
+            each emp in employee
+                .card.card-stats
+                    .card-header.card-header-success
+                        h4.card-title
+                        | 유저 목록표
+                        p.card-category not have any new employee yet
+                    .card-body.table-responsive
+                        table.table.table-hover
+                            thead.text-success
+                                tr
+                                    th.text-center id
+                                    th 이름 
+                                    th 식별번호 
+                                    th 전화번호 
+                                    th 성별(남:1, 여:2)
+                                    th 직급 
+                                    th 비밀번호
+                                    th 수정
+                                tr
+                                    td #{emp.employee_id}
+                                    td #{emp.name}
+                                    td #{emp.personal_number}
+                                    td #{emp.phone_number}
+                                    td #{emp.gender}
+                                    td #{emp.position}
+                                    td #{emp.employee_password}
+                                    td.td-actions
+                                        button.btn.btn-info(type='button' rel='tooltip' onclick="location.href='/superadmin/edit'")
+                                            i.material-icons edit
