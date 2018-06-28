@@ -12,6 +12,7 @@ head
   link(rel='stylesheet' href='/assets/css/material-dashboard.css')
 body
     include ../includes/topnavemp
+    include ./patient-navbar
     nav.navbar.navbar-expand-lg.bg-rose(style="margin-top:70px;")
         .container
             .navbar-translate
@@ -30,7 +31,7 @@ body
                         a.nav-link(href='/patientmanagement/new') 환자 추가
                         |                 
                     li.nav-item
-                        a.nav-link(href='/patientmanagement/list') 환자 목록
+                        a.nav-link(href='/patientmanagement') 환자 목록
                         |           
             form.form-inline.ml-auto
                 .form-group.has-white
@@ -41,24 +42,14 @@ body
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     .container
         .row
-            h1.page-header 회원가입
-                form(action='/users', method='POST')
-                .form-group
-                    label(for='name') Name
-                    input.form-control(type='text', id='name', name='name', placeholder='Your name')
-                .form-group
-                    label(for='email') Email address
-                    input.form-control(type='email', id='email', name='email', placeholder='Email')
-                .form-group
-                    label(for='password') Password
-                    input.form-control(type='password', id='password', name='password', placeholder='Password')
-                .form-group
-                    label(for='password_confirmation') Password 확인
-                    input.form-control(type='password', id='password_confirmation', name='password_confirmation', placeholder='Password')
-                div.form-actions
-                    a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
-                    | 
-                    button.btn.btn-primary(type='submit') 회원가입 
+            h1 환자 정보
+
+
+        .row
+            .col-md-1
+                button.btn.btn-primary(type='submit' ,style="margin-left:20%; margin-top:20%;") 편집
+            .col-md-1
+                button.btn.btn-primary(type='submit' ,style="margin-left:20%; margin-top:20%;") 삭제
 
 
 

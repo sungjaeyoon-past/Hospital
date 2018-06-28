@@ -30,7 +30,7 @@ body
                         a.nav-link(href='/patientmanagement/new') 환자 추가
                         |                 
                     li.nav-item
-                        a.nav-link(href='/patientmanagement/list') 환자 목록
+                        a.nav-link(href='/patientmanagement') 환자 목록
                         |           
             form.form-inline.ml-auto
                 .form-group.has-white
@@ -48,7 +48,8 @@ body
                     .input-group-prepend
                         span.input-group-text
                         i.material-icons group
-                    input.form-control(type='text', placeholder=' 추가할 환자 이름 입력')
+                    label(for='name')
+                    input.form-control(type='text',id="name", placeholder=' 추가할 환자 이름 입력')
         .row(style="margin-top:3%;")
             .col-md-6
                 .input-group
@@ -59,7 +60,7 @@ body
                 .input-group
                     .input-group-prepend
                         span.input-group-text
-                    input.form-control(type='text', placeholder=' 환자 ')    
+                    input.form-control(type='text', placeholder=' 주민번호 ')    
         .row(style="margin-left:4%; margin-top:3%;")
             .col-md-6
                 .form-check.form-check-radio.form-check-inline
@@ -77,29 +78,18 @@ body
                         
         .row
             .col-md-2
-                button.btn.btn-primary(type='submit' ,style="margin-left:20%; margin-top:20%;") 환자 추가
+                form(action="/patientmanagement/new", method="POST")
+                    button.btn.btn-primary(type='submit' ,style="margin-left:20%; margin-top:20%;") 환자 추가
 
-
-                
-
-
-
-    
-    
-    
+       
     
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Core JS Files
     script(src='/assets/js/core/jquery.min.js')
     script(src='/assets/js/core/popper.min.js')
-    script(src='/assets/js/bootstrap-material-design.js')
-    // Notifications Plugin, full documentation here: http://bootstrap-notify.remabledesigns.com/
+    script(src='/assets/js/core/bootstrap-material-design.min.js')
     script(src='/assets/js/plugins/bootstrap-notify.js')
-    // Charts Plugin, full documentation here: https://gionkunz.github.io/chartist-js/
-    script(src='/assets/js/core/chartist.min.js')
-    // Plugin for Scrollbar documentation here: https://github.com/utatti/perfect-scrollbar
+    script(src='/assets/js/plugins/chartist.min.js')
     script(src='/assets/js/plugins/perfect-scrollbar.jquery.min.js')
-    // Demo init
-    script(src='/assets/js/plugins/demo.js')
-    // Material Dashboard Core initialisations of plugins and Bootstrap Material Design Library
+    script(src='/assets/demo/demo.js')
     script(src='/assets/js/material-dashboard.js?v=2.1.0')
+    script(type='text/javascript' language='javascript' src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
