@@ -27,35 +27,7 @@ body
           |
         button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
           i.material-icons search
-
-    script(type='text/javascript' language='javascript' src='https://code.jquery.com/jquery-3.3.1.js')
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
-    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous")
-    link(rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css') 
-    script(type='text/javascript' language='javascript' src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
-    script.
-        $(document).ready(function() {
-        var table =$('#example').DataTable( {
-        "ajax": {
-        "url": "/superadmin/json",
-        "dataType":"json",
-        "dataSrc": ""
-        },
-        "columns": [
-        { "data": "employee_id" },
-        { "data": "name" },
-        { "data": "personal_number" },
-        { "data": "phone_number" },
-        { "data": "gender" },
-        { "data": "position" }
-        { "data": "employee_password" }
-        ],
-        "order":([7,"desc"])
-        } );
-        setInterval(function(){
-            table.ajax.reload();
-            }, 3000);
-        } );
+ 
   .container
     .row
       .col-md-6.col-sm-6
