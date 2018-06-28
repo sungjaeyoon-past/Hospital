@@ -1,7 +1,7 @@
 extends ../layoutemp
 
 block content
-    nav.navbar.navbar-expand-lg.bg-rose(style="margin-top:20px;")
+    nav.navbar.navbar-expand-lg.bg-rose(style="margin-top:1%;")
         .container                          
             form.form-inline.ml-auto
                 .form-group.has-white
@@ -10,7 +10,7 @@ block content
                 button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
                     i.material-icons search
     .container
-        .row(style="margin-bottom:15px;")
+        .row(style="margin-bottom:2%;")
             .col-md-6.col-sm-6
                 .card.card-stats
                     .card-header.card-header-warning.card-header-icon
@@ -50,4 +50,4 @@ block content
                                 | 핸드폰번호 :
                                 #{patient.phone_number}
                             .col-md-2(style="margin-top:20px;")
-                                a(href=`/show/${patient.personal_number}`) 상세 보기
+                                a(href=`/patientmanagement/show/${patient.personal_number}`) 상세 보기

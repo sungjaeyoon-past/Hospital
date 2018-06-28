@@ -15,11 +15,9 @@ function validateForm(form , option){
   var name = form.name||"";
   var personal_number = form.personal_number||"";
   var phone_number = form.phone_number||"";
-  var gender = form.gender||"";
   if(!name){return "이름을 입력해주세요";}
   if(!personal_number){return "주민번호를 입력해주세요";}
   if(!phone_number){return "핸드폰 번호를 입력해주세요";}
-  if(!gender){return "성별을 선택해주세요";}
 }
 
 /*환자 검색
@@ -51,11 +49,9 @@ router.get('/', catchErrors(async (req, res, next) => {
   });
 }));
 
-//!
+//완성
 router.get('/show/:id', catchErrors(async (req, res, next) => {
-  //환자상세정보 디비에서 가져옴
   var requestPatient = req.params.id;
-  var personList = [];
   conn.query('SELECT * FROM patient WHERE personal_number=' + requestPatient, (err, rows, fields) => {
     var person;
     if (err)
@@ -69,9 +65,9 @@ router.get('/show/:id', catchErrors(async (req, res, next) => {
           'gender': rows[i].gender,
           'patient_id': rows[i].patient_id,
         }
-        personList.push(person);
       }
-      res.render('patientmanagement/show', { patients: personList });
+      console.log(person);
+      res.render('patientmanagement/show', { patient:person });
     }
   });
 }));
@@ -103,6 +99,7 @@ router.post('/new', catchErrors(async (req, res, next) => {
     else
       console.log(insertSql +"삽입 완료");
   });
+  req.flash('success',"추가 성공");
   res.redirect('/patientmanagement');
 }));
 
@@ -120,8 +117,13 @@ router.put('/:id', catchErrors(async (req, res, next) => {
 
 //---------------------------환자 삭제-------------------------------------------
 router.delete('/:id', catchErrors(async (req, res, next) => {
-  //id 값을 찾아서 ddelete
-  //저장 성공실패여부
+  var insertSql="DELETE FROM patient WHERE personal_number = '"+req.params.id+"'";
+  await conn.query(insertSql,(err, rows, fields) =>{
+    if (err)
+    console.log("에러:" + err);
+  else
+    console.log(insertSql +"삭제 완료");
+  });
   res.redirect('/patientmanagement');
 }));
 
