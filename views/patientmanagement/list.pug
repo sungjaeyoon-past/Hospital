@@ -1,47 +1,39 @@
-doctype html
-head
-  title Hello, world!
-  // Required meta tags
-  meta(charset='utf-8')
-  meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport')
-  meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')
-  // Fonts and icons
-  link(rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons')
-  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css')
-  // Material Dashboard CSS
-  link(rel='stylesheet' href='/assets/css/material-dashboard.css')
-body
-    include ../includes/topnavemp
-    include ./patient-navbar
+extends ../layoutemp
+
+block content
+    nav.navbar.navbar-expand-lg.bg-rose(style="margin-top:20px;")
+        .container                          
+            form.form-inline.ml-auto
+                .form-group.has-white
+                    input.form-control(type='text', placeholder='Search')
+                    |                 
+                button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
+                    i.material-icons search
     .container
-        .row
+        .row(style="margin-bottom:15px;")
             .col-md-6.col-sm-6
                 .card.card-stats
                     .card-header.card-header-warning.card-header-icon
-                        .card-icon
-                            i.material-icons content_copy
                         p.card-category 등록된 환자수
                         h3.card-title
                             | 49
                             small 명
                     .card-footer
                         .stats
-                            i.material-icons.text-danger warning
-                            a(href='#pablo') 환자 등록
+                            .btn.btn-dark
+                                a(href='/patientmanagement/new') 환자 추가
+                                    
             .col-md-6.col-sm-6
                 .card.card-stats
                     .card-header.card-header-success.card-header-icon
-                        .card-icon
-                            i.material-icons store
-                        p.card-category 입실 환자수
+                        p.card-category 입원 환자수
                         h3.card-title 
                             | 49
                             small 명
                     .card-footer
                         .stats
-                            i.material-icons date_range
-                            a(href='#pablo')  환자 모니터링
-
+                            .btn.btn-dark
+                                a(href='/monitor')  환자 모니터링
         .row
             .col-md-12
                 each patient in patients
@@ -51,13 +43,11 @@ body
                                  .alert.alert-warning(role='alert')
                                     | 환자 이름 :
                                     #{patient.name}
-                            .col-md-3(style="margin-top:30px;")
+                            .col-md-3(style="margin-top:20px;")
                                 | 주민번호  :
                                 #{patient.personal_number}
-                            .col-md-3(style="margin-top:30px;")
+                            .col-md-3(style="margin-top:20px;")
                                 | 핸드폰번호 :
                                 #{patient.phone_number}
-                            .col-md-2(style="margin-top:30px;")
+                            .col-md-2(style="margin-top:20px;")
                                 a(href=`/show/${patient.personal_number}`) 상세 보기
-
-    include ./patient-script

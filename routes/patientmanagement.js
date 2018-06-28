@@ -81,26 +81,28 @@ router.get('/new', catchErrors(async (req, res, next) => {
   res.render('patientmanagement/new');
 }));
 
-//!
+//완성
 router.post('/new', catchErrors(async (req, res, next) => {
-  /*const err=validateForm(req.body);
+  const err=validateForm(req.body);
   if(err){
     req.flash('danger',err);
     console.log(err);
     return res.redirect('back');
-  }*/
+  }
   var name=req.body.name;
-  console.log(name);
-  var personal_number=req.body.personal_number;
   var phone_number = req.body.phone_number;
-  var gender =0;// req.body.gender;
-  var insertSql="INSERT INTO patient (name, personal_number, phone_number, gender) VALUES ('"+name+"','"+personal_number+"','"+phone_number+"','"+gender+"')";
-  /*await conn.query(insertSql,(err, rows, fields) =>{
+  var personal_number=req.body.personal_number;
+  var gender=0;
+  if(req.body.gender='female'){gender=1;}
+  var insertSql="INSERT INTO patient (name, phone_number, personal_number, gender) VALUES ('"+
+  name+"','"+phone_number+"','"+personal_number+"','"+gender+"')";
+  console.log(insertSql);
+  await conn.query(insertSql,(err, rows, fields) =>{
     if (err)
       console.log("에러:" + err);
     else
       console.log(insertSql +"삽입 완료");
-  });*/
+  });
   res.redirect('/patientmanagement');
 }));
 
