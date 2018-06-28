@@ -1,0 +1,91 @@
+doctype html
+html
+  head
+    title title
+
+    link(rel='stylesheet' href='/assets/css/material-dashboard.css')
+    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css')
+    link(rel='stylesheet' type='text/css' href= 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons')
+    meta(charset='utf-8')
+    meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')
+
+body
+  include ../includes/topnavemp
+
+  nav.navbar.navbar-expand-lg.white(style="margin-top:70px;")
+    .container
+      ul.navbar-nav
+        li.nav-item
+          a.nav-link(href='/superadmin/list') 유저 목록
+          |
+        li.nav-item
+          a.nav-link(href='/superadmin/edit') 유저정보 수정
+      form.form-inline.ml-auto
+        .form-group.has-white
+          input.form-control(type='text', placeholder='search')
+          |
+        button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
+          i.material-icons search
+
+    script(type='text/javascript' language='javascript' src='https://code.jquery.com/jquery-3.3.1.js')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous")
+    link(rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css') 
+    script(type='text/javascript' language='javascript' src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+    script.
+        $(document).ready(function() {
+        var table =$('#example').DataTable( {
+        "ajax": {
+        "url": "/superadmin/json",
+        "dataType":"json",
+        "dataSrc": ""
+        },
+        "columns": [
+        { "data": "employee_id" },
+        { "data": "name" },
+        { "data": "personal_number" },
+        { "data": "phone_number" },
+        { "data": "gender" },
+        { "data": "position" }
+        { "data": "employee_password" }
+        ],
+        "order":([7,"desc"])
+        } );
+        setInterval(function(){
+            table.ajax.reload();
+            }, 3000);
+        } );
+  .container
+    .row
+      .col-md-6.col-sm-6
+        .card.card-stats
+          .card-header.card-header-danger.card-header-icon
+            .card-icon
+              i.material-icons store
+            p.card-category 수정 가능한 유저
+            h3.card-title
+              | 5
+          .card-footer
+            .stats
+              i.material-icons warning
+              a(href='/superadmin/edit') 정보 수정
+
+    .row
+        .col-lg-6.col-md-12
+            .card.card-stats
+                .card-header.card-header-success
+                    h4.card-title
+                    | 유저 목록
+                    p.card-category not have any new employee yet
+                .card-body.table-responsive
+                    table.table.table-hover
+                        thead.text-success
+                            tr
+                                td id
+                                td 이름 
+                                td 식별번호 
+                                td 전화번호 
+                                td 성별
+                                td 직급 
+                                td 비밀번호

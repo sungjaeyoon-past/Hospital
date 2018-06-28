@@ -16,27 +16,26 @@ router.get('/', catchErrors(async (req, res, next) => {
 }));
 
 //사용자 목록, db에서 유저정보 받아옴
-router.get('/json', catchErrors(async (req, res, next) => {
-  var userList = [];
-  await conn.query('SELECT * FROM user', function (err, rows, fields) {
-    var user;
+router.get('/list', catchErrors(async (req, res, next) => {
+  var empList = [];
+  await conn.query('SELECT * FROM employee', function (err, rows, fields) {
+    var emp;
     if (err)
-      console.log('Error while performing Query.', err);
+      console.log('Error', err);
     else {
       for (var i = 0; i < rows.length; i++) {
-        // superadmin일 경우 edit 버튼 활성화
-        var edit = "";
-        var user = {
-          //if (rows[i].superadmin == 1) edit += "EDIT"
-          'user_number': rows[i].user_number,
-          'user_id': rows[i].user_id,
-          'user_name': rows[i].user_name,
-          'user_password': rows[i].user_password,
-          'edit': edit
+        var emp = {
+          'employee_id': rows[i].employee_id,
+          'name': rows[i].name,
+          'personal_number': rows[i].personal_number,
+          'phone_number': rows[i].phone_number,
+          'gender': rows[i].gender,
+          'position': rows[i].position,
+          'employee_password': rows[i].employee_password
         }
-        userList.push(user);
+        empList.push(emp);
       }
-      res.json(userList);
+      res.render('superadmin/list', {emp: empList});
     }
   });
 }));

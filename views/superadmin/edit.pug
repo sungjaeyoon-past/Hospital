@@ -1,1 +1,41 @@
-extends ../layoutemp
+doctype html
+html
+  head
+    title title
+
+    link(rel='stylesheet' href='/assets/css/material-dashboard.css')
+    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css')
+    link(rel='stylesheet' type='text/css' href= 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons')
+    meta(charset='utf-8')
+    meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')
+body
+  include ../includes/topnavemp
+  nav.navbar.navbar-expand-lg.white(style="margin-top:70px;")
+    .container
+      ul.navbar-nav
+        li.nav-item
+          a.nav-link(href='/superadmin/list') 유저 목록
+          |
+        li.nav-item
+          a.nav-link(href='/superadmin/edit') 유저정보 수정
+      form.form-inline.ml-auto
+        .form-group.has-white
+          input.form-control(type='text', placeholder='search')
+          |
+        button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
+          i.material-icons search
+  .container
+    .row
+      .col-md-6.col-sm-6
+        .card.card-stats
+          .card-header.card-header-success.card-header-icon
+            .card-icon
+              i.material-icons content_copy
+            p.card-category 등록된 유저
+            h3.card-title
+              | 5
+          .card-footer
+            .stats
+              i.material-icons local_offer
+              a(href='/superadmin/list') 유저 목록
