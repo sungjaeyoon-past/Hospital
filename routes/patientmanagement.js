@@ -11,13 +11,13 @@ var conn = mysql.createConnection({
 conn.connect();
 const catchErrors = require('../lib/async-error');
 
-function validateForm(form , option){
-  var name = form.name||"";
-  var personal_number = form.personal_number||"";
-  var phone_number = form.phone_number||"";
-  if(!name){return "이름을 입력해주세요";}
-  if(!personal_number){return "주민번호를 입력해주세요";}
-  if(!phone_number){return "핸드폰 번호를 입력해주세요";}
+function validateForm(form, option) {
+  var name = form.name || "";
+  var personal_number = form.personal_number || "";
+  var phone_number = form.phone_number || "";
+  if (!name) { return "이름을 입력해주세요"; }
+  if (!personal_number) { return "주민번호를 입력해주세요"; }
+  if (!phone_number) { return "핸드폰 번호를 입력해주세요"; }
 }
 
 /*환자 검색
@@ -67,7 +67,7 @@ router.get('/show/:id', catchErrors(async (req, res, next) => {
         }
       }
       console.log(person);
-      res.render('patientmanagement/show', { patient:person });
+      res.render('patientmanagement/show', { patient: person });
     }
   });
 }));
@@ -79,27 +79,27 @@ router.get('/new', catchErrors(async (req, res, next) => {
 
 //완성
 router.post('/new', catchErrors(async (req, res, next) => {
-  const err=validateForm(req.body);
-  if(err){
-    req.flash('danger',err);
+  const err = validateForm(req.body);
+  if (err) {
+    req.flash('danger', err);
     console.log(err);
     return res.redirect('back');
   }
-  var name=req.body.name;
+  var name = req.body.name;
   var phone_number = req.body.phone_number;
-  var personal_number=req.body.personal_number;
-  var gender=0;
-  if(req.body.gender='female'){gender=1;}
-  var insertSql="INSERT INTO patient (name, phone_number, personal_number, gender) VALUES ('"+
-  name+"','"+phone_number+"','"+personal_number+"','"+gender+"')";
+  var personal_number = req.body.personal_number;
+  var gender = 0;
+  if (req.body.gender = 'female') { gender = 1; }
+  var insertSql = "INSERT INTO patient (name, phone_number, personal_number, gender) VALUES ('" +
+    name + "','" + phone_number + "','" + personal_number + "','" + gender + "')";
   console.log(insertSql);
-  await conn.query(insertSql,(err, rows, fields) =>{
+  await conn.query(insertSql, (err, rows, fields) => {
     if (err)
       console.log("에러:" + err);
     else
-      console.log(insertSql +"삽입 완료");
+      console.log(insertSql + "삽입 완료");
   });
-  req.flash('success',"추가 성공");
+  req.flash('success', "추가 성공");
   res.redirect('/patientmanagement');
 }));
 
@@ -121,51 +121,51 @@ router.get('/edit/:id', catchErrors(async (req, res, next) => {
         }
       }
       console.log(person);
-      res.render('patientmanagement/edit', { patient:person });
+      res.render('patientmanagement/edit', { patient: person });
     }
   });
 }));
 
 //
 router.put('/:id', catchErrors(async (req, res, next) => {
-  var name=req.body.name;
+  var name = req.body.name;
   var phone_number = req.body.phone_number;
-  var personal_number=req.body.personal_number;
-  var gender=0;
-  if(req.body.gender='female'){gender=1;}
-  
+  var personal_number = req.body.personal_number;
+  var gender = 0;
+  if (req.body.gender = 'female') { gender = 1; }
+
   var original_personal_number;
-  await conn.query("SELECT * FROM patient WHERE personal_number="+ personal_number,(err, rows, fields) =>{
+  await conn.query("SELECT * FROM patient WHERE personal_number=" + personal_number, (err, rows, fields) => {
     if (err)
       console.log("에러:" + err);
     else
-      original_personal_number=rows[0].personal_number;
+      original_personal_number = rows[0].personal_number;
   });
 
   console.log(original_personal_number);
-  var insertSql="UPDATE patient SET name='"+
-  name+"', personal_number='"+
-  personal_number+"', phone_number='"+
-  phone_number+"', gender="+
-  gender + "WHERE personal_number="+original_personal_number;
+  var insertSql = "UPDATE patient SET name='" +
+    name + "', personal_number='" +
+    personal_number + "', phone_number='" +
+    phone_number + "', gender=" +
+    gender + "WHERE personal_number=" + original_personal_number;
 
-  await conn.query(insertSql,(err, rows, fields) =>{
+  await conn.query(insertSql, (err, rows, fields) => {
     if (err)
       console.log("에러:" + err);
     else
-      console.log(insertSql +"변경 완료");
+      console.log(insertSql + "변경 완료");
   });
   res.redirect('/patientmanagement');
 }));
 
 //완성
 router.delete('/:id', catchErrors(async (req, res, next) => {
-  var insertSql="DELETE FROM patient WHERE personal_number = '"+req.params.id+"'";
-  await conn.query(insertSql,(err, rows, fields) =>{
+  var insertSql = "DELETE FROM patient WHERE personal_number = '" + req.params.id + "'";
+  await conn.query(insertSql, (err, rows, fields) => {
     if (err)
-    console.log("에러:" + err);
-  else
-    console.log(insertSql +"삭제 완료");
+      console.log("에러:" + err);
+    else
+      console.log(insertSql + "삭제 완료");
   });
   res.redirect('/patientmanagement');
 }));

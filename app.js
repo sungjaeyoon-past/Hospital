@@ -7,8 +7,6 @@ var sassMiddleware = require('node-sass-middleware');
 var session = require('express-session');
 var methodOverride = require('method-override');
 var flash = require('connect-flash');
-var passport = require('passport');
-var configAuth = require('./config/auth');
 
 /*
 var mysql = require('mysql');
@@ -29,19 +27,14 @@ conn.query('SELECT * FROM patient',function(err, rows, fields) {
     console.log('Error while performing Query.', err);
 });*/
 
-/*-----------------url require-----------------*/
-var index = require('./routes/index');
-var users = require('./routes/users');
-var introduce = require('./routes/introduce');
-var calender = require('./routes/calender');
-var employee = require('./routes/employee');
-var statistics = require('./routes/statistics');
+/*-----------------Routes 파일 불러오기-----------------*/
+var index = require('./routes/statistics');
+var diagnosis = require('./routes/diagnosis');
+var receipt = require('./routes/receipt');
 var monitor = require('./routes/monitor');
 var patientmanagement = require('./routes/patientmanagement');
-var surveyschedule = require('./routes/surveyschedule');
-var workschedule = require('./routes/workschedule');
 var superadmin = require('./routes/superadmin');
-/*-----------------url require-----------------*/
+/*-----------------Routes 파일 불러오기-----------------*/
 var app = express();
 
 // view를 뭘로 쓸지 결정 - pug, html 등
@@ -72,9 +65,6 @@ app.use(session({
 app.use(flash()); // flash message를 사용할 수 있도록
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.use(function (req, res, next) {
   console.log("REQ USER", req.user);
   res.locals.currentUser = req.user;
@@ -82,20 +72,13 @@ app.use(function (req, res, next) {
   next();
 });
 
-configAuth(passport);
-
 
 /*-----------------url route-----------------*/
 app.use('/', index);
-app.use('/users', users);
-app.use('/calender', calender);
-app.use('/introduce', introduce);
-app.use('/employee', employee);
-app.use('/statistics', statistics);
 app.use('/monitor', monitor);
+app.use('/receipt', receipt);
+app.use('/diagnosis', diagnosis);
 app.use('/patientmanagement', patientmanagement);
-app.use('/surveyschedule', surveyschedule);
-app.use('/workschedule', workschedule);
 app.use('/superadmin', superadmin);
 /*-----------------url route-----------------*/
 
@@ -112,7 +95,7 @@ app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);
-  res.render('error');//에러페이지 설정
+  res.render('includes/error');//에러페이지 설정
 });
 
 module.exports = app;
