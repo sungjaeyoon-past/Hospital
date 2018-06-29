@@ -9,8 +9,9 @@ block content
                     |환자 추가
         br
         form(action="/patientmanagement/new", method="POST")
-            include ./_form
-                            
-            .row
-                .col-md-1
-                        button.btn.btn-primary(type='submit' ,style="margin-left:20%; margin-top:20%;") 환자 추가
+            .alert.alert-primary
+                include ./_form
+                                
+                .row
+                    .col-md-1
+                            button.btn.btn-primary(type='submit' ,style="margin-left:20%; margin-top:20%;") 환자 추가

@@ -20,8 +20,13 @@ conn.query(insertSql,function(err,result){
 });
 }
 
-/* GET home page. */
+//진료 대기중인 환자를 보여줌
 router.get('/', catchErrors(async (req, res, next) => {
+    res.render('receipt/receiptmain');
+}));
+
+//진료기록 작성 완료
+router.post('/:id', catchErrors(async (req, res, next) => {
     res.render('receipt/receiptmain');
 }));
 

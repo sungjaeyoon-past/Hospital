@@ -1,3 +1,57 @@
 extends ../layoutemp
 
 block content
+    include ../includes/topnavemp
+    .container
+        .row(style="margin-top:20px;")
+            .col-md-12
+                h1
+                    | 진료 기록 작성
+        hr
+        form.alert.alert-primary(action="/patientmanagement/new", method="POST")
+            .row
+                .col-md-12
+                    .input-group.mb-3
+                        .input-group-prepend
+                            span#basic-addon1.input-group-text 환자 번호                    
+                        input.form-control(type='number', placeholder='',name='patient_id')
+            .row
+                .col-md-4
+                    .input-group.mb-3
+                        .input-group-prepend
+                            span#basic-addon1.input-group-text 처방된 약                    
+                        input.form-control(type='text', placeholder='약의 종류',name='name')
+                  
+                .col-md-4
+                    .input-group.mb-3
+                        .input-group-prepend
+                            span#basic-addon1.input-group-text 양                    
+                        input.form-control(type='text', placeholder='!',name='name')
+                .col-md-4
+                    .form-check.form-check-inline(style="margin-top:3%;")
+                        input#inlineCheckbox1.form-check-input(type='checkbox', value='option1')
+                        |   
+                        label.form-check-label(for='inlineCheckbox1') 아침
+                    .form-check.form-check-inline
+                        input#inlineCheckbox1.form-check-input(type='checkbox', value='option2')
+                        |   
+                        label.form-check-label(for='inlineCheckbox1') 점심
+                    .form-check.form-check-inline
+                        input#inlineCheckbox1.form-check-input(type='checkbox', value='option3')
+                        |   
+                        label.form-check-label(for='inlineCheckbox1') 저녁                       
+                    .form-check.form-check-inline
+                        input#inlineCheckbox1.form-check-input(type='checkbox', value='option4')
+                        |   
+                        label.form-check-label(for='inlineCheckbox1') 기타                       
+            .row
+                .col-md-12
+                    .input-group
+                        .input-group-prepend
+                            span.input-group-text 진료 내용
+                        |   
+                        textarea.form-control(type='text', aria-label='With textarea', ,name='???')
+
+            .row
+                .col-md-1
+                        button.btn.btn-primary(type='submit' ,style="margin-top:20%;") 작성 완료

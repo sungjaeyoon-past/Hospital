@@ -100,9 +100,14 @@ router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
   var insertSql="DELETE FROM inpatient WHERE patient_id = '"+req.params.id+"'"; 
   getSqlResult(insertSql, function(err,data){
     if (err) {
-        console.log("ERROR : ",err);            
+        console.log("ERROR : ",err);  
+        req.flash('success', "퇴원 실패");          
     }else{
-      req.flash('success', "퇴원 성공");
+      if(!data){
+        req.flash('success', "퇴원 성공");
+      }else{
+        req.flash('success', "입원한 환자가 아님!");
+      }
     }
     res.redirect('/patientmanagement');
   });
@@ -197,6 +202,7 @@ router.delete('/:id', catchErrors(async (req, res, next) => {
     } else {          
       console.log(insertSql + "삭제 완료");
     }
+    req.flash('success', "삭제 완료");
     res.redirect('/patientmanagement');
   });
 }));
