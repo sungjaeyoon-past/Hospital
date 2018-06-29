@@ -20,7 +20,7 @@ block content
                             small 명
                     .card-footer
                         .stats
-                            .btn.btn-dark
+                            .btn.btn-light
                                 a(href='/patientmanagement/new') 환자 추가
                                     
             .col-md-6.col-sm-6
@@ -32,7 +32,7 @@ block content
                             small 명
                     .card-footer
                         .stats
-                            .btn.btn-dark
+                            .btn.btn-light
                                 a(href='/monitor')  환자 모니터링
         .row
             .col-md-12
@@ -49,5 +49,10 @@ block content
                             .col-md-3(style="margin-top:20px;")
                                 | 핸드폰번호 :
                                 #{patient.phone_number}
-                            .col-md-2(style="margin-top:20px;")
-                                a(href=`/patientmanagement/show/${patient.personal_number}`) 상세 보기
+                            .col-md-3(style="margin-top:20px;")
+                                .btn.btn-light
+                                    a(href=`/patientmanagement/show/${patient.personal_number}`) 상세보기
+                                .btn.btn-light(style="margin-left:4%;")
+                                    a(href=`/patientmanagement/inpatient/${patient.personal_number}`) 입원
+                                .btn.btn-light
+                                    a(href=`/patientmanagement/show/${patient.personal_number}`) 퇴원

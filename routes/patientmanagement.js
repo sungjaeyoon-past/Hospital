@@ -20,6 +20,29 @@ function validateForm(form, option) {
   if (!phone_number) { return "핸드폰 번호를 입력해주세요"; }
 }
 
+function getSqlResult(insertSql, callback){
+  conn.query(insertSql,function(err,result){
+    if(err)
+      callback(err,null);
+    else
+      callback(null,result);
+  });
+}
+
+function getPersonResult(personList,data){
+  for(var i in data){
+    var person = {
+      'name': data[i].name,
+      'personal_number': data[i].personal_number,
+      'phone_number': data[i].phone_number,
+      'gender': data[i].gender,
+      'patient_id': data[i].patient_id
+    }
+    personList.push(person);
+  }
+  return personList;
+}
+
 /*환자 검색
 router.get('/', catchErrors(async (req, res, next) => {
 
@@ -29,22 +52,13 @@ router.get('/', catchErrors(async (req, res, next) => {
 //완성
 router.get('/', catchErrors(async (req, res, next) => {
   var personList = [];
-  conn.query('SELECT * FROM patient', (err, rows, fields) => {
-    var person;
-    if (err)
-      console.log("에러:" + err);
-    else {
-      for (var i in rows) {
-        var person = {
-          'name': rows[i].name,
-          'personal_number': rows[i].personal_number,
-          'phone_number': rows[i].phone_number,
-          'gender': rows[i].gender,
-          'patient_id': rows[i].patient_id,
-        }
-        personList.push(person);
-      }
-      res.render('patientmanagement/list', { patients: personList });
+  var insertSql="SELECT * FROM patient"
+  getSqlResult(insertSql, function(err,data){
+    if (err) {
+        console.log("ERROR : ",err);            
+    } else {          
+        personList=getPersonResult(personList,data);  
+        res.render('patientmanagement/list', { patients: personList });
     }
   });
 }));
@@ -52,25 +66,23 @@ router.get('/', catchErrors(async (req, res, next) => {
 //완성
 router.get('/show/:id', catchErrors(async (req, res, next) => {
   var requestPatient = req.params.id;
-  conn.query('SELECT * FROM patient WHERE personal_number=' + requestPatient, (err, rows, fields) => {
-    var person;
-    if (err)
-      console.log("에러:" + err);
-    else {
-      for (var i in rows) {
-        var person = {
-          'name': rows[i].name,
-          'personal_number': rows[i].personal_number,
-          'phone_number': rows[i].phone_number,
-          'gender': rows[i].gender,
-          'patient_id': rows[i].patient_id,
-        }
-      }
-      console.log(person);
-      res.render('patientmanagement/show', { patient: person });
+  var insertSql='SELECT * FROM patient WHERE personal_number=' + requestPatient;
+  getSqlResult(insertSql, function(err,data){
+    if (err) {
+        console.log("ERROR : ",err);            
+    } else {            
+          var person = {
+            'name': data[0].name,
+            'personal_number': data[0].personal_number,
+            'phone_number': data[0].phone_number,
+            'gender': data[0].gender,
+            'patient_id': data[0].patient_id
+          }    
+        res.render('patientmanagement/show', { patient:person });
     }
   });
 }));
+
 
 //완성
 router.get('/new', catchErrors(async (req, res, next) => {
@@ -90,17 +102,16 @@ router.post('/new', catchErrors(async (req, res, next) => {
   var personal_number = req.body.personal_number;
   var gender = 0;
   if (req.body.gender = 'female') { gender = 1; }
-  var insertSql = "INSERT INTO patient (name, phone_number, personal_number, gender) VALUES ('" +
-    name + "','" + phone_number + "','" + personal_number + "','" + gender + "')";
-  console.log(insertSql);
-  await conn.query(insertSql, (err, rows, fields) => {
-    if (err)
-      console.log("에러:" + err);
-    else
-      console.log(insertSql + "삽입 완료");
+  var insertSql = "INSERT INTO patient (name, phone_number, personal_number, gender) VALUES ('" +name + "','" + phone_number + "','" + personal_number + "','" + gender + "')";
+
+  getSqlResult(insertSql, function(err,data){
+    if (err) {
+        console.log("ERROR : ",err);            
+    }else{
+      req.flash('success', "추가 성공");
+    }
+    res.redirect('/patientmanagement');
   });
-  req.flash('success', "추가 성공");
-  res.redirect('/patientmanagement');
 }));
 
 //완성
