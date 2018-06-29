@@ -1,0 +1,200 @@
+extends ../layoutemp
+
+block content
+    link(rel='stylesheet', href='/stylesheets/topnav.css')
+    .container
+        .btn-group
+            .button.btn.btn-default.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                | 과 선택 
+                span.caret
+                ul.dropdown-menu
+                    li
+                        a(href='#') 외과
+                    li
+                        a(href='#') 치과
+                    li
+                        a(href='#') 내과
+                    li
+                        a(href='#') 무슨과          
+    .container
+        .row(style="margin-bottom:2%;")
+            .col-md-12.col-sm-12
+                .card.card-stats
+                    .card-header.card-header-warning.card-header-icon
+                        p.card-category 환자 대기 목록
+                        h5.card-title
+                            #{count_patient}
+                            small 명                                
+    .container
+        .card-deck
+            .card.text-white.bg-info(style='max-width: 18rem;')
+                .card-body
+                    h5.card-title 환자 이름
+                    p.card-text
+                    | 환자 번호
+                    p.card-text
+                    | 환자 순서
+                    hr
+                    .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
+                        button.btn.btn-default(type='button') ←
+                        button.btn.btn-default(type='button') x
+                        button.btn.btn-default(type='button') → 
+            .card.text-white.bg-info(style='max-width: 18rem;')
+                .card-body
+                    h5.card-title 환자 이름
+                    p.card-text
+                    | 환자 번호
+                    p.card-text
+                    | 환자 순서
+                    hr
+                    .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
+                        button.btn.btn-default(type='button') ←
+                        button.btn.btn-default(type='button') x
+                        button.btn.btn-default(type='button') →                   
+            .card.text-white.bg-info(style='max-width: 18rem;')
+                .card-body
+                    h5.card-title 환자 이름
+                    p.card-text
+                    | 환자 번호
+                    p.card-text
+                    | 환자 순서
+                    hr
+                    .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
+                        button.btn.btn-default(type='button') ←
+                        button.btn.btn-default(type='button') x
+                        button.btn.btn-default(type='button') →                   
+            .card.text-white.bg-info(style='max-width: 18rem;')
+                .card-body
+                    h5.card-title 환자 이름
+                    p.card-text
+                    | 환자 번호
+                    p.card-text
+                    | 환자 순서
+                    hr
+                    .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
+                        button.btn.btn-default(type='button') ←
+                        button.btn.btn-default(type='button') x
+                        button.btn.btn-default(type='button') →                
+            .card.text-white.bg-info(style='max-width: 18rem;')
+                .card-body
+                    h5.card-title 환자 이름
+                    p.card-text
+                    | 환자 번호
+                    p.card-text
+                    | 환자 순서
+                    hr
+                    .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
+                        button.btn.btn-default(type='button') ←
+                        button.btn.btn-default(type='button') x
+                        button.btn.btn-default(type='button') →                
+            .card.text-white.bg-info(style='max-width: 18rem;')
+                .card-body
+                    h5.card-title 환자 이름
+                    p.card-text
+                    | 환자 번호
+                    p.card-text
+                    | 환자 순서
+                    hr
+                    .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
+                        button.btn.btn-default(type='button') ←
+                        button.btn.btn-default(type='button') x
+                        button.btn.btn-default(type='button') → 
+    .container
+        p 현재 x명의 환자가 대기중입니다.
+    row.col-xl
+    .container
+        .row(style="margin-bottom:2%;")
+            .col-md-12.col-sm-12
+                .card.card-stats
+                    .card-header.card-header-warning.card-header-icon
+                        h3.card-title 진료 접수
+                    .card-footer
+                        .row
+                            .stats(style="text-align:center")
+                                .btn.btn-light
+                                    a(href='/patientmanagement/new') 환자 추가
+                            .stats(style="text-align:center")
+                                .btn.btn-light
+                                    a(href='/patientmanagement') 환자 관리
+        .row
+            .col-sm-4
+                form.form-inline.ml-auto(action="#", method="GET")
+                    .form-group.has-white
+                        input.form-control(type='text', placeholder='이름으로 검색', name='name')             
+                    button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit') search    
+            .col-sm-4
+                form.form-inline.ml-auto(action="#", method="GET")
+                    .form-group.has-white
+                        input.form-control(type='text', placeholder='주민번호로 검색', name='personal_number')              
+                    button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit') search              
+            .col-sm-4                               
+                form.form-inline.ml-auto(action="#", method="GET")
+                    .form-group.has-white
+                        input.form-control(type='text', placeholder='환자번호로 검색', name='patient_id')                
+                    button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit') search    
+        row.col-xl
+        .row
+            .col-md-12
+                .alert.alert-success(role='alert', style="margin-bottom:10px; text-align: center;")
+                    .row
+                        .col-md-3
+                            .alert.alert-warning(role='alert') 환자이름: ㄴㅇㄹ
+                        .col-md-3(style="margin-top:20px;") 주민번호 : ㄴㅇㄹ
+                        .col-md-3(style="margin-top:20px;") 핸드폰번호: ㅇㄴㄹ
+                        .col-md-3(style="margin-top:20px;")
+                            .btn.btn-light(style="margin-left:4%;")
+                                a(href=`#`) 진료 접수 
+                            .btn.btn-light(style="margin-left:1%;")
+                                a(href=`#`) 접수 취소
+        .row
+            .col-md-12
+                .alert.alert-success(role='alert', style="margin-bottom:10px; text-align: center;")
+                    .row
+                        .col-md-3
+                            .alert.alert-warning(role='alert') 환자이름: ㄴㅇㄹ
+                        .col-md-3(style="margin-top:20px;") 주민번호 : ㄴㅇㄹ
+                        .col-md-3(style="margin-top:20px;") 핸드폰번호: ㅇㄴㄹ
+                        .col-md-3(style="margin-top:20px;")
+                            .btn.btn-light(style="margin-left:4%;")
+                                a(href=`#`) 진료 접수 
+                            .btn.btn-light(style="margin-left:1%;")
+                                a(href=`#`) 접수 취소
+        .row
+            .col-md-12
+                .alert.alert-success(role='alert', style="margin-bottom:10px; text-align: center;")
+                    .row
+                        .col-md-3
+                            .alert.alert-warning(role='alert') 환자이름: ㄴㅇㄹ
+                        .col-md-3(style="margin-top:20px;") 주민번호 : ㄴㅇㄹ
+                        .col-md-3(style="margin-top:20px;") 핸드폰번호: ㅇㄴㄹ
+                        .col-md-3(style="margin-top:20px;")
+                            .btn.btn-light(style="margin-left:4%;")
+                                a(href=`#`) 진료 접수 
+                            .btn.btn-light(style="margin-left:1%;")
+                                a(href=`#`) 접수 취소
+        .row
+            .col-md-12
+                .alert.alert-success(role='alert', style="margin-bottom:10px; text-align: center;")
+                    .row
+                        .col-md-3
+                            .alert.alert-warning(role='alert') 환자이름: ㄴㅇㄹ
+                        .col-md-3(style="margin-top:20px;") 주민번호 : ㄴㅇㄹ
+                        .col-md-3(style="margin-top:20px;") 핸드폰번호: ㅇㄴㄹ
+                        .col-md-3(style="margin-top:20px;")
+                            .btn.btn-light(style="margin-left:4%;")
+                                a(href=`#`) 진료 접수 
+                            .btn.btn-light(style="margin-left:1%;")
+                                a(href=`#`) 접수 취소
+        .row
+            .col-md-12
+                .alert.alert-success(role='alert', style="margin-bottom:10px; text-align: center;")
+                    .row
+                        .col-md-3
+                            .alert.alert-warning(role='alert') 환자이름: ㄴㅇㄹ
+                        .col-md-3(style="margin-top:20px;") 주민번호 : ㄴㅇㄹ
+                        .col-md-3(style="margin-top:20px;") 핸드폰번호: ㅇㄴㄹ
+                        .col-md-3(style="margin-top:20px;")
+                            .btn.btn-light(style="margin-left:4%;")
+                                a(href=`#`) 진료 접수 
+                            .btn.btn-light(style="margin-left:1%;")
+                                a(href=`#`) 접수 취소                                                                                                
