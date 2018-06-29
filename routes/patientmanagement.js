@@ -46,10 +46,8 @@ function getPersonResult(personList,data){
 //환자관리 눌렀을 때 보여주는곳+ 환자 검색 (완)
 router.get('/', catchErrors(async (req, res, next) => {
   if(req.query.name){
-    console.log(req.query.name);
     var insertSql="SELECT * FROM patient WHERE name ='"+req.query.name+"'";
   }else{
-    console.log("이름요청x");
     var insertSql="SELECT * FROM patient"
   }
   var personList = [];
@@ -57,8 +55,8 @@ router.get('/', catchErrors(async (req, res, next) => {
     if (err) {
       console.log("ERROR : ",err);            
     } else {          
-      personList=getPersonResult(personList,data);  
-      res.render('patientmanagement/list', { patients: personList });
+      personList=getPersonResult(personList,data);
+      res.render('patientmanagement/list', { patients: personList , count_patient:data.length});
     }
   });
 }));

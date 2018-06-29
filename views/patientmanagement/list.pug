@@ -11,29 +11,21 @@ block content
                     i.material-icons search
     .container
         .row(style="margin-bottom:2%;")
-            .col-md-6.col-sm-6
+            .col-md-12.col-sm-12
                 .card.card-stats
                     .card-header.card-header-warning.card-header-icon
-                        p.card-category 등록된 환자수
+                        p.card-category 검색된 환자수
                         h3.card-title
-                            | 49
+                            #{count_patient}
                             small 명
                     .card-footer
-                        .stats
-                            .btn.btn-light
-                                a(href='/patientmanagement/new') 환자 추가
-                                    
-            .col-md-6.col-sm-6
-                .card.card-stats
-                    .card-header.card-header-success.card-header-icon
-                        p.card-category 입원 환자수
-                        h3.card-title 
-                            | 49
-                            small 명
-                    .card-footer
-                        .stats
-                            .btn.btn-light
-                                a(href='/monitor')  환자 모니터링
+                        .row
+                            .stats(style="text-align:center")
+                                .btn.btn-light
+                                    a(href='/patientmanagement/new') 환자 추가
+                            .stats(style="text-align:center")
+                                .btn.btn-light
+                                    a(href='/monitor') 환자 모니터링
         .row
             .col-md-12
                 each patient in patients
