@@ -43,16 +43,16 @@ function getPersonResult(personList,data){
   return personList;
 }
 
-/*환자 검색
+//환자관리 눌렀을 때 보여주는곳+ 환자 검색 (완)
 router.get('/', catchErrors(async (req, res, next) => {
-
-  res.render('');
-}));*/
-
-//완성
-router.get('/', catchErrors(async (req, res, next) => {
+  if(req.query.name){
+    console.log(req.query.name);
+    var insertSql="SELECT * FROM patient WHERE name ='"+req.query.name+"'";
+  }else{
+    console.log("이름요청x");
+    var insertSql="SELECT * FROM patient"
+  }
   var personList = [];
-  var insertSql="SELECT * FROM patient"
   getSqlResult(insertSql, function(err,data){
     if (err) {
       console.log("ERROR : ",err);            
@@ -63,7 +63,7 @@ router.get('/', catchErrors(async (req, res, next) => {
   });
 }));
 
-//완성
+//입원 클릭했을시 입원수속 보여주는곳 (완)
 router.get('/inpatient/:id', catchErrors(async (req, res, next) => {
   var person = [];
   var requestPatient=req.params.id;
@@ -73,20 +73,20 @@ router.get('/inpatient/:id', catchErrors(async (req, res, next) => {
         console.log("ERROR : ",err);            
     }else{
       person=getPersonResult(person,data);
-      console.log(person[0]);
       res.render('patientmanagement/inpatient', { patient: person[0] });
     }
   });
 }));
 
-//완성
+//입원 수속 완료후 입원 추가 (완)
 router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
   var patient_id=req.params.id;
   var hospital_room = req.body.hospital_room;
+  var bed_no=req.body.bed_no;
   var disease_name = req.body.disease_name;
   var doctor_employee_id=req.body.doctor_employee_id;
   var hospital_day=req.body.hospital_day;
-  var insertSql="INSERT INTO inpatient (patient_id, hospital_room, disease_name, doctor_employee_id, hospital_day) VALUES ('"+patient_id+ "','" +hospital_room+ "','" +disease_name+ "','" +doctor_employee_id+ "','" +hospital_day+"')";
+  var insertSql="INSERT INTO inpatient (patient_id, hospital_room, bed_no, disease_name, doctor_employee_id, hospital_day) VALUES ('"+patient_id+ "','" +hospital_room+ "','"+bed_no+"','"+disease_name+ "','" +doctor_employee_id+ "','" +hospital_day+"')";
   getSqlResult(insertSql, function(err,data){
     if (err) {
         console.log("ERROR : ",err);            
@@ -97,7 +97,7 @@ router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
   });
 }));
 
-//완성
+//퇴원 수속 (완)
 router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
   var insertSql="DELETE FROM inpatient WHERE patient_id = '"+req.params.id+"'"; 
   getSqlResult(insertSql, function(err,data){
@@ -110,7 +110,7 @@ router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
   });
 }));
 
-//완성
+//상세보기를 눌렀을 경우 보여주는곳 (완)
 router.get('/show/:id', catchErrors(async (req, res, next) => {
   var person = [];
   var requestPatient = req.params.id;
@@ -120,19 +120,18 @@ router.get('/show/:id', catchErrors(async (req, res, next) => {
         console.log("ERROR : ",err);            
     }else{
       person=getPersonResult(person,data);
-      console.log(person[0]);
       res.render('patientmanagement/show', { patient: person[0] });
     }
   });
 }));
 
 
-//완성
+//환자 추가눌렀을 때 (완)
 router.get('/new', catchErrors(async (req, res, next) => {
   res.render('patientmanagement/new');
 }));
 
-//완성
+//환자 추가를 했을 때 (완)
 router.post('/new', catchErrors(async (req, res, next) => {
   const err = validateForm(req.body);
   if (err) {
@@ -156,7 +155,7 @@ router.post('/new', catchErrors(async (req, res, next) => {
   });
 }));
 
-//완성
+//환자 정보 변경 눌렀을 경우 (?)->pug에 기존값 넣기
 router.get('/edit/:id', catchErrors(async (req, res, next) => {
   var person = [];
   var requestPatient = req.params.id;
@@ -172,7 +171,7 @@ router.get('/edit/:id', catchErrors(async (req, res, next) => {
   });
 }));
 
-//
+//환자 정보 변경 했을 경우 (완)
 router.put('/:id', catchErrors(async (req, res, next) => {
   var original_personal_number=req.body.personal_number;
   var name = req.body.name;
@@ -191,7 +190,7 @@ router.put('/:id', catchErrors(async (req, res, next) => {
   });
 }));
 
-//완성
+//환자 정보를 삭제 (완)
 router.delete('/:id', catchErrors(async (req, res, next) => {
   var insertSql = "DELETE FROM patient WHERE personal_number = '" + req.params.id + "'";
   getSqlResult(insertSql, function(err,data){

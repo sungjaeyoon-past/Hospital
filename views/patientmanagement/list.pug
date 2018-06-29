@@ -3,9 +3,9 @@ extends ../layoutemp
 block content
     nav.navbar.navbar-expand-lg.bg-rose(style="margin-top:1%;")
         .container                          
-            form.form-inline.ml-auto
+            form.form-inline.ml-auto(action="/patientmanagement", method="GET")
                 .form-group.has-white
-                    input.form-control(type='text', placeholder='Search')
+                    input.form-control(type='text', placeholder='이름으로 검색', name='name')
                     |                 
                 button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
                     i.material-icons search
@@ -54,5 +54,5 @@ block content
                                     a(href=`/patientmanagement/show/${patient.personal_number}`) 상세보기
                                 .btn.btn-light(style="margin-left:4%;")
                                     a(href=`/patientmanagement/inpatient/${patient.personal_number}`) 입원
-                                .btn.btn-light
+                                .btn.btn-light(style="margin-left:1%;")
                                     a(href=`/patientmanagement/inpatient/${patient.patient_id}?_method=DELETE`) 퇴원
