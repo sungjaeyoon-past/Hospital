@@ -79,6 +79,7 @@ router.get('/inpatient/:id', catchErrors(async (req, res, next) => {
   });
 }));
 
+//완성
 router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
   var patient_id=req.params.id;
   var hospital_room = req.body.hospital_room;
@@ -91,6 +92,19 @@ router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
         console.log("ERROR : ",err);            
     }else{
       req.flash('success', "추가 성공");
+    }
+    res.redirect('/patientmanagement');
+  });
+}));
+
+//완성
+router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
+  var insertSql="DELETE FROM inpatient WHERE patient_id = '"+req.params.id+"'"; 
+  getSqlResult(insertSql, function(err,data){
+    if (err) {
+        console.log("ERROR : ",err);            
+    }else{
+      req.flash('success', "퇴원 성공");
     }
     res.redirect('/patientmanagement');
   });
