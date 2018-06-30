@@ -12,6 +12,7 @@ block content
                 h3
                     | 주민번호 :
                     #{patient.personal_number}
+        include ./_bed
 
         br
         form(action=`/patientmanagement/inpatient/${patient.patient_id}`, method="POST")
@@ -20,12 +21,12 @@ block content
                     .col-md-6
                         .input-group.mb-3
                             .input-group-prepend
-                                span#basic-addon1.input-group-text 병실번호
+                                span#basic-addon1.input-group-text 병실 번호
                             input.form-control(type='number', placeholder='', name='hospital_room', aria-describedby='basic-addon1')
                     .col-md-6
                         .input-group.mb-3
                             .input-group-prepend
-                                span#basic-addon1.input-group-text 침대번호
+                                span#basic-addon1.input-group-text 침대 번호
                             input.form-control(type='number', placeholder='', name='bed_no', aria-describedby='basic-addon1')               
                 .row
                     .col-md-6
@@ -36,7 +37,7 @@ block content
                     .col-md-6
                         .input-group.mb-3
                             .input-group-prepend
-                                span#basic-addon1.input-group-text 입원날짜
+                                span#basic-addon1.input-group-text 입원 날짜
                             input.form-control(type='date', placeholder='', name='hospital_day', aria-describedby='basic-addon1')
                 .row
                     .col-md-12

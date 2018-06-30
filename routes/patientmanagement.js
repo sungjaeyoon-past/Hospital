@@ -84,14 +84,27 @@ router.get('/bed', catchErrors(async (req, res, next) => {
 //입원 클릭했을시 입원수속 보여주는곳 (완)
 router.get('/inpatient/:id', catchErrors(async (req, res, next) => {
   var person = [];
+  var bedList=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
   var requestPatient=req.params.id;
-  var insertSql='SELECT * FROM patient WHERE personal_number=' + requestPatient;
+  var insertSql='SELECT * FROM patient WHERE patient_id=' + requestPatient;
+  var insertSql2="SELECT bed_id, inpatient_id FROM bed";
   getSqlResult(insertSql, function(err,data){
     if (err) {
         console.log("ERROR : ",err);            
     }else{
       person=getPersonResult(person,data);
-      res.render('patientmanagement/inpatient', { patient: person[0] });
+      getSqlResult(insertSql2, function(err,data){
+        if (err) {
+          console.log("ERROR : ",err);            
+        } else {                     
+          for(var i in data){
+            if(data[i].inpatient_id > 0){
+              bedList[data[i].bed_id-1]=1;
+            }
+          } 
+          res.render('patientmanagement/inpatient', { patient: person[0] , bedList:bedList});
+        }
+      });
     }
   });
 }));
@@ -155,7 +168,7 @@ router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
 router.get('/show/:id', catchErrors(async (req, res, next) => {
   var person = [];
   var requestPatient = req.params.id;
-  var insertSql='SELECT * FROM patient WHERE personal_number=' + requestPatient;
+  var insertSql='SELECT * FROM patient WHERE patient_id=' + requestPatient;
   getSqlResult(insertSql, function(err,data){
     if (err) {
         console.log("ERROR : ",err);            
