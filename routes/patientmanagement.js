@@ -127,7 +127,7 @@ router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
 
 //퇴원 수속 (완)
 router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
-  var insertSql1="DELETE FROM bed WHERE inpatient_id = '"+req.params.id+"'";
+  var insertSql1="UPDATE bed SET inpatient_id = null ,weight_sensor=0, is_wet=0, is_empty=0 WHERE inpatient_id = "+req.params.id;
   var insertSql2="DELETE FROM inpatient WHERE patient_id = '"+req.params.id+"'"; 
   getSqlResult(insertSql1, function(err,data){
     if (err) {
@@ -215,7 +215,7 @@ router.get('/edit/:id', catchErrors(async (req, res, next) => {
 
 //환자 정보 변경 했을 경우 (완)
 router.put('/:id', catchErrors(async (req, res, next) => {
-  var original_personal_number=req.body.personal_number;
+  var patient_id=req.body.personal_id;
   var name = req.body.name;
   var phone_number = req.body.phone_number;
   var personal_number = req.body.personal_number;
