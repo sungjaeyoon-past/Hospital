@@ -22,25 +22,63 @@ body
   block top-nav
     include ../includes/topnavemp
   .row
-    each room in rooms
       .col-lg-3.col-md-6.col-sm-6
         .card.card-stats
           .card-header.card-header-warning.card-header-icon
             .card-icon
               i.material-icons local_hospital
-            p.card-category #{room.room_no}
+            p.card-category 1번 방
             h3.card-title
-              |#{room.temperature+"'C"}
+              |#{infos[0].room1_temperature+"'c"}
               br   
-              |#{room.humidity+"%"} 
+              |#{infos[0].room1_humidity+"%"} 
           .card-footer
             .stats
-              a(href='/statistics/temperatureGraph') 앙 기모띠!
+              a(href='/temperatureGraph') 앙 기모띠
+      .col-lg-3.col-md-6.col-sm-6
+        .card.card-stats
+          .card-header.card-header-warning.card-header-icon
+            .card-icon
+              i.material-icons local_hospital
+            p.card-category 2번 방
+            h3.card-title
+              |#{infos[0].room2_temperature+"'c"}
+              br   
+              |#{infos[0].room2_humidity+"%"} 
+          .card-footer
+            .stats
+              a(href='/temperatureGraph') 앙 기모띠!  
+      .col-lg-3.col-md-6.col-sm-6
+        .card.card-stats
+          .card-header.card-header-warning.card-header-icon
+            .card-icon
+              i.material-icons local_hospital
+            p.card-category 3번 방
+            h3.card-title
+              |#{infos[0].room3_temperature+"'c"}
+              br   
+              |#{infos[0].room3_humidity+"%"} 
+          .card-footer
+            .stats
+              a(href='/temperatureGraph') 앙 기모띠! 
+      .col-lg-3.col-md-6.col-sm-6
+        .card.card-stats
+          .card-header.card-header-warning.card-header-icon
+            .card-icon
+              i.material-icons local_hospital
+            p.card-category 4번 방
+            h3.card-title
+              |#{infos[0].room4_temperature+"'c"}
+              br   
+              |#{infos[0].room4_humidity+"%"} 
+          .card-footer
+            .stats
+              a(href='/temperatureGraph') 앙 기모띠!         
   .row
     .card.text-center
       .card-header.card-header-primary
         ul.nav.nav-tabs
-          li.nav-item.active(role='presentation')
+          li.nav-item(role='presentation')
             a.nav-link(href="#diaper",data-toggle="tab") 기저귀
           li.nav-item(role='presentation')
             a.nav-link(href="#linger",data-toggle="tab") 링거
@@ -50,22 +88,20 @@ body
         .tab-content
           #diaper.tab-pane.fade
             table.table
-              tr
-                td 1
-              tr
-                td 2
+              -for(i=1;i<infos.length;i++)
+                tr
+                  td #{infos[i].name} #{infos[i].hospital_room+'번 방'} #{infos[i].is_wet}
+              
           #linger.tab-pane.fade
             table.table
-              tr
-                td 3
-              tr
-                td 4
+              -for(i=1;i<infos.length;i++)
+                tr
+                  td #{infos[i].name} #{infos[i].hospital_room+'번 방'} #{infos[i].is_empty}
           #weight_sensor.tab-pane.fade
              table.table
-              tr
-                td 5
-              tr
-                td 6
+              -for(i=1;i<infos.length;i++)
+                tr
+                  td #{infos[i].name} #{infos[i].hospital_room+'번 방'} #{infos[i].weight_sensor}
 
                 
 

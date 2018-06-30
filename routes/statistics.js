@@ -13,25 +13,51 @@ conn.connect();
 const catchErrors = require('../lib/async-error');
 
 router.get('/', catchErrors(async(req, res, next) => {
-    var hospital_rooms = [];
+    var rooms_info = [];
     conn.query('SELECT * FROM hospital_room',function(err,rows,fields){
-        var hospital_room;
+        var room_info;
         if(!err){
-            for(var i = 0; i < rows.length; i++){
-                var hospital_room = {
-                    'room_no' : rows[i].room_no + '번 방' ,
-                    'temperature' : rows[i].temperature,
-                    'humidity' : rows[i].humidity
+            var room_info = {
+                'room1_temperature' : rows[0].temperature,
+                'room1_humidity' : rows[0].humidity,
+            
+                'room2_temperature' : rows[1].temperature,
+                'room2_humidity' : rows[1].humidity,
                 
-                }
-                hospital_rooms.push(hospital_room);
+                'room3_temperature' : rows[2].temperature,
+                'room3_humidity' : rows[2].humidity,
+                
+                'room4_temperature' : rows[3].temperature,
+                'room4_humidity' : rows[3].humidity
             }
-            console.log(hospital_rooms);
+            rooms_info.push(room_info);
         }
         else{
             console.log(err);
         }
-        res.render('statistics/statistics', {rooms:hospital_rooms});
+    });
+    conn.query('SELECT * FROM statistics',function(err,rows,fields){
+        var info;
+        if(!err){
+            for(var i = 0; i < rows.length; i++){
+                var info = {
+                    'name' : rows[i].name ,
+                    'hospital_room' : rows[i].hospital_room,
+                    'bed_no' : rows[i].bed_no,
+                    'temperature':rows[i].temperature,
+                    'humidity':rows[i].humidity,
+                    'weight_sensor':rows[i].weight_sensor,
+                    'is_wet': rows[i].is_wet,
+                    'is_empty':rows[i].is_empty
+                }
+                rooms_info.push(info);
+            }
+            console.log(rooms_info);
+        }
+        else{
+            console.log(err);
+        }
+        res.render('statistics/statistics', {infos:rooms_info});
     });
 }));
 
