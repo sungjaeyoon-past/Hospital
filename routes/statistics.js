@@ -66,18 +66,20 @@ router.get('/temperatureGraph', catchErrors(async(req, res, next) => {
     conn.query('SELECT * FROM temperature_history',function(err,rows,fields){
         var history;
         if(!err){
-            for(var i=0; i<rows[i].length ; i++)
+            for(var i=0; i<rows.length ; i++){
                 var history ={
                     'temperature' : rows[i].temperature,
-                    'time': rows[i].teme,
-                    'hospital_room':hospital_room
+                    'time': rows[i].time,
+                    'hospital_room':rows[i].hospital_room
                 } 
                 historis.push(history);
+            }
+            console.log(historis);
         }
         else{
             console.log(err);
         }
-        res.render('statistics/temperatureGraph',{historis:historis});
+        res.render('statistics/temperatureGraph',{histor:historis});
     });
 }));
 

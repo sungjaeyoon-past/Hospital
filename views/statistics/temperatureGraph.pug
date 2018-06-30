@@ -56,8 +56,9 @@ body
 
     script.
         $(document).ready(function(){
+            /*
             var historis=[];
-            
+            var express = require('express');
             var mysql = require('mysql');
             var conn = mysql.createConnection({
                 host: '58.123.136.107',
@@ -81,11 +82,12 @@ body
                     console.log(err);
                 }
             });
+            */
             if ($('#dailySalesChart').length != 0) {
                 dataDailySalesChart = {
-                    labels: [historis[0].time, historis[1].time, historis[2].time, historis[3].time],
+                    labels: ['#{histor[0].time}','#{histor[1].time}','#{histor[2].time}','#{histor[3].time}'],
                     series: [
-                        [historis[0].temperature, historis[1].temperature, historis[2].temperature, historis[3].temperature ]
+                        ['#{histor[0].temperature}','#{histor[1].temperature}','#{histor[2].temperature}','#{histor[3].temperature}' ]
                     ]
                 };
 
@@ -93,8 +95,8 @@ body
                     lineSmooth: Chartist.Interpolation.cardinal({
                         tension: 0
                     }),
-                    low: 0,
-                    high: 50,
+                    low: 23,
+                    high: 28,
                     chartPadding: {
                         top: 0,
                         right: 0,
