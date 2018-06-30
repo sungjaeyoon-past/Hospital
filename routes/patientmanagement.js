@@ -85,11 +85,21 @@ router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
   var doctor_employee_id=req.body.doctor_employee_id;
   var hospital_day=req.body.hospital_day;
   var insertSql="INSERT INTO inpatient (patient_id, hospital_room, bed_no, disease_name, doctor_employee_id, hospital_day) VALUES ('"+patient_id+ "','" +hospital_room+ "','"+bed_no+"','"+disease_name+ "','" +doctor_employee_id+ "','" +hospital_day+"')";
+  var insertSql2 = "UPDATE bed SET inpatient_id="+patient_id+", weight_sensor="+ 0 +", is_wet="+0+", is_empty="+0+" WHERE (bed_id='"+bed_no+"') AND ( hospital_room='"+hospital_room+"')";
+  console.log(insertSql);
   getSqlResult(insertSql, function(err,data){
     if (err) {
-        console.log("ERROR : ",err);            
+        console.log("ERROR : ",err);
+        req.flash('success', "추가 실패");            
     }else{
-      req.flash('success', "추가 성공");
+      getSqlResult(insertSql2,function(err,date){
+        if(err){
+          console.log("ERROR : ",err);
+          req.flash('success', "사용 중인 침대임!");    
+        }else{
+          req.flash('success', "추가 성공");
+        }
+      });
     }
     res.redirect('/patientmanagement');
   });
@@ -97,17 +107,25 @@ router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
 
 //퇴원 수속 (완)
 router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
-  var insertSql="DELETE FROM inpatient WHERE patient_id = '"+req.params.id+"'"; 
-  getSqlResult(insertSql, function(err,data){
+  var insertSql1="DELETE FROM bed WHERE inpatient_id = '"+req.params.id+"'";
+  var insertSql2="DELETE FROM inpatient WHERE patient_id = '"+req.params.id+"'"; 
+  getSqlResult(insertSql1, function(err,data){
     if (err) {
         console.log("ERROR : ",err);  
         req.flash('success', "퇴원 실패");          
     }else{
-      if(!data){
-        req.flash('success', "퇴원 성공");
-      }else{
-        req.flash('success', "입원한 환자가 아님!");
-      }
+      getSqlResult(insertSql2,function(err,data){
+        if(err){
+          console.log("ERROR : ",err);
+          req.flash('success', "퇴원 실패");
+        }else{
+          if(data){
+            req.flash('success', "퇴원 성공");
+          }else{
+            req.flash('success', "입원한 환자가 아님!");
+          }
+        }
+      });
     }
     res.redirect('/patientmanagement');
   });
@@ -150,7 +168,8 @@ router.post('/new', catchErrors(async (req, res, next) => {
   var insertSql = "INSERT INTO patient (name, phone_number, personal_number, gender) VALUES ('" +name + "','" + phone_number + "','" + personal_number + "','" + gender + "')";
   getSqlResult(insertSql, function(err,data){
     if (err) {
-        console.log("ERROR : ",err);            
+        console.log("ERROR : ",err);
+        req.flash('success', "추가 실패");            
     }else{
       req.flash('success', "추가 성공");
     }
@@ -165,7 +184,7 @@ router.get('/edit/:id', catchErrors(async (req, res, next) => {
   var insertSql='SELECT * FROM patient WHERE personal_number=' + requestPatient;
   getSqlResult(insertSql, function(err,data){
     if (err) {
-        console.log("ERROR : ",err);            
+        console.log("ERROR : ",err);             
     }else{
       req.flash('success', "추가 성공");
       person=getPersonResult(person,data); 
@@ -185,7 +204,8 @@ router.put('/:id', catchErrors(async (req, res, next) => {
   var insertSql = "UPDATE patient SET name='" +name + "', personal_number='" +personal_number + "', phone_number='" +phone_number + "', gender=" +gender + "WHERE personal_number=" + original_personal_number;
   getSqlResult(insertSql, function(err,data){
     if (err) {
-        console.log("ERROR : ",err);            
+        console.log("ERROR : ",err);
+        req.flash('success', "변경 실패");            
     }else{
       req.flash('success', "변경 성공"); 
       res.redirect('/patientmanagement');
@@ -198,9 +218,8 @@ router.delete('/:id', catchErrors(async (req, res, next) => {
   var insertSql = "DELETE FROM patient WHERE personal_number = '" + req.params.id + "'";
   getSqlResult(insertSql, function(err,data){
     if (err) {
-      console.log("ERROR : ",err);            
-    } else {          
-      console.log(insertSql + "삭제 완료");
+      console.log("ERROR : ",err);
+      req.flash('success', "삭제 실패");            
     }
     req.flash('success', "삭제 완료");
     res.redirect('/patientmanagement');
