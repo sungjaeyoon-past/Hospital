@@ -4,7 +4,7 @@ const catchErrors = require('../lib/async-error');
 
 /* GET home page. */
 router.get('/', catchErrors(async (req, res, next) => {
-    res.render('diagnosis/diagnosismain');
+    res.render('diagnosis/receiptmain');
 }));
 
 module.exports = router;
