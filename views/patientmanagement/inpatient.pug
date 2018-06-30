@@ -12,6 +12,7 @@ block content
                 h3
                     | 주민번호 :
                     #{patient.personal_number}
+
         br
         form(action=`/patientmanagement/inpatient/${patient.patient_id}`, method="POST")
             .alert.alert-primary

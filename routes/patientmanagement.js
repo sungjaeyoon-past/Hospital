@@ -61,6 +61,26 @@ router.get('/', catchErrors(async (req, res, next) => {
   });
 }));
 
+//입원환자 침대 현황 (완)
+router.get('/bed', catchErrors(async (req, res, next) => {
+  var bedList=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  var insertSql="SELECT bed_id, inpatient_id FROM bed";
+  getSqlResult(insertSql, function(err,data){
+    if (err) {
+      console.log("ERROR : ",err);            
+    } else { 
+      console.log(data);                    
+      for(var i in data){
+        if(data[i].inpatient_id > 0){
+          bedList[data[i].bed_id-1]=1;
+        }
+      } 
+    }
+    res.render('patientmanagement/bed',{bedList:bedList});
+  });
+}));
+
+
 //입원 클릭했을시 입원수속 보여주는곳 (완)
 router.get('/inpatient/:id', catchErrors(async (req, res, next) => {
   var person = [];
