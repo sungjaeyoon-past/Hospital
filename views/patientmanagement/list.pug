@@ -2,7 +2,15 @@ extends ../layoutemp
 
 block content
     nav.navbar.navbar-expand-lg.bg-rose(style="margin-top:1%;")
-        .container                          
+        .container
+            .alert.alert-primary
+                nav.nav
+                    a.nav-link.active(href='/patientmanagement/new') 환자 추가
+                    |   
+                    a.nav-link(href='/monitor') 환자 모니터링
+                    |   
+                    a.nav-link(href='/patientmanagement/bed') 입원 환자 현황
+                    |                 
             form.form-inline.ml-auto(action="/patientmanagement", method="GET")
                 .form-group.has-white
                     input.form-control(type='text', placeholder='이름으로 검색', name='name')
@@ -18,17 +26,7 @@ block content
                         h3.card-title
                             #{count_patient}
                             small 명
-                    .card-footer
-                        .row
-                            .stats(style="text-align:center")
-                                .btn.btn-light
-                                    a(href='/patientmanagement/new') 환자 추가
-                            .stats(style="text-align:center")
-                                .btn.btn-light
-                                    a(href='/monitor') 환자 모니터링
-                            .stats(style="text-align:center")
-                                .btn.btn-light
-                                    a(href='/patientmanagement/bed') 입원 환자 현황
+                    
         .alert.alert-primary
             .row
                 .col-md-12

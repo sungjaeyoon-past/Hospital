@@ -1,5 +1,16 @@
 extends ../layoutemp
 
 block content
-    .container(style="margin-top:4%;")
-        include ./_bed
+    .container(style="margin-top:2%;")
+        .alert.alert-primary
+            nav.nav
+                a.nav-link.active(href='/patientmanagement/new') 환자 추가
+                |   
+                a.nav-link(href='/monitor') 환자 모니터링
+                |   
+                a.nav-link(href='/') 환자 통계
+                |   
+    .container(style="margin-top:2%;")
+
+        .alert.alert-secondary
+            include ./_bed
