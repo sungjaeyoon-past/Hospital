@@ -35,10 +35,11 @@ block content
                     p.card-text
                     | 환자 순서
                     hr
-                    .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
-                        button.btn.btn-default(type='button') ←
-                        button.btn.btn-default(type='button') x
-                        button.btn.btn-default(type='button') → 
+                    .form(action="/diagnosis", method="POST" name="number" value=1)
+                        .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
+                            button.btn.btn-default(type='submit' name="action" value="prev") ←
+                            button.btn.btn-default(type='submit' name="action" value="del") x
+                            button.btn.btn-default(type='submit' name="action" value="next") → 
             .card.text-white.bg-info(style='max-width: 18rem;')
                 .card-body
                     h5.card-title 환자 이름
@@ -118,83 +119,33 @@ block content
                                     a(href='/patientmanagement') 환자 관리
         .row
             .col-sm-4
-                form.form-inline.ml-auto(action="#", method="GET")
+                form.form-inline.ml-auto(action="/diagnosis", method="GET")
                     .form-group.has-white
                         input.form-control(type='text', placeholder='이름으로 검색', name='name')             
                     button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit') search    
             .col-sm-4
-                form.form-inline.ml-auto(action="#", method="GET")
+                form.form-inline.ml-auto(action="/diagnosis", method="GET")
                     .form-group.has-white
                         input.form-control(type='text', placeholder='주민번호로 검색', name='personal_number')              
                     button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit') search              
             .col-sm-4                               
-                form.form-inline.ml-auto(action="#", method="GET")
+                form.form-inline.ml-auto(action="/diagnosis", method="GET")
                     .form-group.has-white
                         input.form-control(type='text', placeholder='환자번호로 검색', name='patient_id')                
                     button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit') search    
         row.col-xl
         .row
-            .col-md-12
-                .alert.alert-success(role='alert', style="margin-bottom:10px; text-align: center;")
-                    .row
-                        .col-md-3
-                            .alert.alert-warning(role='alert') 환자이름: ㄴㅇㄹ
-                        .col-md-3(style="margin-top:20px;") 주민번호 : ㄴㅇㄹ
-                        .col-md-3(style="margin-top:20px;") 핸드폰번호: ㅇㄴㄹ
-                        .col-md-3(style="margin-top:20px;")
-                            .btn.btn-light(style="margin-left:4%;")
-                                a(href=`#`) 진료 접수 
-                            .btn.btn-light(style="margin-left:1%;")
-                                a(href=`#`) 접수 취소
-        .row
-            .col-md-12
-                .alert.alert-success(role='alert', style="margin-bottom:10px; text-align: center;")
-                    .row
-                        .col-md-3
-                            .alert.alert-warning(role='alert') 환자이름: ㄴㅇㄹ
-                        .col-md-3(style="margin-top:20px;") 주민번호 : ㄴㅇㄹ
-                        .col-md-3(style="margin-top:20px;") 핸드폰번호: ㅇㄴㄹ
-                        .col-md-3(style="margin-top:20px;")
-                            .btn.btn-light(style="margin-left:4%;")
-                                a(href=`#`) 진료 접수 
-                            .btn.btn-light(style="margin-left:1%;")
-                                a(href=`#`) 접수 취소
-        .row
-            .col-md-12
-                .alert.alert-success(role='alert', style="margin-bottom:10px; text-align: center;")
-                    .row
-                        .col-md-3
-                            .alert.alert-warning(role='alert') 환자이름: ㄴㅇㄹ
-                        .col-md-3(style="margin-top:20px;") 주민번호 : ㄴㅇㄹ
-                        .col-md-3(style="margin-top:20px;") 핸드폰번호: ㅇㄴㄹ
-                        .col-md-3(style="margin-top:20px;")
-                            .btn.btn-light(style="margin-left:4%;")
-                                a(href=`#`) 진료 접수 
-                            .btn.btn-light(style="margin-left:1%;")
-                                a(href=`#`) 접수 취소
-        .row
-            .col-md-12
-                .alert.alert-success(role='alert', style="margin-bottom:10px; text-align: center;")
-                    .row
-                        .col-md-3
-                            .alert.alert-warning(role='alert') 환자이름: ㄴㅇㄹ
-                        .col-md-3(style="margin-top:20px;") 주민번호 : ㄴㅇㄹ
-                        .col-md-3(style="margin-top:20px;") 핸드폰번호: ㅇㄴㄹ
-                        .col-md-3(style="margin-top:20px;")
-                            .btn.btn-light(style="margin-left:4%;")
-                                a(href=`#`) 진료 접수 
-                            .btn.btn-light(style="margin-left:1%;")
-                                a(href=`#`) 접수 취소
-        .row
-            .col-md-12
-                .alert.alert-success(role='alert', style="margin-bottom:10px; text-align: center;")
-                    .row
-                        .col-md-3
-                            .alert.alert-warning(role='alert') 환자이름: ㄴㅇㄹ
-                        .col-md-3(style="margin-top:20px;") 주민번호 : ㄴㅇㄹ
-                        .col-md-3(style="margin-top:20px;") 핸드폰번호: ㅇㄴㄹ
-                        .col-md-3(style="margin-top:20px;")
-                            .btn.btn-light(style="margin-left:4%;")
-                                a(href=`#`) 진료 접수 
-                            .btn.btn-light(style="margin-left:1%;")
-                                a(href=`#`) 접수 취소                                                                                                
+            each patient in patientList
+                .col-md-12
+                    .alert.alert-success(role='alert', style="margin-bottom:10px; text-align: center;")
+                        .row
+                            .col-md-3
+                                .alert.alert-warning(role='alert') 환자이름: #{patient.name}
+                            .col-md-2(style="margin-top:20px;") 환자번호 : #{patient.patient_id}
+                            .col-md-2(style="margin-top:20px;") 주민번호: #{patient.personal_number}
+                            .col-md-2(style="margin-top:20px;") 핸드폰번호: #{patient.phone_number}
+                            .col-md-3(style="margin-top:20px;")
+                                .btn.btn-light(style="margin-left:4%;")
+                                    a(href=`/diagnosis/queue/${patient.patient_id}`) 진료 접수 
+                                .btn.btn-light(style="margin-left:1%;")
+                                    a(href=`/diagnosis/dequeue/${patient.patient_id}`) 접수 취소
