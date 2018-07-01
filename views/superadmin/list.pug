@@ -17,6 +17,9 @@ body
     .container
       ul.navbar-nav
         li.nav-item
+          a.nav-link(href='/superadmin') 메인 화면
+          |
+        li.nav-item
           a.nav-link(href='/superadmin/list') 유저 목록
           |
         li.nav-item
@@ -37,7 +40,8 @@ body
               i.material-icons store
             p.card-category 수정 가능한 유저
             h3.card-title
-              | 1
+              #{count_emp}
+              small 명
           .card-footer
             .stats
               i.material-icons warning

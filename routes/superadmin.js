@@ -35,16 +35,36 @@ router.get('/list', catchErrors(async (req, res, next) => {
         }
         empList.push(emp);
       }
-      res.render('superadmin/list', {employee: empList});
+      res.render('superadmin/list', {employee: empList, count_emp:rows.length});
     }
   });
 }));
 
 //사용자 정보 수정
 //사용자 admin 승급은 정보 수정에서 함께 한다
+//아직 구현x
 router.get('/edit', catchErrors(async (req, res, next) => {
-  res.render('superadmin/edit');
-}));
+  var empList = [];
+  conn.query('SELECT * FROM employee', function (err, rows, fields) {
+    var emp;
+    if (err)
+      console.log('Error', err);
+    else {
+      for (var i in rows) {
+        var emp = {
+          'employee_id': rows[i].employee_id,
+          'name': rows[i].name,
+          'personal_number': rows[i].personal_number,
+          'phone_number': rows[i].phone_number,
+          'gender': rows[i].gender,
+          'position': rows[i].position,
+          'employee_password': rows[i].employee_password
+        }
+        empList.push(emp);
+      }
+      res.render('superadmin/edit', {employee: empList, count_emp:rows.length});
+    }
+  });}));
 
 
 module.exports = router;

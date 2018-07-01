@@ -16,6 +16,9 @@ body
     .container
       ul.navbar-nav
         li.nav-item
+          a.nav-link(href='/superadmin') 메인 화면
+          |
+        li.nav-item
           a.nav-link(href='/superadmin/list') 유저 목록
           |
         li.nav-item
@@ -33,9 +36,7 @@ body
           .card-header.card-header-success.card-header-icon
             .card-icon
               i.material-icons content_copy
-            p.card-category 등록된 유저
-            h3.card-title
-              | 1
+            p.card-category 등록된 유저 페이지
           .card-footer
             .stats
               i.material-icons local_offer
@@ -46,9 +47,7 @@ body
           .card-header.card-header-danger.card-header-icon
             .card-icon
               i.material-icons store
-            p.card-category 수정 가능한 유저
-            h3.card-title
-              | 1
+            p.card-category 수정 가능한 유저 페이지
           .card-footer
             .stats
               i.material-icons warning
