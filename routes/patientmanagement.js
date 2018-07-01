@@ -210,11 +210,11 @@ router.post('/new', catchErrors(async (req, res, next) => {
   });
 }));
 
-//환자 정보 변경 눌렀을 경우 (?)->pug에 기존값 넣기
+//환자 정보 변경 눌렀을 경우 (X)->pug에 기존값 넣기
 router.get('/edit/:id', catchErrors(async (req, res, next) => {
   var person = [];
   var requestPatient = req.params.id;
-  var insertSql='SELECT * FROM patient WHERE personal_number=' + requestPatient;
+  var insertSql='SELECT * FROM patient WHERE patient_id=' + requestPatient;
   getSqlResult(insertSql, function(err,data){
     if (err) {
         console.log("ERROR : ",err);             
@@ -226,15 +226,16 @@ router.get('/edit/:id', catchErrors(async (req, res, next) => {
   });
 }));
 
-//환자 정보 변경 했을 경우 (완)
+//환자 정보 변경 했을 경우 (X)
 router.put('/:id', catchErrors(async (req, res, next) => {
-  var patient_id=req.body.personal_id;
+  var patient_id=req.params.id;
   var name = req.body.name;
   var phone_number = req.body.phone_number;
   var personal_number = req.body.personal_number;
   var gender = 0;
   if (req.body.gender = 'female') { gender = 1; }
-  var insertSql = "UPDATE patient SET name='" +name + "', personal_number='" +personal_number + "', phone_number='" +phone_number + "', gender=" +gender + "WHERE personal_number=" + original_personal_number;
+  var insertSql = "UPDATE patient SET name='" +name + "', personal_number='" +personal_number + "', phone_number='" +phone_number + "', gender=" +gender + " WHERE patient_id=" + patient_id;
+  console.log(insertSql);
   getSqlResult(insertSql, function(err,data){
     if (err) {
         console.log("ERROR : ",err);
@@ -248,7 +249,8 @@ router.put('/:id', catchErrors(async (req, res, next) => {
 
 //환자 정보를 삭제 (완)
 router.delete('/:id', catchErrors(async (req, res, next) => {
-  var insertSql = "DELETE FROM patient WHERE personal_number = '" + req.params.id + "'";
+  console.log(req.params.id);
+  var insertSql = "DELETE FROM patient WHERE patient_id = " + req.params.id ;
   getSqlResult(insertSql, function(err,data){
     if (err) {
       console.log("ERROR : ",err);

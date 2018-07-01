@@ -40,10 +40,10 @@ block content
                     | 허미;
         .row
             .col-md-1
-                a.button.btn.btn-primary(href=`/patientmanagement/edit/${patient.personal_number}`)
+                a.button.btn.btn-primary(href=`/patientmanagement/edit/${patient.patient_id}`)
                     | 정보 수정
             .col-md-1
-                a.btn.btn-danger(href=`/patientmanagement/${patient.personal_number}?_method=DELETE`)
+                a.btn.btn-danger(href=`/patientmanagement/${patient.patient_id}?_method=DELETE`)
                     | 정보 삭제
 
 

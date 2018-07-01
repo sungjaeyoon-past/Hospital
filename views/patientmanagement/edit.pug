@@ -8,7 +8,7 @@ block content
                 h1
                     |환자 추가
         br
-        form(action=`/patientmanagement/${patient.personal_number}?_method=PUT`)
+        form(action=`/patientmanagement/${patient.patient_id}?_method=PUT`)
             input(type="hidden", name="_method", value="PUT")
             include ./_form
             .row
