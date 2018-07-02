@@ -29,12 +29,21 @@ function moveByid(id, action) {
     }
 }
 
-function findByid(id) {
+function deleteByid(id) {
     for (var i = 0; i < queuelist.length; i++) {
         if (queuelist[i].patient_id == id) {
             queuelist.splice(i, 1);
         }
     }
+}
+
+function findByid(id) {
+    for (var i = 0; i < queuelist.length; i++) {
+        if (queuelist[i].patient_id == id) {
+            return false;
+        }
+    }
+    return true;
 }
 
 router.get('/', catchErrors(async (req, res, next) => {
@@ -104,23 +113,24 @@ router.get('/queue/:patient_id', catchErrors(async (req, res, next) => {
     //여기서 patient_id얻구 리다이렉트처리
     console.log("queue에다 넣음");
     var requestPatient = req.params.patient_id;
-    console.log(requestPatient);
-    var insertSql = 'SELECT * FROM patient WHERE patient_id=' + requestPatient;
-    await conn.query(insertSql, function (err, rows, fields) {
-        if (err)
-            console.log('Error while performing Query.', err);
-        else {
-            for (var i = 0; i < rows.length; i++) {
-                var person = {
-                    'name': rows[i].name,
-                    'patient_id': rows[i].patient_id,
-                    'personal_number': rows[i].personal_number,
-                    'phone_number': rows[i].phone_number
+    if (findByid(requestPatient)) {
+        var insertSql = 'SELECT * FROM patient WHERE patient_id=' + requestPatient;
+        await conn.query(insertSql, function (err, rows, fields) {
+            if (err)
+                console.log('Error while performing Query.', err);
+            else {
+                for (var i = 0; i < rows.length; i++) {
+                    var person = {
+                        'name': rows[i].name,
+                        'patient_id': rows[i].patient_id,
+                        'personal_number': rows[i].personal_number,
+                        'phone_number': rows[i].phone_number
+                    }
+                    queuelist.push(person);
                 }
-                queuelist.push(person);
             }
-        }
-    });
+        });
+    }
     res.redirect('/diagnosis');
 }));
 //환자 접수 취소함
@@ -128,7 +138,7 @@ router.get('/dequeue/:patient_id', catchErrors(async (req, res, next) => {
     //여기서 patient_id얻구 리다이렉트처리
     console.log("dequeue에다 넣음");
     var requestPatient = req.params.patient_id;
-    findByid(requestPatient);
+    deleteByid(requestPatient);
     res.redirect('/diagnosis');
 }));
 

@@ -28,20 +28,22 @@ block content
     .container
         .card-deck
             each queue, i in queuelist
-                .card.text-white.bg-info(style='max-width: 18rem;')
-                    .card-body
-                        h5.card-title #{queue.name}
-                        p.card-text
-                        | 환자 번호:#{queue.patient_id}
-                        p.card-text
-                        | 순서: #{i+1}
-                        hr
-                        .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
-                            a.btn.btn-default(type='submit' href=`/diagnosis/next/${queue.patient_id}`) ←
-                            a.btn.btn-default(type='submit' href=`/diagnosis/dequeue/${queue.patient_id}`) x
-                            a.btn.btn-default(type='submit' href=`/diagnosis/prev/${queue.patient_id}`) → 
+                -if(i<6)
+                    .card.text-white.bg-info(style='max-width: 18rem;')
+                        .card-body
+                            h5.card-title #{queue.name}
+                            p.card-text
+                            | 환자 번호:#{queue.patient_id}
+                            p.card-text
+                            | 순서: #{i+1}
+                            hr
+                            .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
+                                a.btn.btn-default(type='submit' href=`/diagnosis/next/${queue.patient_id}`) ←
+                                a.btn.btn-default(type='submit' href=`/diagnosis/dequeue/${queue.patient_id}`) x
+                                a.btn.btn-default(type='submit' href=`/diagnosis/prev/${queue.patient_id}`) → 
     .container
-        p 이외 #{queue_number}명의 환자가 대기중입니다.
+        -if(queue_number>6)
+            p 이외 #{queue_number-6}명의 환자가 대기중입니다.
     row.col-xl
     .container
         .row(style="margin-bottom:2%;")
