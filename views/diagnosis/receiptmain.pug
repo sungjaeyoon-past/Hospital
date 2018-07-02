@@ -23,85 +23,25 @@ block content
                     .card-header.card-header-warning.card-header-icon
                         p.card-category 환자 대기 목록
                         h5.card-title
-                            #{count_patient}
+                            #{queue_number}
                             small 명                                
     .container
         .card-deck
-            .card.text-white.bg-info(style='max-width: 18rem;')
-                .card-body
-                    h5.card-title 환자 이름
-                    p.card-text
-                    | 환자 번호
-                    p.card-text
-                    | 환자 순서
-                    hr
-                    .form(action="/diagnosis", method="POST" name="number" value=1)
+            each queue, i in queuelist
+                .card.text-white.bg-info(style='max-width: 18rem;')
+                    .card-body
+                        h5.card-title #{queue.name}
+                        p.card-text
+                        | 환자 번호:#{queue.patient_id}
+                        p.card-text
+                        | 순서: #{i+1}
+                        hr
                         .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
-                            button.btn.btn-default(type='submit' name="action" value="prev") ←
-                            button.btn.btn-default(type='submit' name="action" value="del") x
-                            button.btn.btn-default(type='submit' name="action" value="next") → 
-            .card.text-white.bg-info(style='max-width: 18rem;')
-                .card-body
-                    h5.card-title 환자 이름
-                    p.card-text
-                    | 환자 번호
-                    p.card-text
-                    | 환자 순서
-                    hr
-                    .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
-                        button.btn.btn-default(type='button') ←
-                        button.btn.btn-default(type='button') x
-                        button.btn.btn-default(type='button') →                   
-            .card.text-white.bg-info(style='max-width: 18rem;')
-                .card-body
-                    h5.card-title 환자 이름
-                    p.card-text
-                    | 환자 번호
-                    p.card-text
-                    | 환자 순서
-                    hr
-                    .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
-                        button.btn.btn-default(type='button') ←
-                        button.btn.btn-default(type='button') x
-                        button.btn.btn-default(type='button') →                   
-            .card.text-white.bg-info(style='max-width: 18rem;')
-                .card-body
-                    h5.card-title 환자 이름
-                    p.card-text
-                    | 환자 번호
-                    p.card-text
-                    | 환자 순서
-                    hr
-                    .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
-                        button.btn.btn-default(type='button') ←
-                        button.btn.btn-default(type='button') x
-                        button.btn.btn-default(type='button') →                
-            .card.text-white.bg-info(style='max-width: 18rem;')
-                .card-body
-                    h5.card-title 환자 이름
-                    p.card-text
-                    | 환자 번호
-                    p.card-text
-                    | 환자 순서
-                    hr
-                    .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
-                        button.btn.btn-default(type='button') ←
-                        button.btn.btn-default(type='button') x
-                        button.btn.btn-default(type='button') →                
-            .card.text-white.bg-info(style='max-width: 18rem;')
-                .card-body
-                    h5.card-title 환자 이름
-                    p.card-text
-                    | 환자 번호
-                    p.card-text
-                    | 환자 순서
-                    hr
-                    .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
-                        button.btn.btn-default(type='button') ←
-                        button.btn.btn-default(type='button') x
-                        button.btn.btn-default(type='button') → 
+                            a.btn.btn-default(type='submit' href=`/diagnosis/next/${queue.patient_id}`) ←
+                            a.btn.btn-default(type='submit' href=`/diagnosis/dequeue/${queue.patient_id}`) x
+                            a.btn.btn-default(type='submit' href=`/diagnosis/prev/${queue.patient_id}`) → 
     .container
-        p 현재 x명의 환자가 대기중입니다.
+        p 이외 #{queue_number}명의 환자가 대기중입니다.
     row.col-xl
     .container
         .row(style="margin-bottom:2%;")
