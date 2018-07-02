@@ -123,12 +123,12 @@ router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
   getSqlResult(insertSql, function(err,data){
     if (err) {
         console.log("ERROR : ",err);
-        req.flash('success', "추가 실패");            
+        req.flash('success', "입원 추가 실패");            
     }else{
       getSqlResult(insertSql2,function(err,date){
         if(err){
           console.log("ERROR : ",err);
-          req.flash('success', "사용 중인 침대임!");    
+          req.flash('success', "사용 중인 침대!");    
         }else{
           req.flash('success', "추가 성공");
         }
@@ -169,6 +169,7 @@ router.get('/show/:id', catchErrors(async (req, res, next) => {
   var person = [];
   var requestPatient = req.params.id;
   var insertSql='SELECT * FROM patient WHERE patient_id=' + requestPatient;
+  var insertSql2='SELECT * FROM medical_record WHERE patient_id' + requestPatient;
   getSqlResult(insertSql, function(err,data){
     if (err) {
         console.log("ERROR : ",err);            
