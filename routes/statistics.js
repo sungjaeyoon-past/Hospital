@@ -1,3 +1,5 @@
+
+
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
@@ -41,14 +43,15 @@ router.get('/', catchErrors(async(req, res, next) => {
         if(!err){
             for(var i = 0; i < rows.length; i++){
                 var info = {
-                    'name' : rows[i].name ,
-                    'hospital_room' : rows[i].hospital_room,
-                    'bed_no' : rows[i].bed_no,
+                    'name' :rows[i].name ,
+                    'hospital_room' :rows[i].hospital_room,
+                    'bed_no' :rows[i].bed_no,
                     'temperature':rows[i].temperature,
                     'humidity':rows[i].humidity,
                     'weight_sensor':rows[i].weight_sensor,
-                    'is_wet': rows[i].is_wet,
-                    'is_empty':rows[i].is_empty
+                    'is_wet':rows[i].is_wet,
+                    'is_empty':rows[i].is_empty,
+                    
                 }
                 rooms_info.push(info);
             }

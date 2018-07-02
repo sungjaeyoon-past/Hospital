@@ -1,109 +1,141 @@
-doctype html
-head
-  title Hello, world!
-  // Required meta tags
-  meta(charset='utf-8')
-  meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport')
-  meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')
-  // Fonts and icons
-  link(rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons')
-  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css')
-  // Material Dashboard CSS
-  link(rel='stylesheet' href='/assets/css/material-dashboard.css')
-  
-  style.
-      body{
+title Hello, world!
+// Required meta tags
+meta(charset='utf-8')
+meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport')
+meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')
+// Fonts and icons
+link(rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons')
+link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css')
+// Material Dashboard CSS
+link(rel='stylesheet' href='/assets/css/material-dashboard.css')
+    
+style.
+    body{
         margin-top:75px;
-      } 
+    } 
 
-body
-  block top-nav
+block top-nav
     include ../includes/topnavemp
-    .row
-        .col-md-8
-            .card
-                .card-header.card-chart.card-header-warning
-                    #dailySalesChart.ct-chart
-                .card-body
-                    h4.card-title Daily Sales
-                    p.card-category
-                        span.text-success
-                            i.fa.fa-long-arrow-up
-                            |  55%
-                            |  increase in today sales.
-                .card-footer
-                    .stats
-                    i.material-icons access_time
-                    |  updated 4 minutes ago
+block content
+    .container
+        .row
+            .col-lg-6.col-md-6.col-sm-6
+                .card
+                    .card-header.card-chart.card-header-warning
+                        #dailySalesChart1.ct-chart
+                    .card-body
+                        h4.card-title 1번 병실 온도 변화
+                        p.card-category
+                            span.text-succes
+
+                    .card-footer
+                        .stats
+                        i.material-icons access_time
+                        |  updated #{histor[3].time}
+            .col-lg-6.col-md-6.col-sm-6
+                .card
+                    .card-header.card-chart.card-header-warning
+                        #dailySalesChart2.ct-chart
+                    .card-body
+                        h4.card-title 2번 병실 온도 변화
+                        p.card-category
+                            span.text-success
+                    .card-footer
+                        .stats
+                        i.material-icons access_time
+                        |  updated #{histor[7].time}
+        .row
+            .col-lg-6.col-md-6.col-sm-6
+                .card
+                    .card-header.card-chart.card-header-warning
+                        #dailySalesChart3.ct-chart
+                    .card-body
+                        h4.card-title 3번 병실 온도 변화
+                        p.card-category
+                            span.text-succes
+
+                    .card-footer
+                        .stats
+                        i.material-icons access_time
+                        |  updated #{histor[11].time}
+            .col-lg-6.col-md-6.col-sm-6
+                .card
+                    .card-header.card-chart.card-header-warning
+                        #dailySalesChart4.ct-chart
+                    .card-body
+                        h4.card-title 4번 병실 온도 변화
+                        p.card-category
+                            span.text-success
+                    .card-footer
+                        .stats
+                        i.material-icons access_time
+                        |  updated #{histor[15].time}
 
 
 
 
-    // Core JS Files
-    script(src='/assets/js/core/jquery.min.js')
-    script(src='/assets/js/core/popper.min.js')
-    script(src='/assets/js/core/bootstrap-material-design.min.js')
-    // Notifications Plugin, full documentation here: http://bootstrap-notify.remabledesigns.com/
-    script(src='/assets/js/plugins/bootstrap-notify.js')
-    // Charts Plugin, full documentation here: https://gionkunz.github.io/chartist-js/
-    script(src='/assets/js/plugins/chartist.min.js')
-    // Plugin for Scrollbar documentation here: https://github.com/utatti/perfect-scrollbar
-    script(src='/assets/js/plugins/perfect-scrollbar.jquery.min.js')
-    // Demo init
-    script(src='/assets/demo/demo.js')
-    // Material Dashboard Core initialisations of plugins and Bootstrap Material Design Library
-    script(src='/assets/js/material-dashboard.js?v=2.1.0')
 
-    script.
-        $(document).ready(function(){
-            /*
-            var historis=[];
-            var express = require('express');
-            var mysql = require('mysql');
-            var conn = mysql.createConnection({
-                host: '58.123.136.107',
-                port: '3308',
-                user: 'web',
-                password: 'mju12345',
-                database: 'medic'
-            });
-            conn.connect();
-            conn.query('SELECT * FROM temperature_history',function(err,rows,fields){
-                if(!err){
-                    for(var i=0; i<rows[i].length ; i++)
-                        var history ={
-                            'temperature' : rows[i].temperature,
-                            'time': rows[i].teme,
-                            'hospital_room':hospital_room
-                        } 
-                        historis.push(history);
-                }
-                else{
-                    console.log(err);
-                }
-            });
-            */
-            if ($('#dailySalesChart').length != 0) {
-                dataDailySalesChart = {
-                    labels: ['#{histor[0].time}','#{histor[1].time}','#{histor[2].time}','#{histor[3].time}'],
-                    series: [
-                        ['#{histor[0].temperature}','#{histor[1].temperature}','#{histor[2].temperature}','#{histor[3].temperature}' ]
-                    ]
-                };
+// Core JS Files
+script(src='/assets/js/core/jquery.min.js')
+script(src='/assets/js/core/popper.min.js')
+script(src='/assets/js/core/bootstrap-material-design.min.js')
+// Notifications Plugin, full documentation here: http://bootstrap-notify.remabledesigns.com/
+script(src='/assets/js/plugins/bootstrap-notify.js')
+// Charts Plugin, full documentation here: https://gionkunz.github.io/chartist-js/
+script(src='/assets/js/plugins/chartist.min.js')
+// Plugin for Scrollbar documentation here: https://github.com/utatti/perfect-scrollbar
+script(src='/assets/js/plugins/perfect-scrollbar.jquery.min.js')
+// Demo init
+script(src='/assets/demo/demo.js')
+// Material Dashboard Core initialisations of plugins and Bootstrap Material Design Library
+script(src='/assets/js/material-dashboard.js?v=2.1.0')
 
-                optionsDailySalesChart = {
-                    lineSmooth: Chartist.Interpolation.cardinal({
-                        tension: 0
-                    }),
-                    low: 23,
-                    high: 28,
-                    chartPadding: {
-                        top: 0,
-                        right: 0,
-                        bottom: 0,
-                        left: 0
-                    },
-                }
-                var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+script.
+    $(document).ready(function(){
+
+        if ($('#dailySalesChart1').length != 0) {
+            dataDailySalesChart1 = {
+                labels: ['#{histor[0].time}','#{histor[1].time}','#{histor[2].time}','#{histor[3].time}'],
+                series: [
+                    ['#{histor[0].temperature}','#{histor[1].temperature}','#{histor[2].temperature}','#{histor[3].temperature}' ]
+                ]
+            };
+
+            optionsDailySalesChart = {
+                lineSmooth: Chartist.Interpolation.cardinal({
+                    tension: 0
+                }),
+                low: 22,
+                high: 28,
+                chartPadding: {
+                    top: 20,
+                    right: 20,
+                    bottom: 20,
+                    left: 20
+                },
             }
-        });
+            dataDailySalesChart2 = {
+                labels: ['#{histor[4].time}','#{histor[5].time}','#{histor[6].time}','#{histor[7].time}'],
+                series: [
+                    ['#{histor[4].temperature}','#{histor[5].temperature}','#{histor[6].temperature}','#{histor[7].temperature}' ]
+                ]
+            };
+            dataDailySalesChart3 = {
+                labels: ['#{histor[8].time}','#{histor[9].time}','#{histor[10].time}','#{histor[11].time}'],
+                series: [
+                    ['#{histor[8].temperature}','#{histor[9].temperature}','#{histor[10].temperature}','#{histor[11].temperature}' ]
+                ]
+            };
+            dataDailySalesChart4 = {
+                labels: ['#{histor[12].time}','#{histor[13].time}','#{histor[14].time}','#{histor[15].time}'],
+                series: [
+                    ['#{histor[12].temperature}','#{histor[13].temperature}','#{histor[14].temperature}','#{histor[15].temperature}' ]
+                ]
+            };
+            var dailySalesChart1 = new Chartist.Line('#dailySalesChart1', dataDailySalesChart1, optionsDailySalesChart);
+            var dailySalesChart2 = new Chartist.Line('#dailySalesChart2', dataDailySalesChart2, optionsDailySalesChart);
+            var dailySalesChart3 = new Chartist.Line('#dailySalesChart3', dataDailySalesChart3, optionsDailySalesChart);
+            var dailySalesChart4 = new Chartist.Line('#dailySalesChart4', dataDailySalesChart4, optionsDailySalesChart);
+            
+        }
+    });
