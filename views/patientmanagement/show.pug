@@ -3,7 +3,7 @@ extends ../includes/layoutemp
 block content
     .container(style="margin-top:3%;")
         h1 환자 정보
-        .alert.alert-secondary
+        .alert.alert-primary
             .row
                 .col-md-12
                     | 환자 이름:
@@ -26,23 +26,15 @@ block content
                         | 남성
                     else
                         | 여성    
+        hr
 
-        h2 입원
-        .alert.alert-info
-            .row
-                .col-md-12
-                    | 허미;
+        include ./_record
 
-        h3 진료기록
-        .alert.alert-info
-            .row
-                .col-md-12
-                    | 허미;
         .row
             .col-md-1
                 a.button.btn.btn-primary(href=`/patientmanagement/edit/${patient.patient_id}`)
                     | 정보 수정
-            .col-md-1
+            .col-md-3
                 a.btn.btn-danger(href=`/patientmanagement/${patient.patient_id}?_method=DELETE`)
                     | 정보 삭제
 
