@@ -88,28 +88,53 @@ block content;
             a.nav-link(href="#weight_sensor",data-toggle="tab") 낙상
       .card-body
         .tab-content
-          #diaper.tab-pane.fade
+          #diaper.tab-pane.active
             table.table
-              -for(i=1;i<infos.length;i++)
-                tr
-                  td
-                    | #{infos[i].name} 
-                    | #{infos[i].hospital_room+'번 방'}  
-                    -if (infos[i].is_wet==false)
-                      h   교체 x
-                    -else
-                      h   교체 필요!
-              
+              tbody
+                -for(i=1;i<infos.length;i++)
+                  tr
+                    td            
+                      | #{infos[i].hospital_room+'번 방  '}
+                      | #{infos[i].name}   
+                      -if (infos[i].is_wet==false)
+                        h   교체 x
+                      -else
+                        h 교체 필요
+                          i.material-icons.text-danger warning
+                    td.td-actions.text-right
+                      a.btn-prinary.btn-link.btn-sm(type='button' rel='tooltip' title='환자 정보 상세보기' href='/patientmanagement/show/'+infos[i].patient_id)
+                        i.material-icons assignment
+                
           #linger.tab-pane.fade
             table.table
               -for(i=1;i<infos.length;i++)
                 tr
-                  td #{infos[i].name} #{infos[i].hospital_room+'번 방'} #{infos[i].is_empty}
+                  td            
+                    | #{infos[i].hospital_room+'번 방  '}
+                    | #{infos[i].name}   
+                    -if (infos[i].is_empty==false)
+                      h   교체 x
+                    -else
+                      h 교체 필요
+                          i.material-icons.text-danger warning
+                  td.td-actions.text-right
+                    a.btn-prinary.btn-link.btn-sm(type='button' rel='tooltip' title='환자 정보 상세보기' href='/patientmanagement/show/'+infos[i].patient_id)
+                      i.material-icons assignment
           #weight_sensor.tab-pane.fade
              table.table
               -for(i=1;i<infos.length;i++)
                 tr
-                  td #{infos[i].name} #{infos[i].hospital_room+'번 방'} #{infos[i].weight_sensor}
+                  td            
+                    | #{infos[i].hospital_room+'번 방  '}
+                    | #{infos[i].name}   
+                    -if (infos[i].weight_sensor==false)
+                      h 
+                    -else
+                      h   낙상 확인 필요!
+                        i.material-icons.text-danger warning
+                  td.td-actions.text-right
+                    a.btn-prinary.btn-link.btn-sm(type='button' rel='tooltip' title='환자 정보 상세보기' href='/patientmanagement/show/'+infos[i].patient_id)
+                      i.material-icons assignment
 
                 
 

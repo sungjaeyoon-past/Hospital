@@ -1,3 +1,4 @@
+doctype html
 title Hello, world!
 // Required meta tags
 meta(charset='utf-8')
@@ -18,7 +19,7 @@ block top-nav
     include ../includes/topnavemp
 block content
     .container
-        .row
+        .row(style={margin:'2%'})
             .col-lg-6.col-md-6.col-sm-6
                 .card
                     .card-header.card-chart.card-header-warning
@@ -44,7 +45,7 @@ block content
                         .stats
                         i.material-icons access_time
                         |  updated #{histor[7].time}
-        .row
+        .row(style={margin:'2%'})
             .col-lg-6.col-md-6.col-sm-6
                 .card
                     .card-header.card-chart.card-header-warning
@@ -109,9 +110,9 @@ script.
                 high: 28,
                 chartPadding: {
                     top: 20,
-                    right: 20,
+                    right: 10,
                     bottom: 20,
-                    left: 20
+                    left: 10
                 },
             }
             dataDailySalesChart2 = {

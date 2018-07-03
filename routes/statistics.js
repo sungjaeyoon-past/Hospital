@@ -43,6 +43,7 @@ router.get('/', catchErrors(async(req, res, next) => {
         if(!err){
             for(var i = 0; i < rows.length; i++){
                 var info = {
+                    'patient_id':rows[i].patient_id,
                     'name' :rows[i].name ,
                     'hospital_room' :rows[i].hospital_room,
                     'bed_no' :rows[i].bed_no,
