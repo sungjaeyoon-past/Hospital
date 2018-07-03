@@ -18,19 +18,11 @@ function validateForm(form, option) {
   var position = form.position || "";
   var employee_password = form.employee_password || "";
 
-  name = name.trim();
-  personal_number = personal_number.trim();
-  phone_number = phone_number.trim();
-  position = position.trim();
-  employee_password = employee_password.trim();
-
   if (!name) { return "이름 미입력"; }
   if (!personal_number) { return "주민번호 미입력"; }
   if (!phone_number) { return "핸드폰 번호 미입력"; }
   if (!position) { return "직급 미입력"; }
   if (!employee_password) { return "비밀번호 미입력"; }
-
-  return null;
 }
 
 function getSql(insertSql, callback){
@@ -40,6 +32,21 @@ function getSql(insertSql, callback){
     else
       callback(null,result);
   });
+}
+function getEmp(empList,data){
+  for(var i in data){
+    var person = {
+      'employee_id': data[i].employee_id,
+      'name': data[i].name,
+      'personal_number': data[i].personal_number,
+      'phone_number': data[i].phone_number,
+      'gender': data[i].gender,
+      'position': data[i].position,
+      'employee_password': data[i].employee_password
+    }
+    empList.push(emp);
+  }
+  return empList;
 }
 
 router.get('/', catchErrors(async (req, res, next) => {
@@ -76,26 +83,24 @@ router.get('/add', catchErrors(async (req, res, next) => {
   res.render('superadmin/add');
 }));
 
-router.post('/add', catchErrors(async(req, res, next) => {
+router.post('/add', catchErrors(async (req, res, next) => {
   const err = validateForm(req.body);
   if (err) {
     req.flash('danger', err);
     console.log(err);
     return res.redirect('back');
   }
-
-  var newEmp = new Employee({
-    name : req.body.name,
-    personal_number : req.body.personal_number,
-    phone_number : req.body.phone_number,
-    gender : 0,
-    if(gender = 'female'){
-      gender = 1;
-    },
-    position : req.body.position,
-    employee_password : req.body.employee_password
-  })
-  var insertSql = "INSERT INTO employee (name, personal_number, phone_number, gender, position, employee_password) VALUES ('" +employee_id+ "','" + +name+ "','" + phone_number + "','" + personal_number + "','" + gender + "','"+position+"','"+employee_password+"')"
+  var name = req.body.name;
+  var personal_number = req.body.personal_number;
+  var phone_number = req.body.phone_number;
+  var gender = 0;
+  if (req.body.gender = 'female') { gender = 1; }
+  var position = req.body.position;
+  var employee_password = req.body.employee_password;
+  var insertSql = "INSERT INTO employee (name, personal_number, phone_number, gender, position, employee_password) VALUES (' "+name+" ', '" +personal_number+" ', ' "+phone_number+" ', ' "+gender+" ','"+position+"','"+employee_password+"')";
+  /*conn.query("INSERT INTO employee (name, personal_number, phone_number, gender, position, employee_password) VALUES ('" +name+ "','" + personal_number + "','" + phone_number + "','" + gender + "','"+position+"','"+employee_password+"')", function (err, rows, fields){
+    if(err) throw err;
+  });*/
   getSql(insertSql, function(err,data){
     if (err) {
         console.log("error",err);
@@ -103,9 +108,10 @@ router.post('/add', catchErrors(async(req, res, next) => {
     } else {
       req.flash('success', "유저가 추가되었습니다.");
     }
-    res.redirect('superadmin/list');
+    res.redirect('/superadmin/list');
   });
 }));
+
 
 //사용자 정보 수정
 
@@ -130,7 +136,8 @@ router.get('/edit', catchErrors(async (req, res, next) => {
       }
       res.render('superadmin/edit', {employee: empList, count_emp:rows.length});
     }
-  });}));
+  });
+}));
 
 
 module.exports = router;

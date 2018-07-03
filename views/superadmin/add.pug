@@ -45,17 +45,17 @@ body
                         .col-md-5
                             .form-group.bmd-form-group 이름
                                 .bmd-label-floating
-                                input.form-control(type=text, placeholder='name')
+                                input.form-control(type=text, placeholder='name', name='name')
                     .row
                         .col-md-5
                             .form-group.bmd-form-group 식별번호
                                 .bmd-label-floating
-                                input.form-control(type=text, placeholder='personal_number')
+                                input.form-control(type=text, placeholder='personal_number', name='personal_number')
                     .row
                         .col-md-5
                             .form-group.bmd-form-group 전화번호
                                 .bmd-label-floating
-                                input.form-control(type=text, placeholder='-없이 입력 (예:01012345678)')
+                                input.form-control(type=text, placeholder='-없이 입력 (예:01012345678)', name='personal_number')
                     .row
                         .col-md-5
                             .form-check
@@ -70,12 +70,12 @@ body
                         .col-md-5
                             .form-group.bmd-form-group 직급
                                 .bmd-label-floating
-                                input.form-control(type=text, placeholder='position')
+                                input.form-control(type=text, placeholder='position', name='position')
                     .row
                         .col-md-5
                             .form-group.bmd-form-group 비밀번호
                                 .bmd-label-floating
-                                input.form-control(type=text, placeholder='employee_password')
+                                input.form-control(type=text, placeholder='employee_password', name='employee_password')
                     br
                     form(action = "/superadmin/add", method="POST")
                             .row
