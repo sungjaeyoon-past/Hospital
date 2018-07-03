@@ -34,34 +34,13 @@ body
         button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
           i.material-icons search
 
-  .container
-    .row
-      .col-md-6.col-sm-6
-        .card.card-stats
-          .card-header.card-header-success.card-header-icon
-            .card-icon
-              i.material-icons content_copy
-            p.card-category 등록된 유저
-            h3.card-title
-              #{count_emp}
-              small 명
-          .card-footer
-            .stats
-              i.material-icons local_offer
-              a(href='/superadmin/list') 유저 목록
-
-
 .container
     .row
         .col-md-8
             .card.card-header.card-header-primary
-                h4.card-title Edit Profile
+                h4.card-title Create New Profile
                 .card.body
-                    .row
-                        .col-md-5
-                            .form-group.bmd-form-group id
-                                .bmd-label-floating
-                                input.form-control(type=text, placeholder='employee_id')
+                    
                     .row
                         .col-md-5
                             .form-group.bmd-form-group 이름
@@ -71,7 +50,7 @@ body
                         .col-md-5
                             .form-group.bmd-form-group 식별번호
                                 .bmd-label-floating
-                                input.form-control(type=text, placeholder='#{emp.personal_number}' disabled)
+                                input.form-control(type=text, placeholder='personal_number')
                     .row
                         .col-md-5
                             .form-group.bmd-form-group 전화번호
@@ -97,5 +76,7 @@ body
                             .form-group.bmd-form-group 비밀번호
                                 .bmd-label-floating
                                 input.form-control(type=text, placeholder='employee_password')
-                    
-                    button.btn.btn-primary(type='submit', style="margin-top:10%;") Update Profile
+                    br
+                    form(action = "/superadmin/add", method="POST")
+                            .row
+                                button.btn.btn-primary(type='submit', style="margin-left:10%;") Create Profile

@@ -23,6 +23,9 @@ body
           a.nav-link(href='/superadmin/list') 유저 목록
           |
         li.nav-item
+          a.nav-link(href='/superadmin/add') 유저 추가
+          |
+        li.nav-item
           a.nav-link(href='/superadmin/edit') 유저정보 수정
       form.form-inline.ml-auto
         .form-group.has-white
@@ -48,6 +51,9 @@ body
               a(href='/superadmin/edit') 정보 수정
 
     .row
+      .col-md-6.col-sm-6
+        button.btn.btn-primary(type='button', onclick="location.href='/superadmin/add'") 유저 추가
+    .row
         .col-lg-12.col-md-20
             each emp in employee
                 .card.card-stats
@@ -61,9 +67,9 @@ body
                                 tr
                                     th.text-center id
                                     th 이름 
-                                    th 식별번호 
+                                    th 주민번호 
                                     th 전화번호 
-                                    th 성별(남:1, 여:2)
+                                    th 성별
                                     th 직급 
                                     th 비밀번호
                                     th 수정
