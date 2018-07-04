@@ -35,7 +35,7 @@ function getSql(insertSql, callback){
 }
 function getEmp(empList,data){
   for(var i in data){
-    var person = {
+    var emp = {
       'employee_id': data[i].employee_id,
       'name': data[i].name,
       'personal_number': data[i].personal_number,
@@ -124,7 +124,6 @@ router.get('/edit', catchErrors(async (req, res, next) => {
     else {
       for (var i in rows) {
         var emp = {
-
           'name': rows[i].name,
           'personal_number': rows[i].personal_number,
           'phone_number': rows[i].phone_number,
