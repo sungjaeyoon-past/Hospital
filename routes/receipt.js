@@ -50,7 +50,7 @@ router.post('/', catchErrors(async (req, res, next) => {
         }else{
             req.flash('success', "추가 성공");
         }
-        res.render('receipt/receiptmain');
+        res.redirect('receipt/receiptmain');
       });
 }));
 

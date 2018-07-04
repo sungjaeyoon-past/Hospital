@@ -10,6 +10,11 @@ var conn = mysql.createConnection({
 });
 conn.connect();
 const catchErrors = require('../lib/async-error');
+const Nexmo=require('nexmo');
+const nexmo = new Nexmo({
+  apiKey: 'fe555087',
+  apiSecret: 'qQjUJNdRH9wkYWl3'
+});
 
 function validateForm(form, option) {
   var name = form.name || "";
@@ -167,19 +172,58 @@ router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
 //상세보기를 눌렀을 경우 보여주는곳 (완)
 router.get('/show/:id', catchErrors(async (req, res, next) => {
   var person = [];
+  var recordList =[];
   var requestPatient = req.params.id;
   var insertSql='SELECT * FROM patient WHERE patient_id=' + requestPatient;
-  var insertSql2='SELECT * FROM medical_record WHERE patient_id' + requestPatient;
+  var insertSql2='SELECT * FROM medical_record WHERE patient_id=' + requestPatient;
   getSqlResult(insertSql, function(err,data){
     if (err) {
         console.log("ERROR : ",err);            
     }else{
       person=getPersonResult(person,data);
-      res.render('patientmanagement/show', { patient: person[0] });
+      getSqlResult(insertSql2, function(err,data){
+        if (err) {
+            console.log("ERROR : ",err);            
+        }else{
+          for(var i in data){
+            var record={
+              'patient_id':data[i].patient_id,
+              'doctor_id':data[i].doctor_id,
+              'date':data[i].date,
+              'disease':data[i].disease,
+              'description':data[i].description,
+              'medicine_id':data[i].medicine_id,
+              'amount':data[i].amount,
+              'frequency':data[i].frequency,
+              'precaution':data[i].precaution
+            }
+            recordList.push(record);
+          }
+          console.log(recordList);
+          res.render('patientmanagement/show', { patient: person[0], recordList:recordList });
+        }
+      });
     }
   });
 }));
 
+//문자보내기 (x)
+router.get('/send', catchErrors(async (req, res, next) => {
+  var TO_NUMBER='821089479574';
+  const from = 'Nexmo';
+  const to = TO_NUMBER;
+  const text = 'A text message sent using the Nexmo SMS API';
+  nexmo.message.sendSms(from, to, text, (error, response) => {
+    if(error) {
+      throw error;
+    } else if(response.messages[0].status != '0') {
+      console.error(response);
+      throw 'Nexmo returned back a non-zero status';
+    } else {
+      console.log(response);
+    }
+  });
+}));
 
 //환자 추가눌렀을 때 (완)
 router.get('/new', catchErrors(async (req, res, next) => {
