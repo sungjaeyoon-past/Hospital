@@ -52,50 +52,14 @@ body
 
 
 .container
-    .row
-        .col-md-8
-            .card.card-header.card-header-primary
-                h4.card-title Edit Profile
-                .card.body
-                    .row
-                        .col-md-5
-                            .form-group.bmd-form-group id
-                                .bmd-label-floating
-                                input.form-control(type=text, placeholder='employee_id')
-                    .row
-                        .col-md-5
-                            .form-group.bmd-form-group 이름
-                                .bmd-label-floating
-                                input.form-control(type=text, placeholder='name')
-                    .row
-                        .col-md-5
-                            .form-group.bmd-form-group 식별번호
-                                .bmd-label-floating
-                                input.form-control(type=text, placeholder='#{emp.personal_number}' disabled)
-                    .row
-                        .col-md-5
-                            .form-group.bmd-form-group 전화번호
-                                .bmd-label-floating
-                                input.form-control(type=text, placeholder='-없이 입력 (예:01012345678)')
-                    .row
-                        .col-md-5
-                            .form-check
-                                    input(type='radio', name='gender',value='option1', checked='')
-                                    label.form-check-label(for='male')
-                                        | 남성
-                            .form-check
-                                    input(type='radio', name='gender',value='option2')
-                                    label.form-check-label(for='female')
-                                        | 여성
-                    .row
-                        .col-md-5
-                            .form-group.bmd-form-group 직급
-                                .bmd-label-floating
-                                input.form-control(type=text, placeholder='position')
-                    .row
-                        .col-md-5
-                            .form-group.bmd-form-group 비밀번호
-                                .bmd-label-floating
-                                input.form-control(type=text, placeholder='employee_password')
-                    
-                    button.btn.btn-primary(type='submit', style="margin-top:10%;") Update Profile
+        .row(style="margin-top:20px;")
+            .col-md-12
+                h2
+                    |직원정보 수정
+        br
+        form(action="/superadmin/edit", method="PUT")
+            input(type="hidden", name="_method", value="PUT")
+            include ./_form_edit              
+            .row
+                .col-md-1
+                        button.btn.btn-primary(type='submit', style="margin-left:20%; margin-top:20%;") Update Profile

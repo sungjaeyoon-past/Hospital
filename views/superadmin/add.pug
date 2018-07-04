@@ -37,12 +37,11 @@ body
 .container
         .row(style="margin-top:20px;")
             .col-md-12
-                h1
-                    |환자 추가
+                h2
+                    |직원 추가
         br
         form(action="/superadmin/add", method="POST")
-            .alert.alert-primary
-                include ./_form              
-                .row
-                    .col-md-1
-                            button.btn.btn-primary(type='submit' ,style="margin-left:20%; margin-top:20%;") Create Profile    
+            include ./_form              
+            .row
+                .col-md-1
+                        button.btn.btn-primary(type='submit', style="margin-left:20%; margin-top:20%;") Create Profile    
