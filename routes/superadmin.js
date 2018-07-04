@@ -98,9 +98,7 @@ router.post('/add', catchErrors(async (req, res, next) => {
   var position = req.body.position;
   var employee_password = req.body.employee_password;
   var insertSql = "INSERT INTO employee (name, personal_number, phone_number, gender, position, employee_password) VALUES (' "+name+" ', '" +personal_number+" ', ' "+phone_number+" ', ' "+gender+" ','"+position+"','"+employee_password+"')";
-  /*conn.query("INSERT INTO employee (name, personal_number, phone_number, gender, position, employee_password) VALUES ('" +name+ "','" + personal_number + "','" + phone_number + "','" + gender + "','"+position+"','"+employee_password+"')", function (err, rows, fields){
-    if(err) throw err;
-  });*/
+
   getSql(insertSql, function(err,data){
     if (err) {
         console.log("error",err);
@@ -115,9 +113,10 @@ router.post('/add', catchErrors(async (req, res, next) => {
 
 //사용자 정보 수정
 
-router.get('/edit', catchErrors(async (req, res, next) => {
+router.get('/:id/edit', catchErrors(async (req, res, next) => {
   var empList = [];
-  conn.query('SELECT * FROM employee', function (err, rows, fields) {
+  var reqEmp = req.params.employee_id;
+  conn.query('SELECT * FROM employee WHERE employee_id='+reqEmp, function (err, rows, fields) {
     var emp;
     if (err)
       console.log('Error', err);

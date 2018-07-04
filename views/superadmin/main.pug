@@ -19,13 +19,12 @@ body
           a.nav-link(href='/superadmin') 메인 화면
           |
         li.nav-item
-          a.nav-link(href='/superadmin/list') 유저 목록
+          a.nav-link(href='/superadmin/list') 직원 목록
           |
         li.nav-item
-          a.nav-link(href='/superadmin/add') 유저 추가
+          a.nav-link(href='/superadmin/add') 직원 추가
           |
-        li.nav-item
-          a.nav-link(href='/superadmin/edit') 유저정보 수정
+
       form.form-inline.ml-auto
         .form-group.has-white
           input.form-control(type='text', placeholder='search')
@@ -39,19 +38,19 @@ body
           .card-header.card-header-success.card-header-icon
             .card-icon
               i.material-icons content_copy
-            p.card-category 등록된 유저 페이지
+            p.card-category 등록된 직원 페이지
           .card-footer
             .stats
               i.material-icons local_offer
-              a(href='/superadmin/list') 유저 목록
+              a(href='/superadmin/list') 직원 목록
 
       .col-md-6.col-sm-6
         .card.card-stats
           .card-header.card-header-danger.card-header-icon
             .card-icon
               i.material-icons store
-            p.card-category 수정 가능한 유저 페이지
+            p.card-category 직원 추가 페이지
           .card-footer
             .stats
               i.material-icons warning
-              a(href='/superadmin/edit') 정보 수정
+              a(href='/superadmin/add') 직원 추가

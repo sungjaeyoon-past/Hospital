@@ -13,42 +13,25 @@ html
 body
   include ../includes/topnavemp
 
-  nav.navbar.navbar-expand-lg.white(style="margin-top:70px;")
+  nav.navbar.navbar-expand-lg.bg-primary(style="margin-top:70px;")
     .container
       ul.navbar-nav
         li.nav-item
           a.nav-link(href='/superadmin') 메인 화면
           |
         li.nav-item
-          a.nav-link(href='/superadmin/list') 유저 목록
+          a.nav-link(href='/superadmin/list') 직원 목록
           |
         li.nav-item
-          a.nav-link(href='/superadmin/add') 유저 추가
+          a.nav-link(href='/superadmin/add') 직원 추가
           |
-        li.nav-item
-          a.nav-link(href='/superadmin/edit') 유저정보 수정
+
       form.form-inline.ml-auto
         .form-group.has-white
           input.form-control(type='text', placeholder='search')
           |
         button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
           i.material-icons search
-
-  .container
-    .row
-      .col-md-6.col-sm-6
-        .card.card-stats
-          .card-header.card-header-success.card-header-icon
-            .card-icon
-              i.material-icons content_copy
-            p.card-category 등록된 유저
-            h3.card-title
-              #{count_emp}
-              small 명
-          .card-footer
-            .stats
-              i.material-icons local_offer
-              a(href='/superadmin/list') 유저 목록
 
 
 .container
@@ -57,7 +40,7 @@ body
                 h2
                     |직원정보 수정
         br
-        form(action="/superadmin/edit", method="PUT")
+        form(action=`/superadmin/${emp.employee_id}?_method=PUT`)
             input(type="hidden", name="_method", value="PUT")
             include ./_form_edit              
             .row
