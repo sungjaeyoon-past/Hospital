@@ -27,7 +27,7 @@ if recordList
                             .input-group-prepend
                                 span#basic-addon1.input-group-text  진료 날짜:
                             |   
-                            input.form-control(type='text', placeholder='Username', value=record.date, readonly)
+                            input.form-control(type='text', placeholder='Username', value=moment(record.date).format('YYYY-MM-DD'), readonly)
                 .row
                     .col-md-12
                         .input-group.mb-3
@@ -61,7 +61,9 @@ if recordList
                             input.form-control(type='text', placeholder='Username', value=record.precaution, readonly)
 else
     .alert.alert-primary
-        | 진료기록 없음
+        .row
+            .col-md-2
+                | 진료기록 없음
 
         
 

@@ -1,0 +1,14 @@
+table.table
+    thead
+        tr
+            th(scope="col") 약 ID
+            th(scope="col") 이름
+            th(scope="col") 설명
+            th(scope="col") 주의사항
+    tbody
+        tr
+            each medicine in medicineList
+                th(scope="row") #{medicine.medicine_id}
+                td #{medicine.name}
+                td #{medicine.description}
+                td #{medicine.warning}

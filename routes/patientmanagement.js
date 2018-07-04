@@ -69,19 +69,36 @@ router.get('/', catchErrors(async (req, res, next) => {
 //입원환자 침대 현황 (완)
 router.get('/bed', catchErrors(async (req, res, next) => {
   var bedList=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  var patientList=[];
   var insertSql="SELECT bed_id, inpatient_id FROM bed";
+  var insertSql2='SELECT patient_id, bed_no, disease_name, hospital_day FROM inpatient ORDER BY bed_no';
   getSqlResult(insertSql, function(err,data){
     if (err) {
       console.log("ERROR : ",err);            
-    } else { 
-      console.log(data);                    
+    } else {                     
       for(var i in data){
         if(data[i].inpatient_id > 0){
           bedList[data[i].bed_id-1]=1;
         }
-      } 
+      }
+      getSqlResult(insertSql2, function(err,data){
+        if (err) {
+          console.log("ERROR : ",err);            
+        } else {                     
+          console.log(data);
+          for(var i in data){
+            var patient={
+              'patient_id':data[i].patient_id,
+              'bed_no':data[i].bed_no,
+              'disease_name':data[i].disease_name,
+              'hospital_day':data[i].hospital_day
+            }
+            patientList.push(patient);
+          }
+        }
+        res.render('patientmanagement/bed',{bedList:bedList, patientList:patientList});
+      });
     }
-    res.render('patientmanagement/bed',{bedList:bedList});
   });
 }));
 

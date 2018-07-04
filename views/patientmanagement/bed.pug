@@ -15,3 +15,26 @@ block content
 
         .alert.alert-secondary
             include ./_bed
+        
+        .alert.alert-primary
+            .row
+                .col-md-2
+                    .btn.btn-primary.usedbed
+                        | 사용중인 침대 정보
+            
+        table.table.usedbedtable
+            thead
+                tr
+                    th(scope="col") 침대번호
+                    th(scope="col") 환자번호 (상세보기)
+                    th(scope="col") 질병
+                    th(scope="col") 입원일
+            tbody
+                each patient in patientList
+                    tr
+                        th(scope="row") #{patient.bed_no}
+                        td
+                            a(href=`/patientmanagement/show/${patient.patient_id}`) #{patient.patient_id}
+                        td #{patient.disease_name}
+                        td #{moment(patient.hospital_day).format('YYYY-MM-DD')}
+    
