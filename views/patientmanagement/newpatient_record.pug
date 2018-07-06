@@ -1,0 +1,51 @@
+extends ../layoutemp
+
+block content
+     .container
+        .row(style="margin-top:20px;")
+            .col-md-12
+                h1
+                    |정보 추가
+        br
+        form(action=`/inpatientdetail/${patient_id}`, method="POST")
+            .alert.alert-primary
+                .row
+                    .col-md-2
+                        .input-group.mb-3
+                            .input-group-prepend
+                                span#basic-addon1.input-group-text 환자 번호                   
+                            input.form-control(type='text',name='patient_id', value=patient_id readonly)          
+                    .col-md-4
+                        .input-group.mb-3
+                            .input-group-prepend
+                                span#basic-addon1.input-group-text 담당 간호사                   
+                            input.form-control(type='number',name='nurse_id',  placeholder='담당 간호사 번호 입력')          
+                    .col-md-4
+                        .input-group.mb-3
+                            .input-group-prepend
+                                span#basic-addon1.input-group-text 날짜                    
+                            input.form-control(type='date',name='date',  placeholder='변경 시간') 
+                .row
+                    .col-md-8
+                        .form-check
+                            input#exampleRadios1.form-check-input(type='radio', name='1', value='option1', checked='')
+                            label.form-check-label(for='')
+                                | 링거
+                        .form-check
+                            input#exampleRadios2.form-check-input(type='radio', name='1', value='option2')
+                            label.form-check-label(for='')
+                                | 기저귀         
+                        .form-check
+                            input#exampleRadios2.form-check-input(type='radio', name='1', value='option2')
+                            label.form-check-label(for='')
+                                | 투약
+                .row
+                    .col-md-10
+                        .input-group.mb-3
+                            .input-group-prepend
+                                span#basic-addon1.input-group-text 내용             
+                            input.form-control(type='text', placeholder='변경 내용을 입력 입력해주세요!',name='')
+
+                .row
+                    .col-md-1
+                            button.btn.btn-primary(type='submit' ,style="margin-left:20%; margin-top:20%;") 정보 추가

@@ -7,6 +7,7 @@ var sassMiddleware = require('node-sass-middleware');
 var session = require('express-session');
 var methodOverride = require('method-override');
 var flash = require('connect-flash');
+var passport = require('passport');
 
 /*
 var mysql = require('mysql');
@@ -34,6 +35,8 @@ var receipt = require('./routes/receipt');
 var monitor = require('./routes/monitor');
 var patientmanagement = require('./routes/patientmanagement');
 var superadmin = require('./routes/superadmin');
+var api = require('./routes/api');
+var login = require('./routes/login')
 /*-----------------Routes 파일 불러오기-----------------*/
 var app = express();
 
@@ -64,6 +67,30 @@ app.use(session({
 }));
 app.use(flash()); // flash message를 사용할 수 있도록
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'node_modules')));//node 모듈 사용가능하게끔
+
+/*-----------------------로그인------------------*/
+app.use(passport.initialize());
+app.use(passport.session());
+
+/*
+var isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.redirect('/login');
+};검증됬는지 확인
+
+router.get('/myinfo', isAuthenticated, function (req, res) {
+  res.render('myinfo',{
+    title: 'My Info',
+    user_info: req.user
+  })
+});사용법 예시
+router.get('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/');
+});
+*/
 
 app.use(function (req, res, next) {
   console.log("REQ USER", req.user);
@@ -71,7 +98,7 @@ app.use(function (req, res, next) {
   res.locals.flashMessages = req.flash();
   next();
 });
-
+/*-----------------------로그인 끝------------------*/
 
 /*-----------------url route-----------------*/
 app.use('/', index);
@@ -80,6 +107,8 @@ app.use('/receipt', receipt);
 app.use('/diagnosis', diagnosis);
 app.use('/patientmanagement', patientmanagement);
 app.use('/superadmin', superadmin);
+app.use('/api/v1', api);
+app.use('/login', login);
 /*-----------------url route-----------------*/
 
 
