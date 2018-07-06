@@ -5,13 +5,13 @@ block content
         h1 병실 현황
         .alert.alert-primary
             nav.nav
-                a.nav-link.active(href='/patientmanagement/bed') 외과 병실
+                a.nav-link.active(href='/patientmanagement/bed/1') 안과 병실
                 |   
                 a.nav-link.active(href='/patientmanagement/bed/2') 내과 병실
                 |   
-                a.nav-link.active(href='/patientmanagement/bed/3') 치과 병실
+                a.nav-link.active(href='/patientmanagement/bed/3') 외과 병실
                 |   
-                a.nav-link.active(href='/patientmanagement/bed/4') 안과 병실
+                a.nav-link.active(href='/patientmanagement/bed/4') 치과 병실
                 |
                 a.nav-link(href='/patientmanagement/outpatient') 퇴원 환자
                 |   
@@ -36,13 +36,13 @@ block content
             tbody
                 each patient in patientList
                     tr
-                        th
-                        td(scope="row") #{patient.bed_no}
+                        th #{number}
+
+                        td #{patient.bed_no}
                         td    
-                            a(href=`/patientmanagement/show/${patient.patient_id}`) #{patient.patient_id} 
-                            //이름으로 바꿔야함
-                        td    
-                        td    
+                            a(href=`/patientmanagement/show/${patient.patient_id}`) #{patient.patient_name} 
+                        td #{patient.employee_name} 
+                        td #{patient.personal_number}   
                         td #{patient.disease_name}
                         td #{moment(patient.hospital_day).format('YYYY-MM-DD')}
                         td 
