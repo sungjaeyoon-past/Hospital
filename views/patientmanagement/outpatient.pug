@@ -1,4 +1,33 @@
 extends ../layoutemp
 
 block content
-    
+    .container
+        h1(style="margin-top:2%;") 퇴원 기록
+        table.table.usedbedtable
+            thead
+                tr
+                    th(scope="col") 과
+                    th(scope="col") 환자이름 
+                    th(scope="col") 출생년도 
+                    th(scope="col") 담당의사 
+                    th(scope="col") 질병
+                    th(scope="col") 입원일
+                    th(scope="col") 퇴원일
+            tbody
+                if recordList
+                    each record in recordList
+                        tr
+                            th
+                                #{record.department_name}
+                            td
+                                #{record.name} 
+                            td
+                                #{record.personal_number} 
+                            td 
+                                #{record.doctor_name} 
+                            td    
+                                #{record.disease_name} 
+                            td    
+                                #{record.hospital_day} 
+                            td    
+                                #{record.discharge_day} 

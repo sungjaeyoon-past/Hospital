@@ -64,8 +64,37 @@ router.get('/:id', catchErrors(async (req, res, next) => {
     });
 }));
 
+function validateFormReceipt(form, option) {
+    var patient_id = form.patient_id || "";
+    var doctor_id = form.doctor_id || "";
+    var date = form.date || "";
+    var disease = form.disease || "";
+    var description = form.description || "";
+    var medicine_id = form.medicine_id || "";
+    var amount = form.amount || "";
+    var frequency = form.frequency || "";
+    var precaution = form.precaution || "";
+
+    if(!patient_id){return "환자 번호를 입력해주세요!";}
+    if(!doctor_id){return "담당의사 번호를 입력해주세요!";}
+    if(!date){return "날짜를 입력해주세요!";}
+    if(!disease){return "질병 이름을 입력해주세요!";}
+    if(!description){return "진료 내용를 입력해주세요!";}
+    if(!medicine_id){return "약 번호를 입력해주세요!";}
+    if(!amount){return "약의 양를 입력해주세요!";}
+    if(!frequency){return "약 복용횟수를 입력해주세요!";}
+    if((patient_id<0)||(doctor_id<0)||(medicine_id<0)||(amount<0)||(frequency<0)){return "0이상의 수를를 입력해주세요!";}
+    if(!precaution){return "주의사항을 입력해주세요!";}
+  }
+
 //진료기록 작성 완료
 router.post('/', catchErrors(async (req, res, next) => {
+    const err = validateFormReceipt(req.body);
+    if (err) {
+      req.flash('danger', err);
+      console.log(err);
+      return res.redirect('back');
+    }
     var patient_id=req.body.patient_id;
     var doctor_id=req.body.doctor_id;
     var date=req.body.date;
@@ -77,10 +106,7 @@ router.post('/', catchErrors(async (req, res, next) => {
     var precaution=req.body.precaution;
     var insertSql="INSERT INTO medical_record (patient_id, doctor_id, date, disease, description, medicine_id, amount, frequency, precaution ) VALUES('"+patient_id+"','"+doctor_id+"','"+date+"','"+disease+"','"+description+"','"+medicine_id+"','"+amount+"','"+frequency+"','"+precaution+"')";  
     getSqlResult(insertSql,function(err,date){
-        if(err){
-          console.log("ERROR : ",err);
-          req.flash('success', "추가 실패");
-        }else{
+        if(!err){
             req.flash('success', "추가 성공");
         }
         res.redirect('receipt/receiptmain');
