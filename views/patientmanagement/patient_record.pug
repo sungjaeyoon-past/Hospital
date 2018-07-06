@@ -2,24 +2,27 @@ extends ../layoutemp
 
 block content
     .container
-        h1(style="margin-top:3%;") 내 기록
-        table.table.usedbedtable
+        h1(style="margin-top:3%;") 
+            #{patient_id} 번 환자 기록
+        table.table
             thead
                 tr
-                    th(scope="col") 번호
+                    th(scope="col") 기록번호
                     th(scope="col") 담당 간호사
                     th(scope="col") 시행 일시
                     th(scope="col") 내용
                     th(scope="col") 내용
-
             tbody
+                each record in recordList
+                    tr
+                        th #{record.record_id}
+                        td #{record.employee_id}
+                        td #{moment(record.date).format('YYYY-MM-DD')}
+                        td #{record.information} 
+                        td #{record.description}  
 
-                tr
-                    th
-                    td
-                    td    
-                    td    
-                    td    
-                    td 
+
+
+ 
 
 

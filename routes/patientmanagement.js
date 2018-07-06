@@ -40,6 +40,17 @@ function validateFormInpatient(form, option) {
   if (!doctor_employee_id) { return "담당의사ID를 입력해주세요!"; }
 }
 
+function validateFormDetail(form, option) {
+  var employee_id = form.employee_id || "";
+  var date = form.date || "";
+  var description = form.description || "";
+  if (!employee_id) { return "담당자를 입력해주세요!"; }
+  if (!date) { return "날짜 입력해주세요!"; }
+  if (!description) { return "내용을 입력해주세요!"; }
+
+}
+
+
 function getSqlResult(insertSql, callback) {
   conn.query(insertSql, function (err, result) {
     if (err)
@@ -63,13 +74,16 @@ function getPersonResult(personList, data) {
   return personList;
 }
 
+
+
 //환자관리 눌렀을 때 보여주는곳+ 환자 검색 (완)
 router.get('/', catchErrors(async (req, res, next) => {
   if (req.query.name) {
     //var insertSql="SELECT * FROM patient WHERE name ='"+req.query.name+"'";
   } else {
     var insertSql = "SELECT * FROM patient"
-    //var insertSql="DELETE FROM department WHERE department_name='surgery'";
+    //var insertSql="DELETE FROM inpatient WHERE patient_id='41'";
+    //var insertSql=" UPDATE usage_record SET information ='기저귀' WHERE record_id=2";
   }
   var personList = [];
   getSqlResult(insertSql, function (err, data) {
@@ -123,7 +137,7 @@ router.get('/bed/:number', catchErrors(async (req, res, next) => {
           for (var i in data) {
             var patient = {
               'department_name': data[i].department_name,
-              'bed_no': parseInt(data[i].bed_no)%4,
+              'bed_no': parseInt(data[i].bed_no)%16,
               'patient_id': data[i].patient_id,
               'patient_name': data[i].name,
               'employee_id': data[i].employee_id,
@@ -213,24 +227,61 @@ router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
 
 //입원 수속에서 상세정보 클릭 ()
 router.get('/inpatientdetail/:id', catchErrors(async (req, res, next) => {
-  var patient_id = req.params.id;
-
-  res.render('patientmanagement/patient_record');
+  var insertSql="SELECT * FROM usage_record WHERE patient_id  = "+req.params.id + " ORDER BY record_id DESC";
+  var recordList=[];
+  getSqlResult(insertSql, function (err, data) {
+    if (!err) {
+      for(var i in data){
+        var record={
+          'record_id':data[i].record_id,
+          'employee_id':data[i].employee_id,
+          'date':data[i].date,
+          'information':data[i].information,
+          'description':data[i].description
+        }
+        recordList.push(record);
+      }
+      console.log(recordList);
+      res.render('patientmanagement/patient_record',{recordList:recordList, patient_id:req.params.id});
+    }
+  });
 }));
 
-//입원 중인 환자 투약, 링거, 기저귀 변경내용 추가눌렀을 경우()
+//입원 중인 환자 투약, 링거, 기저귀 변경내용 추가눌렀을 경우(완)
 router.get('/inpatientdetail/new/:id', catchErrors(async (req, res, next) => {
   var patient_id = req.params.id;
   res.render('patientmanagement/newpatient_record', { patient_id: patient_id });
 }));
 
 
-//입원 중인 환자 투약, 링거, 기저귀 변경내용 추가하기()
+//입원 중인 환자 투약, 링거, 기저귀 변경내용 추가하기(완)
 router.post('/inpatientdetail/:id', catchErrors(async (req, res, next) => {
+  const err = validateFormDetail(req.body);
+  if (err) {
+    req.flash('danger', err);
+    console.log(err);
+    return res.redirect('back');
+  }
   var patient_id = req.params.id;
-
-
-  res.redirect('patientmanagement/patient_record');
+  var employee_id=req.body.employee_id;
+  var date=req.body.date;
+  var information=req.body.date;
+  if(information=='option1'){
+    information="링거";
+  }else if(information=='option2'){
+    information="기저귀";
+  }else{
+    information="투약";
+  }
+  var description=req.body.description;
+  var insertSql= "INSERT INTO usage_record (patient_id, employee_id, date, information, description) VALUE ('"+patient_id+"','"+employee_id+"','"+date+"','"+information+"','"+description+"')";
+  console.log(insertSql);
+  getSqlResult(insertSql, function (err, data) {
+    if (!err) {
+      req.flash('success', "추가 성공!");
+    }
+  });
+  res.render('patientmanagement/patient_record');
 }));
 
 //퇴원 수속 ()
@@ -418,7 +469,7 @@ router.get('/edit/:id', catchErrors(async (req, res, next) => {
   });
 }));
 
-//환자 정보 변경 했을 경우 (X)
+//환자 정보 변경 했을 경우 ()
 router.put('/:id', catchErrors(async (req, res, next) => {
   var patient_id = req.params.id;
   var name = req.body.name;
