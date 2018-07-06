@@ -1,15 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const catchErrors = require('../lib/async-error');
-var mysql = require('mysql');
-var conn = mysql.createConnection({
-  host: '58.123.136.107',
-  port: '3308',
-  user: 'web',
-  password: 'mju12345',
-  database: 'medic'
-});
-conn.connect();
+const isAuthenticated = require('../lib/isAuthenticated');
+var mysql_dbc = require('../db/db_con')();
+var conn = mysql_dbc.init();
 
 /* GET home page. */
 
@@ -21,8 +15,10 @@ conn.connect();
   그리고 주기적으로 정보 갱신(AJAX RELOAD)
   만약 진짜 realtime구현하려면 timestamp값 대조로 가능
 */
-router.get('/', catchErrors(async (req, res, next) => {
-  res.render('monitor/monitor2');
+router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
+  console.log(res.locals.currentUser.user_id);
+  console.log(res.locals.currentUser.user_role);
+  res.render('monitor/monitor2', { role: res.locals.currentUser.user_role });
 }));
 
 //---------------------JSON객체 전달-------------------------//

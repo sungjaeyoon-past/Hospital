@@ -9,8 +9,12 @@ block content
                 |   
                 a.nav-link(href='/monitor') 환자 모니터링
                 |   
-                a.nav-link(href='/') 환자 통계
-                |   
+                a.nav-link(href='/') 통계
+                |
+                a.nav-link(href='/patientmanagement/bed') 병실 현황
+                |                 
+                a.nav-link(href='/patientmanagement/outpatient') 퇴원 환자
+                |    
     .container(style="margin-top:2%;")
 
         .alert.alert-secondary
@@ -25,16 +29,24 @@ block content
         table.table.usedbedtable
             thead
                 tr
+                    th(scope="col") 과
                     th(scope="col") 침대번호
-                    th(scope="col") 환자번호 (상세보기)
+                    th(scope="col") 환자번호(둘까?)
+                    th(scope="col") 환자이름 
+                    th(scope="col") 출생년도 
+                    th(scope="col") 담당의사 
                     th(scope="col") 질병
                     th(scope="col") 입원일
             tbody
                 each patient in patientList
                     tr
-                        th(scope="row") #{patient.bed_no}
+                        th
+                        td(scope="row") #{patient.bed_no}
                         td
                             a(href=`/patientmanagement/show/${patient.patient_id}`) #{patient.patient_id}
+                        td    
+                        td    
+                        td    
                         td #{patient.disease_name}
                         td #{moment(patient.hospital_day).format('YYYY-MM-DD')}
     
