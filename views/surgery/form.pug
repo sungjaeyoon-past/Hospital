@@ -1,0 +1,45 @@
+.row
+    .col-md-6
+        .input-group.mb-3
+            .input-group-prepend
+                span#basic-addon1.input-group-text 접수 번호                    
+            input.form-control(type='number', placeholder='',name='surgery_schedule_id')
+    .col-md-6
+        .input-group.mb-3
+            .input-group-prepend
+                span#basic-addon1.input-group-text 환자 id                    
+            input.form-control(type='number', placeholder='1',name='patient_id')
+    .col-md-6
+        .input-group.mb-3
+            .input-group-prepend
+                span#basic-addon1.input-group-text 의사 id                    
+            input.form-control(type='number', placeholder='1',name='doctor_id')
+.row
+    .col-md-6
+        .input-group.mb-3
+            .input-group-prepend
+                span#basic-addon1.input-group-text 수술 시작 예정 시각
+            input.form-control(type='date', placeholder='2018-07-06', name='date', aria-describedby='basic-addon1')
+    .col-md-6
+        .input-group.mb-3
+            .input-group-prepend
+                span#basic-addon1.input-group-text 수술 완료 예정 시각
+            input.form-control(type='date', placeholder='2018-07-06', name='date', aria-describedby='basic-addon1')
+
+hr
+.row
+    .col-md-4
+        .input-group.mb-3
+            .input-group-prepend
+                span#basic-addon1.input-group-text 수술실                    
+            input.form-control(type='number', placeholder='수술실',name='medicine_id')
+                            
+.row
+    .col-md-12
+        .input-group.mb-3
+            .input-group-prepend
+                span#basic-addon1.input-group-text 비고                  
+            input.form-control(type='text', placeholder='비고',name='description')
+.row
+    .col-md-1
+            button.btn.btn-primary(type='submit' ,style="margin-top:20%;") 수술실 예약
