@@ -18,23 +18,28 @@ block content
         form(action=`/patientmanagement/inpatient/${patient.patient_id}`, method="POST")
             .alert.alert-primary
                 .row
-                    .col-md-2                     
-                        .form-check
-                            input#exampleRadios1.form-check-input(type='radio', name='department', value='option1', checked='')
-                            label.form-check-label(for='안과')
-                            | 안과
-                        .form-check
-                            input#exampleRadios1.form-check-input(type='radio', name='department', value='option2')
-                            label.form-check-label(for='내과')
-                            | 내과
-                        .form-check
-                            input#exampleRadios1.form-check-input(type='radio', name='department', value='option3' )
-                            label.form-check-label(for='외과')
-                            | 외과
-                        .form-check
-                            input#exampleRadios1.form-check-input(type='radio', name='department', value='option4' )
-                            label.form-check-label(for='치과')
-                            | 치과
+                    .col-md-6
+                        .row
+                            .col-md-3                   
+                                .form-check
+                                    input#exampleRadios1.form-check-input(type='radio', name='department', value='option1', checked='')
+                                    label.form-check-label(for='안과')
+                                    | 안과
+                            .col-md-3                    
+                                .form-check
+                                    input#exampleRadios1.form-check-input(type='radio', name='department', value='option2')
+                                    label.form-check-label(for='내과')
+                                    | 내과
+                            .col-md-3                     
+                                .form-check
+                                    input#exampleRadios1.form-check-input(type='radio', name='department', value='option3' )
+                                    label.form-check-label(for='외과')
+                                    | 외과
+                            .col-md-3                     
+                                .form-check
+                                    input#exampleRadios1.form-check-input(type='radio', name='department', value='option4' )
+                                    label.form-check-label(for='치과')
+                                    | 치과
                     .col-md-3
                         .input-group.mb-3
                             .input-group-prepend

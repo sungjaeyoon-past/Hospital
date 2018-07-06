@@ -105,19 +105,19 @@ router.get('/bed/:number', catchErrors(async (req, res, next) => {
   if (number == '1') {
     var insertSql = "SELECT bed_id, inpatient_id FROM bed WHERE (bed_id>=1)AND(bed_id<=16)";
     var insertSql2 = "SELECT* FROM medic.inpatient_view WHERE (bed_no>=1)AND(bed_no<=16) ORDER BY bed_no";
-    number="안과";
+    number = "안과";
   } else if (number == '2') {
     var insertSql = "SELECT bed_id, inpatient_id FROM bed WHERE (bed_id>=17)AND(bed_id<=32)";
     var insertSql2 = "SELECT* FROM medic.inpatient_view WHERE (bed_no>=17)AND(bed_no<=32) ORDER BY bed_no";
-    number="내과";
+    number = "내과";
   } else if (number == '3') {
     var insertSql = "SELECT bed_id, inpatient_id FROM bed WHERE (bed_id>=33)AND(bed_id<=48)";
     var insertSql2 = "SELECT* FROM medic.inpatient_view WHERE (bed_no>=33)AND(bed_no<=48) ORDER BY bed_no";
-    number="외과";
+    number = "외과";
   } else if (number == '4') {
     var insertSql = "SELECT bed_id, inpatient_id FROM bed WHERE (bed_id>=49)AND(bed_id<=64)";
     var insertSql2 = "SELECT* FROM medic.inpatient_view WHERE (bed_no>=49)AND(bed_no<=64) ORDER BY bed_no";
-    number="치과";
+    number = "치과";
   }
   console.log(insertSql);
   console.log(insertSql2);
@@ -127,7 +127,7 @@ router.get('/bed/:number', catchErrors(async (req, res, next) => {
     } else {
       for (var i in data) {
         if (data[i].inpatient_id > 0) {
-          bedList[parseInt(data[i].bed_id)%4 - 1] = 1;
+          bedList[parseInt(data[i].bed_id) % 4 - 1] = 1;
         }
       }
       getSqlResult(insertSql2, function (err, data) {
@@ -137,7 +137,7 @@ router.get('/bed/:number', catchErrors(async (req, res, next) => {
           for (var i in data) {
             var patient = {
               'department_name': data[i].department_name,
-              'bed_no': parseInt(data[i].bed_no)%16,
+              'bed_no': parseInt(data[i].bed_no) % 16,
               'patient_id': data[i].patient_id,
               'patient_name': data[i].name,
               'employee_id': data[i].employee_id,
@@ -150,7 +150,7 @@ router.get('/bed/:number', catchErrors(async (req, res, next) => {
             patientList.push(patient);
           }
         }
-        res.render('patientmanagement/bed', { bedList: bedList, patientList: patientList, number:number });
+        res.render('patientmanagement/bed', { bedList: bedList, patientList: patientList, number: number });
       });
     }
   });
@@ -158,26 +158,37 @@ router.get('/bed/:number', catchErrors(async (req, res, next) => {
 
 //입원 클릭했을시 입원수속 보여주는곳 (완)
 router.get('/inpatient/:id', catchErrors(async (req, res, next) => {
-  var person = [];
-  var bedList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var requestPatient = req.params.id;
-  var insertSql = 'SELECT * FROM patient WHERE patient_id=' + requestPatient;
-  var insertSql2 = "SELECT bed_id, inpatient_id FROM bed";
+  var insertSql = 'SELECT patient_id FROM inpatient WHERE patient_id=' + req.params.id;
   getSqlResult(insertSql, function (err, data) {
-    if (err) {
-      console.log("ERROR : ", err);
-    } else {
-      person = getPersonResult(person, data);
+    if (data.length==1) {
+      req.flash('danger', "이미 입원중인 환자입니다.");
+      return res.redirect('back');
+    }else{
+      var person = [];
+      var bedList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      var requestPatient = req.params.id;
+      var insertSql2 = 'SELECT * FROM patient WHERE patient_id=' + requestPatient;
+      var insertSql3 = "SELECT bed_id, inpatient_id FROM bed";
       getSqlResult(insertSql2, function (err, data) {
         if (err) {
           console.log("ERROR : ", err);
         } else {
-          for (var i in data) {
-            if (data[i].inpatient_id > 0) {
-              bedList[data[i].bed_id - 1] = 1;
+          person = getPersonResult(person, data);
+          getSqlResult(insertSql3, function (err, data) {
+            if (err) {
+              console.log("ERROR : ", err);
+            } else {
+              for (var i in data) {
+                if (data[i].inpatient_id > 0) {
+                  bedList[data[i].bed_id - 1] = 1;
+                }
+              }
+              res.render('patientmanagement/inpatient', { patient: person[0], bedList: bedList });
             }
-          }
-          res.render('patientmanagement/inpatient', { patient: person[0], bedList: bedList });
+          });
         }
       });
     }
@@ -203,7 +214,7 @@ router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
   } else {
     bed_no = 48 + parseInt(bed_no);
   }
-  var hospital_room = parseInt((parseInt(bed_no)-1)/4)+1;
+  var hospital_room = parseInt((parseInt(bed_no) - 1) / 4) + 1;
   console.log(hospital_room);
   var disease_name = req.body.disease_name;
   var doctor_employee_id = req.body.doctor_employee_id;
@@ -227,22 +238,22 @@ router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
 
 //입원 수속에서 상세정보 클릭 ()
 router.get('/inpatientdetail/:id', catchErrors(async (req, res, next) => {
-  var insertSql="SELECT * FROM usage_record WHERE patient_id  = "+req.params.id + " ORDER BY record_id DESC";
-  var recordList=[];
+  var insertSql = "SELECT * FROM usage_record WHERE patient_id  = " + req.params.id + " ORDER BY record_id DESC";
+  var recordList = [];
   getSqlResult(insertSql, function (err, data) {
     if (!err) {
-      for(var i in data){
-        var record={
-          'record_id':data[i].record_id,
-          'employee_id':data[i].employee_id,
-          'date':data[i].date,
-          'information':data[i].information,
-          'description':data[i].description
+      for (var i in data) {
+        var record = {
+          'record_id': data[i].record_id,
+          'employee_id': data[i].employee_id,
+          'date': data[i].date,
+          'information': data[i].information,
+          'description': data[i].description
         }
         recordList.push(record);
       }
       console.log(recordList);
-      res.render('patientmanagement/patient_record',{recordList:recordList, patient_id:req.params.id});
+      res.render('patientmanagement/patient_record', { recordList: recordList, patient_id: req.params.id });
     }
   });
 }));
@@ -263,18 +274,18 @@ router.post('/inpatientdetail/:id', catchErrors(async (req, res, next) => {
     return res.redirect('back');
   }
   var patient_id = req.params.id;
-  var employee_id=req.body.employee_id;
-  var date=req.body.date;
-  var information=req.body.date;
-  if(information=='option1'){
-    information="링거";
-  }else if(information=='option2'){
-    information="기저귀";
-  }else{
-    information="투약";
+  var employee_id = req.body.employee_id;
+  var date = req.body.date;
+  var information = req.body.date;
+  if (information == 'option1') {
+    information = "링거";
+  } else if (information == 'option2') {
+    information = "기저귀";
+  } else {
+    information = "투약";
   }
-  var description=req.body.description;
-  var insertSql= "INSERT INTO usage_record (patient_id, employee_id, date, information, description) VALUE ('"+patient_id+"','"+employee_id+"','"+date+"','"+information+"','"+description+"')";
+  var description = req.body.description;
+  var insertSql = "INSERT INTO usage_record (patient_id, employee_id, date, information, description) VALUE ('" + patient_id + "','" + employee_id + "','" + date + "','" + information + "','" + description + "')";
   console.log(insertSql);
   getSqlResult(insertSql, function (err, data) {
     if (!err) {
@@ -297,28 +308,28 @@ router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
     mm = '0' + mm
   }
   today = mm + '/' + dd + '/' + yyyy;
-  var insertSql = "SELECT * FROM inpatient WHERE patient_id = " + req.params.id ;
+  var insertSql = "SELECT * FROM inpatient WHERE patient_id = " + req.params.id;
   getSqlResult(insertSql, function (err, data) {
-    if (data.length>=1) {
+    if (data.length >= 1) {
       var doctor_id = data[0].doctor_employee_id;
       var hospital_day = data[0].hospital_day;
       var disease_name = data[0].disease_name;
       var department_id = data[0].bed_no;
-      if((department_id>=1)&&(department_id<=16)){
-        department_id='안과';
-      }else if((department_id>=17)&&(department_id<=32)){
-        department_id='내과';
-      }else if((department_id>=33)&&(department_id<=48)){
-        department_id='외과';
-      }else{
-        department_id='치과';
+      if ((department_id >= 1) && (department_id <= 16)) {
+        department_id = '안과';
+      } else if ((department_id >= 17) && (department_id <= 32)) {
+        department_id = '내과';
+      } else if ((department_id >= 33) && (department_id <= 48)) {
+        department_id = '외과';
+      } else {
+        department_id = '치과';
       }
       var insertSql2 = "UPDATE bed SET inpatient_id = null ,weight_sensor=0, is_wet=0, is_empty=0 WHERE inpatient_id = " + req.params.id;
-      var insertSql3 = "DELETE FROM inpatient WHERE patient_id = " + req.params.id ;
-      var insertSql4 = "INSERT INTO hospital_record ( patient_id, doctor_id, department_id, disease_name, hospital_day, discharge_day) VALUES ('"+ req.params.id + "','" + doctor_id + "','" + department_id + "','" + disease_name + "','" + hospital_day + "','" + today + "' )";
-      console.log("2: "+insertSql2);
-      console.log("3: "+insertSql3);
-      console.log("4: "+insertSql4);
+      var insertSql3 = "DELETE FROM inpatient WHERE patient_id = " + req.params.id;
+      var insertSql4 = "INSERT INTO hospital_record ( patient_id, doctor_id, department_id, disease_name, hospital_day, discharge_day) VALUES ('" + req.params.id + "','" + doctor_id + "','" + department_id + "','" + disease_name + "','" + hospital_day + "','" + today + "' )";
+      console.log("2: " + insertSql2);
+      console.log("3: " + insertSql3);
+      console.log("4: " + insertSql4);
       getSqlResult(insertSql2, function (err, data) {
         if (!err) {
           getSqlResult(insertSql3, function (err, data) {

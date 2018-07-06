@@ -27,19 +27,23 @@ block content
                             input.form-control(type='date',name='date',  placeholder='변경 시간') 
                 .row
                     .col-md-8
-                        .form-check
-                            input#exampleRadios1.form-check-input(type='radio', name='1', value='option1', checked='')
-                            label.form-check-label(for='linger')
-                                | 링거
-                        .form-check
-                            input#exampleRadios2.form-check-input(type='radio', name='1', value='option2')
-                            label.form-check-label(for='what')
-                                | 기저귀         
-                        .form-check
-                            input#exampleRadios2.form-check-input(type='radio', name='1', value='option3')
-                            label.form-check-label(for='medicine')
-                                | 투약
-                .row
+                        .row
+                            .col-md-2
+                                .form-check
+                                    input#exampleRadios1.form-check-input(type='radio', name='1', value='option1', checked='')
+                                    label.form-check-label(for='linger')
+                                        | 링거
+                            .col-md-2
+                                .form-check
+                                    input#exampleRadios2.form-check-input(type='radio', name='1', value='option2')
+                                    label.form-check-label(for='what')
+                                        | 기저귀         
+                            .col-md-2
+                                .form-check
+                                    input#exampleRadios2.form-check-input(type='radio', name='1', value='option3')
+                                    label.form-check-label(for='medicine')
+                                        | 투약
+                .row(style="margin-top:2%;")
                     .col-md-10
                         .input-group.mb-3
                             .input-group-prepend
