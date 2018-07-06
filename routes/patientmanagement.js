@@ -74,6 +74,17 @@ function getPersonResult(personList, data) {
   return personList;
 }
 
+function formatDate(date) {
+  var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
+
+  return [year, month, day].join('-');
+}
 
 
 //환자관리 눌렀을 때 보여주는곳+ 환자 검색 (완)
@@ -295,7 +306,7 @@ router.post('/inpatientdetail/:id', catchErrors(async (req, res, next) => {
   res.render('patientmanagement/patient_record');
 }));
 
-//퇴원 수속 ()
+//퇴원 수속 (완)
 router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
   var today = new Date();
   var dd = today.getDate();
@@ -307,22 +318,22 @@ router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
   if (mm < 10) {
     mm = '0' + mm
   }
-  today = mm + '/' + dd + '/' + yyyy;
+  today = yyyy + '-' + mm + '-' + dd;
   var insertSql = "SELECT * FROM inpatient WHERE patient_id = " + req.params.id;
   getSqlResult(insertSql, function (err, data) {
     if (data.length >= 1) {
       var doctor_id = data[0].doctor_employee_id;
-      var hospital_day = data[0].hospital_day;
+      var hospital_day = formatDate(data[0].hospital_day);
       var disease_name = data[0].disease_name;
       var department_id = data[0].bed_no;
       if ((department_id >= 1) && (department_id <= 16)) {
-        department_id = '안과';
+        department_id = 1;
       } else if ((department_id >= 17) && (department_id <= 32)) {
-        department_id = '내과';
+        department_id = 2;
       } else if ((department_id >= 33) && (department_id <= 48)) {
-        department_id = '외과';
+        department_id = 3;
       } else {
-        department_id = '치과';
+        department_id = 4;
       }
       var insertSql2 = "UPDATE bed SET inpatient_id = null ,weight_sensor=0, is_wet=0, is_empty=0 WHERE inpatient_id = " + req.params.id;
       var insertSql3 = "DELETE FROM inpatient WHERE patient_id = " + req.params.id;
@@ -338,6 +349,7 @@ router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
                 if (!err) {
                   req.flash('success', "퇴원 성공!");
                 } else {
+                  console.log(err);
                   req.flash('danger', "퇴원 불가!");
                 }
               });
@@ -356,7 +368,7 @@ router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
   });
 }));
 
-//퇴원 기록 확인()
+//퇴원 기록 확인(완)
 router.get('/outpatient', catchErrors(async (req, res, next) => {
   var insertSql = "SELECT * FROM medic.hospital_record_view";
   var recordList = [];
@@ -364,20 +376,22 @@ router.get('/outpatient', catchErrors(async (req, res, next) => {
     if (!err) {
       for (var i in data) {
         var record = {
+          'department_name': data[i].department_name,
           'patient_id': data[i].patient_id,
           'name': data[i].name,
           'personal_number': data[i].personal_number,
+          'doctor_name': data[i].doctor_name,
+          'disease_name': data[i].disease_name,
           'hospital_day': data[i].hospital_day,
           'discharge_day': data[i].discharge_day,
-          'disease_name': data[i].disease_name,
-          'doctor_name': data[i].doctor_name,
-          'department_name': data[i].department_name,
         }
+        record.personal_number=(record.personal_number).substring(0, 6);
         recordList.push(record);
       }
+      console.log(recordList);
+      res.render('patientmanagement/outpatient', { recordList: recordList });
     }
   });
-  res.render('patientmanagement/outpatient', { recordList: recordList });
 }));
 
 

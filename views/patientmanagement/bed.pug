@@ -13,7 +13,7 @@ block content
                 |   
                 a.nav-link.active(href='/patientmanagement/bed/4') 치과 병실
                 |
-                a.nav-link(href='/patientmanagement/outpatient') 퇴원 환자
+                a.nav-link(href='/patientmanagement/outpatient') 퇴원 기록
                 |   
 
         include ./_bed
@@ -33,6 +33,7 @@ block content
                     th(scope="col") 입원일
                     th(scope="col") 입원 정보
                     th(scope="col") 정보 추가
+                    th(scope="col") 퇴원
             tbody
                 each patient in patientList
                     tr
@@ -50,4 +51,8 @@ block content
                         td 
                             .btn.btn-dark(style="text-align:center;")
                                 a(href=`/patientmanagement/inpatientdetail/new/${patient.patient_id}`) +
+                        td  
+                            .btn.btn-light(style="text-align:center;")
+                                a(href=`/patientmanagement/inpatient/${patient.patient_id}?_method=DELETE`) 퇴원
+                            
     
