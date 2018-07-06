@@ -28,7 +28,7 @@ block content;
           .card-header.card-header-warning.card-header-icon
             .card-icon
               i.material-icons local_hospital
-            p.card-category 1번 방
+            p.card-category 1번 병실
             h3.card-title
               |#{infos[0].room1_temperature+"'c"}
               br   
@@ -41,7 +41,7 @@ block content;
           .card-header.card-header-warning.card-header-icon
             .card-icon
               i.material-icons local_hospital
-            p.card-category 2번 방
+            p.card-category 2번 병실
             h3.card-title
               |#{infos[0].room2_temperature+"'c"}
               br   
@@ -55,7 +55,7 @@ block content;
           .card-header.card-header-warning.card-header-icon
             .card-icon
               i.material-icons local_hospital
-            p.card-category 3번 방
+            p.card-category 3번 병실
             h3.card-title
               |#{infos[0].room3_temperature+"'c"}
               br   
@@ -68,7 +68,7 @@ block content;
           .card-header.card-header-warning.card-header-icon
             .card-icon
               i.material-icons local_hospital
-            p.card-category 4번 방
+            p.card-category 4번 병실
             h3.card-title
               |#{infos[0].room4_temperature+"'c"}
               br   
@@ -94,7 +94,7 @@ block content;
                 -for(i=1;i<infos.length;i++)
                   tr
                     td            
-                      | #{infos[i].hospital_room+'번 방  '}
+                      | #{infos[i].hospital_room+'번 병실  '}
                       | #{infos[i].name}   
                       -if (infos[i].is_wet==false)
                         h   교체 x
@@ -110,7 +110,7 @@ block content;
               -for(i=1;i<infos.length;i++)
                 tr
                   td            
-                    | #{infos[i].hospital_room+'번 방  '}
+                    | #{infos[i].hospital_room+'번 병실  '}
                     | #{infos[i].name}   
                     -if (infos[i].is_empty==false)
                       h   교체 x
@@ -125,7 +125,7 @@ block content;
               -for(i=1;i<infos.length;i++)
                 tr
                   td            
-                    | #{infos[i].hospital_room+'번 방  '}
+                    | #{infos[i].hospital_room+'번 병실  '}
                     | #{infos[i].name}   
                     -if (infos[i].weight_sensor==false)
                       h 
