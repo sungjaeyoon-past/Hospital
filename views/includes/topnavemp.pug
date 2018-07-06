@@ -13,10 +13,11 @@
             a.nav-link(href='/patientmanagement') 환자관리
           li.nav-item
             a.nav-link(href='/diagnosis') 진료작성
+          -if(role==0||role==1)
+            li.nav-item
+              a.nav-link(href='/receipt') 진료접수
+          -if(role==0)
+            li.nav-item
+              a.nav-link(href='/superadmin') 최고관리자
           li.nav-item
-            a.nav-link(href='/receipt') 진료접수
-          li.nav-item
-            a.nav-link(href='/superadmin') 최고관리자
-               
-            
-          
+            a.nav-link(href='/login/logout') 로그아웃
