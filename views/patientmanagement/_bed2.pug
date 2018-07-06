@@ -2,14 +2,14 @@ table.table.usedbedtable
     thead
         tr
             th(scope="col") 담당부서
-            - for(var i=1; i<13; i++)
+            - for(var i=1; i<17; i++)
                 th(scope="col") #{i}번
     tbody(style="text-align:center;")
         //포이치 담당부서
         tr
             th
-                | 와과
-            - for(var i=1; i<13; i++)  
+                | 외과
+            - for(var i=1; i<17; i++)  
                 td
                     //if danger
                     .alert.alert-primary
@@ -17,7 +17,7 @@ table.table.usedbedtable
         tr
             th
                 | 내과
-            - for(var i=1; i<13; i++)  
+            - for(var i=1; i<17; i++)  
                 td
                     //if danger
                     .alert.alert-primary
@@ -25,7 +25,7 @@ table.table.usedbedtable
         tr
             th
                 | 치과
-            - for(var i=1; i<13; i++)  
+            - for(var i=1; i<17; i++)  
                 td
                     //if danger
                     .alert.alert-primary
@@ -33,7 +33,7 @@ table.table.usedbedtable
         tr
             th
                 | 안과
-            - for(var i=1; i<13; i++)  
+            - for(var i=1; i<17; i++)  
                 td
                     //if danger
                     .alert.alert-primary

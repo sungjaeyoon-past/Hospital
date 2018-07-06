@@ -38,6 +38,9 @@ block content
             .col-md-3
                 a.btn.btn-danger(href=`/patientmanagement/${patient.patient_id}?_method=DELETE`)
                     | 정보 삭제
+            .col-md-3
+                a.btn.btn-success(href=`/patientmanagement/inpatientdetail/${patient.patient_id}`)
+                    | 입원 정보 확인
 
 
             
