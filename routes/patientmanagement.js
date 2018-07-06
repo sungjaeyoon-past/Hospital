@@ -16,13 +16,31 @@ const nexmo = new Nexmo({
   apiSecret: 'qQjUJNdRH9wkYWl3'
 });
 
-function validateForm(form, option) {
+function validateFormPatient(form, option) {
   var name = form.name || "";
-  var personal_number = form.personal_number || "";
   var phone_number = form.phone_number || "";
+  var personal_number = form.personal_number || "";
   if (!name) { return "이름을 입력해주세요"; }
-  if (!personal_number) { return "주민번호를 입력해주세요"; }
   if (!phone_number) { return "핸드폰 번호를 입력해주세요"; }
+  if(phone_number.length!=11){return "11자리의 핸드폰번호를 입력해주세요";}
+  if (!personal_number) { return "주민번호를 입력해주세요"; }
+  if (personal_number.length!=13) { return "13자리의 주민번호를 입력해주세요"; }
+}
+
+function validateFormInpatient(form, option) {
+  var hospital_room = form.hospital_room || "";
+  var bed_no = form.bed_no || "";
+  var disease_name = form.disease_name || "";
+  var hospital_day = form.hospital_day || "";
+  var doctor_employee_id = form.doctor_employee_id || "";
+  if(!hospital_room){return "병실 번호를 입력해주세요!";}
+  if((hospital_room<1)&&(hospital_room>4)){return "1~4 병실 번호만 입력해주세요!"}
+  if(!bed_no){return "침대 번호를 입력해주세요!";}
+  if((bed_no<1)&&(bed_no>16)){return "1~16 침대 번호만 입력해주세요!"}
+  //사용중인 침대인지 확인해야함
+  if(!disease_name){return "질병을 입력해주세요!";}
+  if(!hospital_day){return "입원일을 설정해주세요!";}
+  if(!doctor_employee_id){return "담당의사ID를 입력해주세요!";}
 }
 
 function getSqlResult(insertSql, callback){
@@ -51,9 +69,10 @@ function getPersonResult(personList,data){
 //환자관리 눌렀을 때 보여주는곳+ 환자 검색 (완)
 router.get('/', catchErrors(async (req, res, next) => {
   if(req.query.name){
-    var insertSql="SELECT * FROM patient WHERE name ='"+req.query.name+"'";
+    //var insertSql="SELECT * FROM patient WHERE name ='"+req.query.name+"'";
   }else{
     var insertSql="SELECT * FROM patient"
+    //var insertSql="DELETE FROM department WHERE department_name='surgery'";
   }
   var personList = [];
   getSqlResult(insertSql, function(err,data){
@@ -85,7 +104,42 @@ router.get('/bed', catchErrors(async (req, res, next) => {
         if (err) {
           console.log("ERROR : ",err);            
         } else {                     
-          console.log(data);
+          for(var i in data){
+            var patient={
+              'patient_id':data[i].patient_id,
+              'bed_no':data[i].bed_no,
+              'disease_name':data[i].disease_name,
+              'hospital_day':data[i].hospital_day
+            }
+            patientList.push(patient);
+          }
+        }
+        res.render('patientmanagement/bed',{bedList:bedList, patientList:patientList});
+      });
+    }
+  });
+}));
+
+//침대 현황 다른과
+router.get('/bed/:id', catchErrors(async (req, res, next) => {
+  var requestDeaprtment  = req.params.id;
+  var bedList=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  var patientList=[];
+  var insertSql="SELECT bed_id, inpatient_id FROM bed";
+  var insertSql2='SELECT patient_id, bed_no, disease_name, hospital_day FROM inpatient ORDER BY bed_no';
+  getSqlResult(insertSql, function(err,data){
+    if (err) {
+      console.log("ERROR : ",err);            
+    } else {                     
+      for(var i in data){
+        if(data[i].inpatient_id > 0){
+          bedList[data[i].bed_id-1]=1;
+        }
+      }
+      getSqlResult(insertSql2, function(err,data){
+        if (err) {
+          console.log("ERROR : ",err);            
+        } else {                     
           for(var i in data){
             var patient={
               'patient_id':data[i].patient_id,
@@ -133,6 +187,12 @@ router.get('/inpatient/:id', catchErrors(async (req, res, next) => {
 
 //입원 수속 완료후 입원 추가 (완)
 router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
+  const err = validateFormInpatient(req.body);
+  if (err) {
+    req.flash('danger', err);
+    console.log(err);
+    return res.redirect('back');
+  }
   var patient_id=req.params.id;
   var hospital_room = req.body.hospital_room;
   var bed_no=req.body.bed_no;
@@ -141,29 +201,47 @@ router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
   var hospital_day=req.body.hospital_day;
   var insertSql="INSERT INTO inpatient (patient_id, hospital_room, bed_no, disease_name, doctor_employee_id, hospital_day) VALUES ('"+patient_id+ "','" +hospital_room+ "','"+bed_no+"','"+disease_name+ "','" +doctor_employee_id+ "','" +hospital_day+"')";
   var insertSql2 = "UPDATE bed SET inpatient_id="+patient_id+", weight_sensor="+ 0 +", is_wet="+0+", is_empty="+0+" WHERE (bed_id='"+bed_no+"') AND ( hospital_room='"+hospital_room+"')";
-  console.log(insertSql);
   getSqlResult(insertSql, function(err,data){
-    if (err) {
-        console.log("ERROR : ",err);
-        req.flash('success', "입원 추가 실패");            
-    }else{
+    if (!err) {
       getSqlResult(insertSql2,function(err,date){
-        if(err){
-          console.log("ERROR : ",err);
-          req.flash('success', "사용 중인 침대!");    
-        }else{
+        if(!err){
           req.flash('success', "추가 성공");
         }
       });
+    }else{
+      req.flash('danger', "이미 입원 중인 환자입니다!");
     }
-    res.redirect('/patientmanagement');
+    return res.redirect('/patientmanagement');
   });
+}));
+
+//입원 수속에서 상세정보 클릭 ()
+router.get('/inpatientdetail/:id', catchErrors(async (req, res, next) => {
+  var patient_id=req.params.id;
+  
+  res.render('patientmanagement/patient_record');
+}));
+
+//입원 중인 환자 투약, 링거, 기저귀 변경내용 추가눌렀을 경우()
+router.get('/inpatientdetail/new/:id', catchErrors(async (req, res, next) => {
+  var patient_id=req.params.id;
+  res.render('patientmanagement/newpatient_record',{patient_id:patient_id});
+}));
+
+
+//입원 중인 환자 투약, 링거, 기저귀 변경내용 추가하기()
+router.post('/inpatientdetail/:id', catchErrors(async (req, res, next) => {
+  var patient_id=req.params.id;
+
+
+  res.redirect('patientmanagement/patient_record');
 }));
 
 //퇴원 수속 (완)
 router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
   var insertSql1="UPDATE bed SET inpatient_id = null ,weight_sensor=0, is_wet=0, is_empty=0 WHERE inpatient_id = "+req.params.id;
   var insertSql2="DELETE FROM inpatient WHERE patient_id = '"+req.params.id+"'"; 
+  //var insertSql3="INSERT INTO outpatient ( patient_id, reserved_day, department) VALUES ("+req.params.id+", '2018-06-25' , '외과' )";
   getSqlResult(insertSql1, function(err,data){
     if (err) {
         console.log("ERROR : ",err);  
@@ -185,6 +263,11 @@ router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
     res.redirect('/patientmanagement');
   });
 }));
+
+router.get('/outpatient', catchErrors(async (req, res, next) => {
+  res.render('patientmanagement/outpatient');
+})); 
+
 
 //상세보기를 눌렀을 경우 보여주는곳 (완)
 router.get('/show/:id', catchErrors(async (req, res, next) => {
@@ -249,7 +332,7 @@ router.get('/new', catchErrors(async (req, res, next) => {
 
 //환자 추가를 했을 때 (완)
 router.post('/new', catchErrors(async (req, res, next) => {
-  const err = validateForm(req.body);
+  const err = validateFormPatient(req.body);
   if (err) {
     req.flash('danger', err);
     console.log(err);
@@ -262,13 +345,10 @@ router.post('/new', catchErrors(async (req, res, next) => {
   if (req.body.gender = 'female') { gender = 1; }
   var insertSql = "INSERT INTO patient (name, phone_number, personal_number, gender) VALUES ('" +name + "','" + phone_number + "','" + personal_number + "','" + gender + "')";
   getSqlResult(insertSql, function(err,data){
-    if (err) {
-        console.log("ERROR : ",err);
-        req.flash('success', "추가 실패");            
-    }else{
-      req.flash('success', "추가 성공");
+    if (!err) {
+      req.flash('success', '추가 완료!');
     }
-    res.redirect('/patientmanagement');
+    return res.redirect('/patientmanagement');
   });
 }));
 

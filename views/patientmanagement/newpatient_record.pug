@@ -1,0 +1,16 @@
+extends ../layoutemp
+
+block content
+     .container
+        .row(style="margin-top:20px;")
+            .col-md-12
+                h1
+                    |정보 추가
+        br
+        form(action=`/inpatientdetail/${patient_id}`, method="POST")
+            .alert.alert-primary
+                include ./_form
+                                
+                .row
+                    .col-md-1
+                            button.btn.btn-primary(type='submit' ,style="margin-left:20%; margin-top:20%;") 정보 추가

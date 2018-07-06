@@ -5,48 +5,49 @@ block content
         h1 병실 현황
         .alert.alert-primary
             nav.nav
-                a.nav-link.active(href='/patientmanagement/new') 환자 추가
+                a.nav-link.active(href='/patientmanagement/bed') 외과 병실
                 |   
-                a.nav-link(href='/monitor') 환자 모니터링
+                a.nav-link.active(href='/patientmanagement/bed/2') 내과 병실
                 |   
-                a.nav-link(href='/') 통계
+                a.nav-link.active(href='/patientmanagement/bed/3') 치과 병실
+                |   
+                a.nav-link.active(href='/patientmanagement/bed/4') 안과 병실
                 |
-                a.nav-link(href='/patientmanagement/bed') 병실 현황
-                |                 
                 a.nav-link(href='/patientmanagement/outpatient') 퇴원 환자
-                |    
-    .container(style="margin-top:2%;")
+                |   
 
-        .alert.alert-secondary
-            include ./_bed
+        include ./_bed
         
-        .alert.alert-primary
-            .row
-                .col-md-2
-                    .btn.btn-primary.usedbed
-                        | 사용중인 침대 정보
+        hr
+        h4  사용중인 침대 정보
             
         table.table.usedbedtable
             thead
                 tr
                     th(scope="col") 과
                     th(scope="col") 침대번호
-                    th(scope="col") 환자번호(둘까?)
                     th(scope="col") 환자이름 
-                    th(scope="col") 출생년도 
                     th(scope="col") 담당의사 
+                    th(scope="col") 출생년도 
                     th(scope="col") 질병
                     th(scope="col") 입원일
+                    th(scope="col") 입원 정보
+                    th(scope="col") 정보 추가
             tbody
                 each patient in patientList
                     tr
                         th
                         td(scope="row") #{patient.bed_no}
-                        td
-                            a(href=`/patientmanagement/show/${patient.patient_id}`) #{patient.patient_id}
                         td    
+                            a(href=`/patientmanagement/show/${patient.patient_id}`) #{patient.patient_id} 
+                            //이름으로 바꿔야함
                         td    
                         td    
                         td #{patient.disease_name}
                         td #{moment(patient.hospital_day).format('YYYY-MM-DD')}
+                        td 
+                            a(href=`/patientmanagement/inpatientdetail/${patient.patient_id}`) 상세정보
+                        td 
+                            .btn.btn-dark(style="text-align:center;")
+                                a(href=`/patientmanagement/inpatientdetail/new/${patient.patient_id}`) +
     
