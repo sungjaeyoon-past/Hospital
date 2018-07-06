@@ -33,7 +33,6 @@ var diagnosis = require('./routes/diagnosis');
 var receipt = require('./routes/receipt');
 var monitor = require('./routes/monitor');
 var patientmanagement = require('./routes/patientmanagement');
-var surgery = require('./routes/surgery');
 var superadmin = require('./routes/superadmin');
 /*-----------------Routes 파일 불러오기-----------------*/
 var app = express();
@@ -80,7 +79,6 @@ app.use('/monitor', monitor);
 app.use('/receipt', receipt);
 app.use('/diagnosis', diagnosis);
 app.use('/patientmanagement', patientmanagement);
-app.use('/surgery', surgery);
 app.use('/superadmin', superadmin);
 /*-----------------url route-----------------*/
 
