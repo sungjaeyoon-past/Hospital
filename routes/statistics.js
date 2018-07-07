@@ -14,29 +14,70 @@ const isAuthenticated = require('../lib/isAuthenticated');//로그인 됬는지 
 //role은 역할이며 0 최고관리자 1 의사 2간호사 navbar를 위해 role까지 전달
 //유저정보 얻는법 res.locals.currentUser하면 됨 지금은 유저아이디 역할밖에 없는데 필요한거 잇음 말좀
 router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
+    var department_infos =[];
     var rooms_info = [];
-    conn.query('SELECT * FROM hospital_room', function (err, rows, fields) {
-        var room_info;
+    conn.query('SELECT AVG(temperature) as temperature,AVG(humidity) as humidity FROM hospital_room where room_no <5', function (err, rows, fields) {
+        var department_info;
         if (!err) {
-            var room_info = {
-                'room1_temperature': rows[0].temperature,
-                'room1_humidity': rows[0].humidity,
-
-                'room2_temperature': rows[1].temperature,
-                'room2_humidity': rows[1].humidity,
-
-                'room3_temperature': rows[2].temperature,
-                'room3_humidity': rows[2].humidity,
-
-                'room4_temperature': rows[3].temperature,
-                'room4_humidity': rows[3].humidity
+            var department_info = {
+                'department_name': '안과',
+                'temperature': rows[0].temperature,
+                'humidity':rows[0].humidity
             }
-            rooms_info.push(room_info);
+
+            department_infos.push(department_info);
         }
         else {
             console.log(err);
         }
     });
+    
+    conn.query('SELECT AVG(temperature) as temperature,AVG(humidity) as humidity FROM hospital_room where room_no >4 and room_no<9', function (err, rows, fields) {
+        var department_info;
+        if (!err) {
+            var department_info = {
+                'department_name': '내과',
+                'temperature': rows[0].temperature,
+                'humidity':rows[0].humidity
+            }
+
+            department_infos.push(department_info);
+        }
+        else {
+            console.log(err);
+        }
+    });
+    
+    conn.query('SELECT AVG(temperature) as temperature,AVG(humidity) as humidity FROM hospital_room where room_no <13 and room_no>8', function (err, rows, fields) {
+        var department_info;
+        if (!err) {
+            var department_info = {
+                'department_name': '외과',
+                'temperature': rows[0].temperature,
+                'humidity':rows[0].humidity
+            }
+            department_infos.push(department_info);
+        }
+        else {
+            console.log(err);
+        }
+    });
+    
+    conn.query('SELECT AVG(temperature) as temperature,AVG(humidity) as humidity FROM hospital_room where room_no >12', function (err, rows, fields) {
+        var department_info;
+        if (!err) {
+            var department_info = {
+                'department_name': '치과',
+                'temperature': rows[0].temperature,
+                'humidity':rows[0].humidity
+            }
+            department_infos.push(department_info);
+        }
+        else {
+            console.log(err);
+        }
+    });
+
     conn.query('SELECT * FROM statistics', function (err, rows, fields) {
         var info;
         if (!err) {
@@ -60,7 +101,7 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
         else {
             console.log(err);
         }
-        res.render('statistics/statistics', { role: res.locals.currentUser.user_role, infos: rooms_info });
+        res.render('statistics/statistics', { role: res.locals.currentUser.user_role, infos: rooms_info, d_infos:department_infos });
     });
 }));
 
