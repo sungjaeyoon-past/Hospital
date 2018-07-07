@@ -1,0 +1,5 @@
+XSym
+0086
+ca5ff3d7ab66fdd73fcd8e0c716f1935
+../../../../GooglePlaces/Frameworks/GooglePlaces.framework/Headers/GMSUserAddedPlace.h
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
