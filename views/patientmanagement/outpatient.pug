@@ -17,17 +17,11 @@ block content
                 if recordList
                     each record in recordList
                         tr
-                            th
-                                #{record.department_name}
-                            td
-                                #{record.name} 
-                            td
-                                #{record.personal_number} 
+                            th #{record.department_name}
                             td 
-                                #{record.doctor_name} 
-                            td    
-                                #{record.disease_name} 
-                            td    
-                                #{record.hospital_day} 
-                            td    
-                                #{record.discharge_day} 
+                                a(href=`/patientmanagement/show/${record.patient_id}`) #{record.name} 
+                            td #{record.personal_number} 
+                            td #{record.doctor_name} 
+                            td #{record.disease_name} 
+                            td #{moment(record.hospital_day).format('YYYY-MM-DD')} 
+                            td #{moment(record.discharge_day).format('YYYY-MM-DD')} 

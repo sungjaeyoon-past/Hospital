@@ -23,59 +23,20 @@ block top-nav
 block content;
   .container
     .row
-      .col-lg-6.col-md-6.col-sm-6
-        .card.card-stats
-          .card-header.card-header-warning.card-header-icon
-            .card-icon
-              i.material-icons local_hospital
-            p.card-category 1번 방
-            h3.card-title
-              |#{infos[0].room1_temperature+"'c"}
-              br   
-              |#{infos[0].room1_humidity+"%"} 
-          .card-footer
-            .stats
-              a(href='/temperatureGraph') 온도 변화
-      .col-lg-6.col-md-6.col-sm-6
-        .card.card-stats
-          .card-header.card-header-warning.card-header-icon
-            .card-icon
-              i.material-icons local_hospital
-            p.card-category 2번 방
-            h3.card-title
-              |#{infos[0].room2_temperature+"'c"}
-              br   
-              |#{infos[0].room2_humidity+"%"} 
-          .card-footer
-            .stats
-              a(href='/temperatureGraph') 온도 변화  
-    .row
-      .col-lg-6.col-md-6.col-sm-6
-        .card.card-stats
-          .card-header.card-header-warning.card-header-icon
-            .card-icon
-              i.material-icons local_hospital
-            p.card-category 3번 방
-            h3.card-title
-              |#{infos[0].room3_temperature+"'c"}
-              br   
-              |#{infos[0].room3_humidity+"%"} 
-          .card-footer
-            .stats
-              a(href='/temperatureGraph') 온도 변화 
-      .col-lg-6.col-md-6.col-sm-6
-        .card.card-stats
-          .card-header.card-header-warning.card-header-icon
-            .card-icon
-              i.material-icons local_hospital
-            p.card-category 4번 방
-            h3.card-title
-              |#{infos[0].room4_temperature+"'c"}
-              br   
-              |#{infos[0].room4_humidity+"%"} 
-          .card-footer
-            .stats
-              a(href='/temperatureGraph') 온도 변화         
+      -for(i=0;i<d_infos.length;i++)
+        .col-lg-6.col-md-6.col-sm-6
+          .card.card-stats
+            .card-header.card-header-warning.card-header-icon
+              .card-icon
+                i.material-icons local_hospital
+              p.card-category #{d_infos[i].department_name}
+              h3.card-title
+                |평균: #{d_infos[i].temperature+"'c"}
+                br   
+                |평균: #{d_infos[i].humidity+"%"} 
+            .card-footer
+              .stats
+                a(href='/temperatureGraph') 온도 변화      
   .container
     .card.text-center
       .card-header.card-header-primary
@@ -91,7 +52,7 @@ block content;
           #diaper.tab-pane.active
             table.table
               tbody
-                -for(i=1;i<infos.length;i++)
+                -for(i=0;i<infos.length;i++)
                   tr
                     td            
                       | #{infos[i].hospital_room+'번 방  '}
@@ -107,7 +68,7 @@ block content;
                 
           #linger.tab-pane.fade
             table.table
-              -for(i=1;i<infos.length;i++)
+              -for(i=0;i<infos.length;i++)
                 tr
                   td            
                     | #{infos[i].hospital_room+'번 방  '}
@@ -122,7 +83,7 @@ block content;
                       i.material-icons assignment
           #weight_sensor.tab-pane.fade
              table.table
-              -for(i=1;i<infos.length;i++)
+              -for(i=0;i<infos.length;i++)
                 tr
                   td            
                     | #{infos[i].hospital_room+'번 방  '}
