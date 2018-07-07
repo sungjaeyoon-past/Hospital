@@ -1,0 +1,17 @@
+extends ../layoutemp
+
+block content
+    include ../includes/topnavemp
+    .container
+        .row(style="margin-top:20px;")
+            .col-md-12
+                h1
+                    | 수술실 예약
+        br
+        form(action="/surgery/new", method="POST")
+            .alert.alert-primary
+                include ./_form
+                                
+                .row
+                    .col-md-1
+                            button.btn.btn-primary(type='submit' ,style="margin-left:20%; margin-top:20%;") 예약 추가

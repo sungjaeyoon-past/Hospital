@@ -18,14 +18,9 @@
     .col-md-6
         .input-group.mb-3
             .input-group-prepend
-                span#basic-addon1.input-group-text 수술 시작 예정 시각
+                span#basic-addon1.input-group-text 수술 예정일
             input.form-control(type='date', placeholder='2018-07-06', name='date', aria-describedby='basic-addon1')
-    .col-md-6
-        .input-group.mb-3
-            .input-group-prepend
-                span#basic-addon1.input-group-text 수술 완료 예정 시각
-            input.form-control(type='date', placeholder='2018-07-06', name='date', aria-describedby='basic-addon1')
-
+// 각 수술엔 하루가 걸린다고 가정
 hr
 .row
     .col-md-4
@@ -39,7 +34,4 @@ hr
         .input-group.mb-3
             .input-group-prepend
                 span#basic-addon1.input-group-text 비고                  
-            input.form-control(type='text', placeholder='비고',name='description')
-.row
-    .col-md-1
-            button.btn.btn-primary(type='submit' ,style="margin-top:20%;") 수술실 예약
+            input.form-control(type='text', placeholder='없을 경우 # 입력',name='description')

@@ -1,12 +1,27 @@
 extends ../layoutemp
 
 block content
-    include ../includes/topnavemp
-    .container
-        .row(style="margin-top:20px;")
-            .col-md-12
-                h1
-                    | 수술실 예약
-        hr
-        form.alert.alert-primary(action="/surgery", method="POST")
-            include ./form
+    .container(style="margin-top:2%;")
+        h1 수술실 예약 현황
+        table.table.surgerytable
+            thead
+                tr
+                    th(scope="col") 접수번호
+                    th(scope="col") 환자 id
+                    th(scope="col") 의사 id 
+                    th(scope="col") 수술 예정일
+                    th(scope="col") 비고
+
+            tbody
+                each surgery in surgeryList
+                    tr
+                        th
+                        td #{surgery.surgery_schedule_id} 
+                        td #{surgery.patient_id}
+                        td #{surgery.doctor_id}
+                        td #{moment(surgery.reserved_datetime).format('YYYY-MM-DD')}
+                        td #{surgery.description}
+        br
+        .row
+            .col-md-6.col-sm-6
+                button.btn.btn-primary(type='button', onclick="location.href='/surgery/new'") 예약 추가
