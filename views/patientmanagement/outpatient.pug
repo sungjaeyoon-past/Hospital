@@ -7,7 +7,6 @@ block content
             thead
                 tr
                     th(scope="col") 과
-                    th(scope="col") 환자번호
                     th(scope="col") 환자이름 
                     th(scope="col") 출생년도 
                     th(scope="col") 담당의사 
@@ -15,13 +14,14 @@ block content
                     th(scope="col") 입원일
                     th(scope="col") 퇴원일
             tbody
-
-                tr
-                    th
-                    td(scope="row") 
-                    td
-                    td    
-                    td    
-                    td    
-                    td 
-                    td 
+                if recordList
+                    each record in recordList
+                        tr
+                            th #{record.department_name}
+                            td 
+                                a(href=`/patientmanagement/show/${record.patient_id}`) #{record.name} 
+                            td #{record.personal_number} 
+                            td #{record.doctor_name} 
+                            td #{record.disease_name} 
+                            td #{moment(record.hospital_day).format('YYYY-MM-DD')} 
+                            td #{moment(record.discharge_day).format('YYYY-MM-DD')} 

@@ -1,0 +1,12 @@
+extends ../layoutemp
+
+block content
+    include ../includes/topnavemp
+    .container
+        .row(style="margin-top:20px;")
+            .col-md-12
+                h1
+                    | 수술실 예약
+        hr
+        form.alert.alert-primary(action="/surgery", method="POST")
+            include ./form

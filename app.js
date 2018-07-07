@@ -34,6 +34,7 @@ var diagnosis = require('./routes/diagnosis');
 var receipt = require('./routes/receipt');
 var monitor = require('./routes/monitor');
 var patientmanagement = require('./routes/patientmanagement');
+var surgery = require('./routes/surgery');
 var superadmin = require('./routes/superadmin');
 var api = require('./routes/api');
 var login = require('./routes/login')
@@ -106,6 +107,7 @@ app.use('/monitor', monitor);
 app.use('/receipt', receipt);
 app.use('/diagnosis', diagnosis);
 app.use('/patientmanagement', patientmanagement);
+app.use('/surgery', surgery);
 app.use('/superadmin', superadmin);
 app.use('/api/v1', api);
 app.use('/login', login);
