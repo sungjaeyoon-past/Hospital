@@ -85,7 +85,7 @@ router.get('/new', catchErrors(async (req, res, next) => {
     var description = req.body.description;
 
     var insertSql = "INSERT INTO surgery_schedule (surgery_schedule_id, patient_id, doctor_id, reserved_datetime, description) VALUES (' "+surgery_schedule_id+" ', '" +patient_id+" ', ' "+doctor_id+" ', '"+reserved_datetime+"','"+description+"')";
-  
+    console.log(insertSql);
     getSql(insertSql, function(err,data){
       if (err) {
           console.log("error",err);
@@ -93,8 +93,8 @@ router.get('/new', catchErrors(async (req, res, next) => {
       } else {
         req.flash('success', "수술실 예약이 추가되었습니다.");
       }
-      res.redirect('/surgery/surgerymain');
     });
+    res.redirect('/surgery/surgerymain');
   }));
 
 
