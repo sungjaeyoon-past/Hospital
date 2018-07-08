@@ -38,10 +38,11 @@ router.get('/json', catchErrors(async (req, res, next) => {
         var person = {
           'name': rows[i].name,
           'patient_id': rows[i].patient_id,
+          'department_name': rows[i].department_name,
           'hospital_room': rows[i].hospital_room,
           'temperature': rows[i].temperature,
           'humidity': rows[i].humidity,
-          'attention': attention,
+          'attention': attention
         }
         personList.push(person);
       }
