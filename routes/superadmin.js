@@ -112,6 +112,10 @@ router.post('/add', catchErrors(async (req, res, next) => {
 
 
 //사용자 정보 수정
+router.get('/superadmin/edit/:id', catchErrors(async(req, res, next)=> {
+  var employee_id = req.param.employee_id;
+  res.render('superadmin/edit',{role: res.locals.currentUser.user_role, employee_id: employee_id});
+}));
 
 router.get('/:id/edit', catchErrors(async (req, res, next) => {
   var empList = [];
