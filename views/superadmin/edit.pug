@@ -11,9 +11,7 @@ html
     meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')
 
 body
-  include ../includes/topnavemp
-
-  nav.navbar.navbar-expand-lg.bg-primary(style="margin-top:70px;")
+  nav.navbar.navbar-expand-lg.bg-primary 
     .container
       ul.navbar-nav
         li.nav-item
@@ -25,14 +23,8 @@ body
         li.nav-item
           a.nav-link(href='/superadmin/add') 직원 추가
           |
-
-      form.form-inline.ml-auto
-        .form-group.has-white
-          input.form-control(type='text', placeholder='search')
-          |
-        button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
-          i.material-icons search
-
+        li.nav-item
+          a.nav-link(href='http://localhost:3000') 홈으로
 
 .container
         .row(style="margin-top:20px;")

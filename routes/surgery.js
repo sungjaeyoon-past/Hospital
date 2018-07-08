@@ -19,20 +19,6 @@ function validateForm(form, option){
     if(!reserved_datetime) { return "수술 예정일 미입력"; }
     if(!description) { return "비고 미입력"; }
 }
-function formatDate(date){
-    var res_date= new Date(date),
-        month = '' + (res_date.getMonth() +1),
-        day = '' + res_date.getDate(),
-        year = '' + res_date.getFullYear();
-
-    if (month.length < 2) {
-        month = '0' + month;
-    }
-    if (day.length < 2) {
-        day = '0' + day;
-    }
-    return [year, month, day].join('-');
-}
 
 function getSql(insertSql, callback){
     conn.query(insertSql,function(err,result){
