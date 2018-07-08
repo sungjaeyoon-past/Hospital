@@ -62,7 +62,7 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
                 surgeryList.push(surgery);
             }
         }
-        res.render('surgery/surgerymain', {surgeryList: surgeryList});
+        res.render('surgery/surgerymain', {role: res.locals.currentUser.user_role ,surgeryList: surgeryList});
     })    
 }));
 
@@ -71,7 +71,7 @@ router.get('/new', catchErrors(async (req, res, next) => {
     res.render('surgery/new');
   }));
   
-  router.post('/new', catchErrors(async (req, res, next) => {
+router.post('/new', catchErrors(async (req, res, next) => {
     const err = validateForm(req.body);
     if (err) {
       req.flash('danger', err);

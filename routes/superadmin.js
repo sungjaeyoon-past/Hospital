@@ -73,7 +73,7 @@ router.get('/list', catchErrors(async (req, res, next) => {
         }
         empList.push(emp);
       }
-      res.render('superadmin/list', {employee: empList, count_emp:rows.length});
+      res.render('superadmin/list', {role: res.locals.currentUser.user_role, employee: empList, count_emp:rows.length});
     }
   });
 }));
@@ -132,7 +132,7 @@ router.get('/:id/edit', catchErrors(async (req, res, next) => {
         }
         empList.push(emp);
       }
-      res.render('superadmin/edit', {employee: empList, count_emp:rows.length});
+      res.render('superadmin/edit', {role: res.locals.currentUser.user_role, employee: empList, count_emp:rows.length});
     }
   });
 }));
