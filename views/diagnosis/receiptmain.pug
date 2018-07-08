@@ -38,9 +38,9 @@ block content
                             | 순서: #{i+1}
                             hr
                             .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
-                                a.btn.btn-default(type='submit' href=`/diagnosis/next/${queue.patient_id}`) ←
+                                a.btn.btn-default(type='submit' href=`/diagnosis/next/${queue.patient_id}&${i}`) ←
                                 a.btn.btn-default(type='submit' href=`/diagnosis/dequeue/${queue.patient_id}`) x
-                                a.btn.btn-default(type='submit' href=`/diagnosis/prev/${queue.patient_id}`) → 
+                                a.btn.btn-default(type='submit' href=`/diagnosis/prev/${queue.patient_id}&${i}`) → 
     .container
         -if(queue_number>6)
             p 이외 #{queue_number-6}명의 환자가 대기중입니다.

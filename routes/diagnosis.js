@@ -9,7 +9,6 @@ function moveByid(id, action) {
     for (var i = 0; i < queuelist.length; i++) {
         if (queuelist[i].patient_id == id) {
             var x = queuelist.splice(i, 1);
-            console.log(x);
             var person = {
                 name: x[0].name,
                 patient_id: x[0].patient_id,
@@ -27,8 +26,10 @@ function deleteByid(id) {
     for (var i = 0; i < queuelist.length; i++) {
         if (queuelist[i].patient_id == id) {
             queuelist.splice(i, 1);
+            return true;
         }
     }
+    return false;
 }
 
 function findByid(id) {
@@ -93,6 +94,9 @@ router.get('/queue/:patient_id', isAuthenticated, catchErrors(async (req, res, n
                 }
             }
         });
+    } else {
+        req.flash('danger', "이미 대기중인 환자 입니다.");
+        return res.redirect('back');
     }
     res.redirect('/diagnosis');
 }));
@@ -102,29 +106,40 @@ router.get('/dequeue/:patient_id', isAuthenticated, catchErrors(async (req, res,
     //여기서 patient_id얻구 리다이렉트처리
     console.log("dequeue에다 넣음");
     var requestPatient = req.params.patient_id;
-    deleteByid(requestPatient);
+    if (!deleteByid(requestPatient)) {
+        req.flash('danger', "삭제할 환자가 없습니다.");
+        return res.redirect('back');
+    }
     res.redirect('/diagnosis');
 }));
 
-router.get('/next/:patient_id', isAuthenticated, catchErrors(async (req, res, next) => {
+router.get('/next/:patient_id&:loc', isAuthenticated, catchErrors(async (req, res, next) => {
     //여기서 patient_id얻구 리다이렉트처리
     console.log("next 넣음");
     var requestPatient = req.params.patient_id;
-    if (requestPatient != 0) {
+    var loc = req.params.loc;
+    console.log(loc);
+    if (loc != 0) {
         moveByid(requestPatient, -1);
+    } else {
+        req.flash('danger', "더 이상 앞으로 갈 수 없습니다.");
+        return res.redirect('back');
     }
-    console.log(queuelist);
     res.redirect('/diagnosis');
 }));
 
-router.get('/prev/:patient_id', isAuthenticated, catchErrors(async (req, res, next) => {
+router.get('/prev/:patient_id&:loc', isAuthenticated, catchErrors(async (req, res, next) => {
     //여기서 patient_id얻구 리다이렉트처리
     console.log("prev 넣음");
     var requestPatient = req.params.patient_id;
-    if (requestPatient != queuelist.length) {
+    var loc = req.params.loc;
+    console.log(queuelist.length);
+    if (loc != queuelist.length - 1) {
         moveByid(requestPatient, 1);
+    } else {
+        req.flash('danger', "더 이상 뒤로 갈 수 없습니다.");
+        return res.redirect('back');
     }
-    console.log(queuelist);
     res.redirect('/diagnosis');
 }));
 
