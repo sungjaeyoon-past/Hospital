@@ -19,6 +19,21 @@ function validateForm(form, option){
     if(!reserved_datetime) { return "수술 예정일 미입력"; }
     if(!description) { return "비고 미입력"; }
 }
+function formatDate(date){
+    var res_date= new Date(date),
+        month = '' + (res_date.getMonth() +1),
+        day = '' + res_date.getDate(),
+        year = '' + res_date.getFullYear();
+
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        day = '0' + day;
+    }
+    return [year, month, day].join('-');
+}
+
 function getSql(insertSql, callback){
     conn.query(insertSql,function(err,result){
         if(err)
@@ -68,7 +83,8 @@ router.get('/new', catchErrors(async (req, res, next) => {
     var doctor_id = req.body.doctor_id;
     var reserved_datetime = req.body.reserved_datetime;
     var description = req.body.description;
-    var insertSql = "INSERT INTO employee (surgery_schedule_id, patient_id, doctor_id, reserved_datetime, description) VALUES (' "+surgery_schedule_id+" ', '" +patient_id+" ', ' "+doctor_id+" ', '"+reserved_datetime+"','"+description+"')";
+
+    var insertSql = "INSERT INTO surgery_schedule (surgery_schedule_id, patient_id, doctor_id, reserved_datetime, description) VALUES (' "+surgery_schedule_id+" ', '" +patient_id+" ', ' "+doctor_id+" ', '"+reserved_datetime+"','"+description+"')";
   
     getSql(insertSql, function(err,data){
       if (err) {

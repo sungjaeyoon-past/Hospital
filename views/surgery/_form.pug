@@ -8,27 +8,21 @@
         .input-group.mb-3
             .input-group-prepend
                 span#basic-addon1.input-group-text 환자 id                    
-            input.form-control(type='number', placeholder='1',name='patient_id')
+            input.form-control(type='number', placeholder='환자 id',name='patient_id')
     .col-md-6
         .input-group.mb-3
             .input-group-prepend
                 span#basic-addon1.input-group-text 의사 id                    
-            input.form-control(type='number', placeholder='1',name='doctor_id')
+            input.form-control(type='number', placeholder='의사 id',name='doctor_id')
 .row
     .col-md-6
         .input-group.mb-3
             .input-group-prepend
                 span#basic-addon1.input-group-text 수술 예정일
-            input.form-control(type='date', placeholder='2018-07-06', name='date', aria-describedby='basic-addon1')
+            input.form-control(type='date', placeholder='2018-07-06', name='resereved_datetime', aria-describedby='basic-addon1')
 // 각 수술엔 하루가 걸린다고 가정
-hr
-.row
-    .col-md-4
-        .input-group.mb-3
-            .input-group-prepend
-                span#basic-addon1.input-group-text 수술실                    
-            input.form-control(type='number', placeholder='수술실',name='medicine_id')
-                            
+
+hr                         
 .row
     .col-md-12
         .input-group.mb-3
