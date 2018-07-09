@@ -86,7 +86,7 @@ function formatDate(date) {
 }
 
 //환자관리 눌렀을 때 보여주는곳+ 환자 검색 (완)
-router.get('/', catchErrors(async (req, res, next) => {
+router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
   if (req.query.name) {
     //var insertSql="SELECT * FROM patient WHERE name ='"+req.query.name+"'";
   } else {
@@ -100,13 +100,13 @@ router.get('/', catchErrors(async (req, res, next) => {
       console.log("ERROR : ", err);
     } else {
       personList = getPersonResult(personList, data);
-      res.render('patientmanagement/list', { patients: personList, count_patient: data.length });
+      res.render('patientmanagement/list', { patients: personList, count_patient: data.length, role: res.locals.currentUser.user_role });
     }
   });
 }));
 
 //입원환자 침대 현황 (완)
-router.get('/bed/:number', catchErrors(async (req, res, next) => {
+router.get('/bed/:number', isAuthenticated, catchErrors(async (req, res, next) => {
   var number = req.params.number;
   var bedList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   var patientList = [];
@@ -156,14 +156,14 @@ router.get('/bed/:number', catchErrors(async (req, res, next) => {
             patientList.push(patient);
           }
         }
-        res.render('patientmanagement/bed', { bedList: bedList, patientList: patientList, number: number });
+        res.render('patientmanagement/bed', { bedList: bedList, patientList: patientList, number: number, role: res.locals.currentUser.user_role });
       });
     }
   });
 }));
 
 //입원 클릭했을시 입원수속 보여주는곳 (완)
-router.get('/inpatient/:id', catchErrors(async (req, res, next) => {
+router.get('/inpatient/:id', isAuthenticated, catchErrors(async (req, res, next) => {
   var insertSql = 'SELECT patient_id FROM inpatient WHERE patient_id=' + req.params.id;
   getSqlResult(insertSql, function (err, data) {
     if (data.length == 1) {
@@ -227,7 +227,7 @@ router.get('/inpatient/:id', catchErrors(async (req, res, next) => {
                 }
 
               }
-              res.render('patientmanagement/inpatient', { patient: person[0], bedList: bedList, doctorList1: doctorList1, doctorList2: doctorList2, doctorList3: doctorList3, doctorList4: doctorList4 });
+              res.render('patientmanagement/inpatient', { patient: person[0], bedList: bedList, doctorList1: doctorList1, doctorList2: doctorList2, doctorList3: doctorList3, doctorList4: doctorList4, role: res.locals.currentUser.user_role });
             }
           });
         }
@@ -237,7 +237,7 @@ router.get('/inpatient/:id', catchErrors(async (req, res, next) => {
 }));
 
 //입원 수속 완료후 입원 추가 (완)
-router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
+router.post('/inpatient/:id', isAuthenticated, catchErrors(async (req, res, next) => {
   const err = validateFormInpatient(req.body);
   if (err) {
     req.flash('danger', err);
@@ -284,7 +284,7 @@ router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
 }));
 
 //입원 수속에서 상세정보 클릭 (완)
-router.get('/inpatientdetail/:id', catchErrors(async (req, res, next) => {
+router.get('/inpatientdetail/:id', isAuthenticated, catchErrors(async (req, res, next) => {
   var insertSql = "SELECT * FROM usage_record WHERE patient_id  = " + req.params.id + " ORDER BY record_id DESC";
   var recordList = [];
   getSqlResult(insertSql, function (err, data) {
@@ -299,13 +299,13 @@ router.get('/inpatientdetail/:id', catchErrors(async (req, res, next) => {
         }
         recordList.push(record);
       }
-      res.render('patientmanagement/patient_record', { recordList: recordList, patient_id: req.params.id });
+      res.render('patientmanagement/patient_record', { recordList: recordList, patient_id: req.params.id, role: res.locals.currentUser.user_role });
     }
   });
 }));
 
 //입원 중인 환자 투약, 링거, 기저귀 변경내용 추가눌렀을 경우(완)
-router.get('/inpatientdetail/new/:id', catchErrors(async (req, res, next) => {
+router.get('/inpatientdetail/new/:id', isAuthenticated, catchErrors(async (req, res, next) => {
   var patient_id = req.params.id;
   var nurseDepartment;
   var nurseList = [];
@@ -339,14 +339,14 @@ router.get('/inpatientdetail/new/:id', catchErrors(async (req, res, next) => {
             console.log(nurse);
           }
         }
-        res.render('patientmanagement/newpatient_record', { patient_id: patient_id, nurseList:nurseList });
+        res.render('patientmanagement/newpatient_record', { patient_id: patient_id, nurseList:nurseList, role: res.locals.currentUser.user_role });
       });
     }
   });
 }));
 
 //입원 중인 환자 투약, 링거, 기저귀 변경내용 추가하기(완)
-router.post('/inpatientdetail/:id', catchErrors(async (req, res, next) => {
+router.post('/inpatientdetail/:id', isAuthenticated, catchErrors(async (req, res, next) => {
   const err = validateFormDetail(req.body);
   if (err) {
     req.flash('danger', err);
@@ -376,7 +376,7 @@ router.post('/inpatientdetail/:id', catchErrors(async (req, res, next) => {
 }));
 
 //퇴원 수속 (완)
-router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
+router.delete('/inpatient/:id', isAuthenticated, catchErrors(async (req, res, next) => {
   var today = new Date();
   var dd = today.getDate();
   var mm = today.getMonth() + 1; //January is 0!
@@ -435,7 +435,7 @@ router.delete('/inpatient/:id', catchErrors(async (req, res, next) => {
 }));
 
 //퇴원 기록 확인(완)
-router.get('/outpatient', catchErrors(async (req, res, next) => {
+router.get('/outpatient', isAuthenticated, catchErrors(async (req, res, next) => {
   var insertSql = "SELECT * FROM medic.hospital_record_view";
   var recordList = [];
   getSqlResult(insertSql, function (err, data) {
@@ -454,13 +454,13 @@ router.get('/outpatient', catchErrors(async (req, res, next) => {
         record.personal_number = (record.personal_number).substring(0, 6);
         recordList.push(record);
       }
-      res.render('patientmanagement/outpatient', { recordList: recordList });
+      res.render('patientmanagement/outpatient', { recordList: recordList, role: res.locals.currentUser.user_role });
     }
   });
 }));
 
 //상세보기를 눌렀을 경우 보여주는곳 (완)
-router.get('/show/:id', catchErrors(async (req, res, next) => {
+router.get('/show/:id', isAuthenticated, catchErrors(async (req, res, next) => {
   var person = [];
   var recordList = [];
   var requestPatient = req.params.id;
@@ -489,7 +489,7 @@ router.get('/show/:id', catchErrors(async (req, res, next) => {
             }
             recordList.push(record);
           }
-          res.render('patientmanagement/show', { patient: person[0], recordList: recordList });
+          res.render('patientmanagement/show', { patient: person[0], recordList: recordList, role: res.locals.currentUser.user_role });
         }
       });
     }
@@ -497,7 +497,7 @@ router.get('/show/:id', catchErrors(async (req, res, next) => {
 }));
 
 //문자보내기 (완)
-router.post('/send/:id', catchErrors(async (req, res, next) => {
+router.post('/send/:id', isAuthenticated, catchErrors(async (req, res, next) => {
   var insertSql="SELECT phone_number FROM patient WHERE patient_id = "+req.params.id;
   var NUMBER;
   getSqlResult(insertSql, function (err, data) {
@@ -531,12 +531,12 @@ router.post('/send/:id', catchErrors(async (req, res, next) => {
 }));
 
 //환자 추가눌렀을 때 (완)
-router.get('/new', catchErrors(async (req, res, next) => {
-  res.render('patientmanagement/new');
+router.get('/new', isAuthenticated, catchErrors(async (req, res, next) => {
+  res.render('patientmanagement/new', {role: res.locals.currentUser.user_role});
 }));
 
 //환자 추가를 했을 때 (완)
-router.post('/new', catchErrors(async (req, res, next) => {
+router.post('/new', isAuthenticated, catchErrors(async (req, res, next) => {
   const err = validateFormPatient(req.body);
   if (err) {
     req.flash('danger', err);
@@ -558,7 +558,7 @@ router.post('/new', catchErrors(async (req, res, next) => {
 }));
 
 //환자 정보 변경 눌렀을 경우 (완)
-router.get('/edit/:id', catchErrors(async (req, res, next) => {
+router.get('/edit/:id', isAuthenticated, catchErrors(async (req, res, next) => {
   var person = [];
   var requestPatient = req.params.id;
   var insertSql = 'SELECT * FROM patient WHERE patient_id=' + requestPatient;
@@ -568,13 +568,13 @@ router.get('/edit/:id', catchErrors(async (req, res, next) => {
     } else {
       req.flash('success', "추가 성공");
       person = getPersonResult(person, data);
-      res.render('patientmanagement/edit', { patient: person[0] });
+      res.render('patientmanagement/edit', { patient: person[0], role: res.locals.currentUser.user_role });
     }
   });
 }));
 
 //환자 정보 변경 했을 경우 (완)
-router.put('/:id', catchErrors(async (req, res, next) => {
+router.put('/:id', isAuthenticated, catchErrors(async (req, res, next) => {
   console.log(req.body);
   const err = validateFormPatient(req.body);
   if (err) {
@@ -602,7 +602,7 @@ router.put('/:id', catchErrors(async (req, res, next) => {
 }));
 
 //환자 정보를 삭제 (완)
-router.delete('/:id', catchErrors(async (req, res, next) => {
+router.delete('/:id', isAuthenticated, catchErrors(async (req, res, next) => {
   var insertSql = "DELETE FROM patient WHERE patient_id = " + req.params.id;
   getSqlResult(insertSql, function (err, data) {
     if (err) {
