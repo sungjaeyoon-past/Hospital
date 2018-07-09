@@ -6,40 +6,40 @@ block content
         .dropdown
             -if(dept_id==0)
                 button#dropdownMenu2.btn.btn-secondary.dropdown-toggle(type='a' href="#" data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-                    | 외과
+                    | 안과
                 .dropdown-menu(aria-labelledby='dropdownMenu2')
                     a.dropdown-item(href='/receipt/1') 내과
                     a.dropdown-item(href='/receipt/2') 치과
-                    a.dropdown-item(href='/receipt/3') 안과
+                    a.dropdown-item(href='/receipt/3') 외과
             -if(dept_id==1)
                 button#dropdownMenu2.btn.btn-secondary.dropdown-toggle(type='a' href="#" data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
                     | 내과
                 .dropdown-menu(aria-labelledby='dropdownMenu2')
-                    a.dropdown-item(href='/receipt/0') 외과
+                    a.dropdown-item(href='/receipt/0') 안과
                     a.dropdown-item(href='/receipt/2') 치과
-                    a.dropdown-item(href='/receipt/3') 안과
+                    a.dropdown-item(href='/receipt/3') 외과
             -if(dept_id==2)
                 button#dropdownMenu2.btn.btn-secondary.dropdown-toggle(type='a' href="#" data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
                     | 치과
                 .dropdown-menu(aria-labelledby='dropdownMenu2')
-                    a.dropdown-item(href='/receipt/0') 외과
+                    a.dropdown-item(href='/receipt/0') 안과
                     a.dropdown-item(href='/receipt/1') 내과
-                    a.dropdown-item(href='/receipt/3') 안과
+                    a.dropdown-item(href='/receipt/3') 외과
             -if(dept_id==3)
                 button#dropdownMenu2.btn.btn-secondary.dropdown-toggle(type='a' href="#" data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-                    | 안과
+                    | 외과
                 .dropdown-menu(aria-labelledby='dropdownMenu2')
-                    a.dropdown-item(href='/receipt/0') 외과
+                    a.dropdown-item(href='/receipt/0') 안과
                     a.dropdown-item(href='/receipt/1') 내과
                     a.dropdown-item(href='/receipt/2') 치과   
             -if(dept_id==4)
                 button#dropdownMenu2.btn.btn-secondary.dropdown-toggle(type='a' href="#" data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
                     | 과선택
                 .dropdown-menu(aria-labelledby='dropdownMenu2')
-                    a.dropdown-item(href='/receipt/0') 외과
+                    a.dropdown-item(href='/receipt/0') 안과
                     a.dropdown-item(href='/receipt/1') 내과
                     a.dropdown-item(href='/receipt/2') 치과
-                    a.dropdown-item(href='/receipt/3') 안과                                                                 
+                    a.dropdown-item(href='/receipt/3') 외과                                                                 
     .container
         .row(style="margin-bottom:2%;")
             .col-md-12.col-sm-12

@@ -23,12 +23,15 @@ html
     link(rel='stylesheet', href='/stylesheets/topnav.css')
     script(src="/js/diagnosis.js")
     script.
-        $(document).ready(makedeck(#{dept_id}));
+        $(document).ready(makedeck(#{doc.dept_id}));
     .container
         .row(style="margin-top:20px;")
             .col-md-12
                 h1
                     | 진료 기록 작성
+                h3
+                    | 의사이름 : #{doc.name}
+                    | 부서 : #{doc.department}
         hr
         .row(style="margin-top:20px;")
             .col-md-12

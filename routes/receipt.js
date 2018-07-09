@@ -52,11 +52,33 @@ function getDate() {
     return today;
 }
 
+function getDeptName(dept_id) {
+    if (dept_id == 1) return '안과';
+    else if (dept_id == 2) return '내과';
+    else if (dept_id == 3) return '외과';
+    else if (dept_id == 4) return '치과';
+    return 'error';
+}
+
 
 //진료 접수 메인 페이지
 router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
     var date = getDate();
-    res.render('receipt/receiptmain', { dept_id: 1, date: date, role: res.locals.currentUser.user_role });
+    var sql = "SELECT * FROM medic.employee where employee_id=" + res.locals.currentUser.user_information;
+    await conn.query(sql, function (err, result) {
+        if (err)
+            console.log('Error while performing Query.', err);
+        else {
+
+            var doc = {
+                dept_id: result[0].department_id - 1,
+                name: result[0].name,
+                department: getDeptName(result[0].department_id)
+            }
+            console.log(result);
+            res.render('receipt/receiptmain', { doc: doc, date: date, role: res.locals.currentUser.user_role });
+        }
+    })
 }));
 
 //리스트에서 진료접수로 넘어왔을 경우 메인 페이지
