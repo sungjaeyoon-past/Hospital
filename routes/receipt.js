@@ -37,52 +37,37 @@ function validateFormReceipt(form, option) {
     if (!precaution) { return "주의사항을 입력해주세요!"; }
 }
 
+function getDate() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+    today = yyyy + '-' + mm + '-' + dd;
+    return today;
+}
+
+
 //진료 접수 메인 페이지
 router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
-    var medicineList = [];
-    var insertSql = 'SELECT * FROM medicine';
-    getSqlResult(insertSql, function (err, data) {
-        if (err) {
-            console.log("ERROR : ", err);
-        } else {
-            for (var i in data) {
-                var medicine = {
-                    'medicine_id': data[i].medicine_id,
-                    'name': data[i].name,
-                    'description': data[i].description,
-                    'warning': data[i].warning
-                }
-            }
-            medicineList.push(medicine);
-            res.render('receipt/receiptmain', { role: res.locals.currentUser.user_role, medicineList: medicineList });
-        }
-    });
+    var date = getDate();
+
+    res.render('receipt/receiptmain', { date: date, role: res.locals.currentUser.user_role });
 }));
 
 //리스트에서 진료접수로 넘어왔을 경우 메인 페이지
 router.get('/:id', catchErrors(async (req, res, next) => {
-    var medicineList = [];
-    var insertSql = 'SELECT * FROM medicine';
-    getSqlResult(insertSql, function (err, data) {
-        if (err) {
-            console.log("ERROR : ", err);
-        } else {
-            for (var i in data) {
-                var medicine = {
-                    'medicine_id': data[i].medicine_id,
-                    'name': data[i].name,
-                    'description': data[i].description,
-                    'warning': data[i].warning
-                }
-            }
-            medicineList.push(medicine);
-            res.render('receipt/receiptmain', { patient_id: req.params.id, medicineList: medicineList });
-        }
-    });
+    var date = getDate();
+    res.render('receipt/receiptmain', { date: date, role: res.locals.currentUser.user_role });
 }));
 
 //진료기록 작성 완료
-router.post('/', catchErrors(async (req, res, next) => {
+router.post('/:id', catchErrors(async (req, res, next) => {
     const err = validateFormReceipt(req.body);
     if (err) {
         req.flash('danger', err);
@@ -90,7 +75,7 @@ router.post('/', catchErrors(async (req, res, next) => {
         return res.redirect('back');
     }
     var patient_id = req.body.patient_id;
-    var doctor_id = req.body.doctor_id;
+    var doctor_id = res.locals.currentUser.user_information;
     var date = req.body.date;
     var disease = req.body.disease;
     var description = req.body.description;

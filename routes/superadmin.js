@@ -11,13 +11,13 @@ function validateForm(form, option) {
   var personal_number = form.personal_number || "";
   var phone_number = form.phone_number || "";
   var position = form.position || "";
-  var employee_password = form.employee_password || "";
+  var department_id = form.department_id || "";
 
   if (!name) { return "이름 미입력"; }
   if (!personal_number) { return "주민번호 미입력"; }
   if (!phone_number) { return "핸드폰 번호 미입력"; }
   if (!position) { return "직급 미입력"; }
-  if (!employee_password) { return "비밀번호 미입력"; }
+  if (!department_id) { return "과 번호 미입력"; }
 }
 
 function getSql(insertSql, callback){
@@ -37,7 +37,7 @@ function getEmp(empList,data){
       'phone_number': data[i].phone_number,
       'gender': data[i].gender,
       'position': data[i].position,
-      'employee_password': data[i].employee_password
+      'department_id': data[i].department_id
     }
     empList.push(emp);
   }
@@ -64,7 +64,7 @@ router.get('/list', catchErrors(async (req, res, next) => {
           'phone_number': rows[i].phone_number,
           'gender': rows[i].gender,
           'position': rows[i].position,
-          'employee_password': rows[i].employee_password
+          'department_id': rows[i].department_id
         }
         empList.push(emp);
       }
@@ -90,9 +90,10 @@ router.post('/add', catchErrors(async (req, res, next) => {
   var phone_number = req.body.phone_number;
   var gender = 0;
   if (req.body.gender = 'female') { gender = 1; }
-  var position = req.body.position;
-  var employee_password = req.body.employee_password;
-  var insertSql = "INSERT INTO employee (name, personal_number, phone_number, gender, position, employee_password) VALUES (' "+name+" ', '" +personal_number+" ', ' "+phone_number+" ', ' "+gender+" ','"+position+"','"+employee_password+"')";
+  var position = 0;
+  if (req.body.position = 'nurse') { position = 1;}
+  var department_id = req.body.department_id;
+  var insertSql = "INSERT INTO employee (name, personal_number, phone_number, gender, position, department_id) VALUES (' "+name+" ', '" +personal_number+" ', ' "+phone_number+" ', ' "+gender+" ','"+position+"','"+department_id+"')";
 
   getSql(insertSql, function(err,data){
     if (err) {
