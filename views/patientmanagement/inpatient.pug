@@ -17,40 +17,58 @@ block content
         br
         form(action=`/patientmanagement/inpatient/${patient.patient_id}`, method="POST")
             .alert.alert-primary
+                br
                 .row
-                    .col-md-6
-                        .row
+                    .col-md-5
+                        .row(style="margin-top:1%;")
                             .col-md-3                   
                                 .form-check
-                                    input#exampleRadios1.form-check-input(type='radio', name='department', value='option1', checked='')
+                                    input#exampleRadios1.form-check-input(type='radio', name='department', value='option1', checked='', onclick="myFunction1()")
                                     label.form-check-label(for='안과')
                                     | 안과
                             .col-md-3                    
                                 .form-check
-                                    input#exampleRadios1.form-check-input(type='radio', name='department', value='option2')
+                                    input#exampleRadios1.form-check-input(type='radio', name='department', value='option2', onclick="myFunction2()")
                                     label.form-check-label(for='내과')
                                     | 내과
                             .col-md-3                     
                                 .form-check
-                                    input#exampleRadios1.form-check-input(type='radio', name='department', value='option3' )
+                                    input#exampleRadios1.form-check-input(type='radio', name='department', value='option3', onclick="myFunction3()" )
                                     label.form-check-label(for='외과')
                                     | 외과
                             .col-md-3                     
                                 .form-check
-                                    input#exampleRadios1.form-check-input(type='radio', name='department', value='option4' )
+                                    input#exampleRadios1.form-check-input(type='radio', name='department', value='option4', onclick="myFunction4()" )
                                     label.form-check-label(for='치과')
-                                    | 치과
-                    .col-md-3
-                        .input-group.mb-3
-                            .input-group-prepend
-                                span#basic-addon1.input-group-text 침대 번호
-                            input.form-control(type='number', placeholder='1~16', name='bed_no', aria-describedby='basic-addon1')               
+                                    | 치과 
+                    .col-md-4
+                        .row
+                            .col-md-12
+                                .input-group-prepend
+                                    span#basic-addon1.input-group-text 담당의사 선택
+                                    #choose-doctor1
+                                        select#inputState.form-control(name="doctor_employee_id", rows="1")
+                                            each doctor in doctorList1
+                                                option(selected="Apperance or Signing", name="doctor_employee_id") #{doctor.name}
+                                    #choose-doctor2(style="display:none;")
+                                        select#inputState.form-control(name="doctor", rows="1")
+                                            each doctor in doctorList2
+                                                option(selected="Apperance or Signing", name="doctor_employee_id") #{doctor.name}
+                                    #choose-doctor3(style="display:none;")
+                                        select#inputState.form-control(name="doctor", rows="1")
+                                            each doctor in doctorList3
+                                                option(selected="Apperance or Signing", name="doctor_employee_id") #{doctor.name}
+                                    #choose-doctor4(style="display:none;")
+                                        select#inputState.form-control(name="doctor", rows="1")
+                                            each doctor in doctorList4
+                                                option(selected="Apperance or Signing", name="doctor_employee_id") #{doctor.name}
+                br
                 .row
                     .col-md-6
                         .input-group.mb-3
                             .input-group-prepend
-                                span#basic-addon1.input-group-text 주요 질병 
-                            input.form-control(type='text', placeholder='당뇨', name='disease_name', aria-describedby='basic-addon1')
+                                span#basic-addon1.input-group-text 침대 번호
+                            input.form-control(type='number', placeholder='1~16', name='bed_no', aria-describedby='basic-addon1')               
                     .col-md-6
                         .input-group.mb-3
                             .input-group-prepend
@@ -60,9 +78,35 @@ block content
                     .col-md-12
                         .input-group.mb-3
                             .input-group-prepend
-                                span#basic-addon1.input-group-text 담당의사ID
-                            input.form-control(type='number', placeholder='', name='doctor_employee_id', aria-describedby='basic-addon1')
-
+                                span#basic-addon1.input-group-text 주요 질병 
+                            input.form-control(type='text', placeholder='당뇨', name='disease_name', aria-describedby='basic-addon1')
+                br
                 .row
                     .col-md-1
                             button.btn.btn-primary(type='submit') 입원 환자로 추가
+
+    script.
+        function myFunction1() {
+            $("#choose-doctor1").show();
+            $("#choose-doctor2").hide();
+            $("#choose-doctor3").hide();
+            $("#choose-doctor4").hide();
+        }
+        function myFunction2() {
+            $("#choose-doctor1").hide();
+            $("#choose-doctor2").show();
+            $("#choose-doctor3").hide();
+            $("#choose-doctor4").hide();
+        }
+        function myFunction3() {
+            $("#choose-doctor1").hide();
+            $("#choose-doctor2").hide();
+            $("#choose-doctor3").show();
+            $("#choose-doctor4").hide();
+        }
+        function myFunction4() {
+            $("#choose-doctor1").hide();
+            $("#choose-doctor2").hide();
+            $("#choose-doctor3").hide();
+            $("#choose-doctor4").show();
+        }

@@ -35,12 +35,14 @@ block content
             .col-md-1
                 a.button.btn.btn-primary(href=`/patientmanagement/edit/${patient.patient_id}`)
                     | 정보 수정
-            .col-md-3
+            .col-md-8
                 a.btn.btn-danger(href=`/patientmanagement/${patient.patient_id}?_method=DELETE`)
                     | 정보 삭제
             .col-md-3
                 a.btn.btn-success(href=`/patientmanagement/inpatientdetail/${patient.patient_id}`)
                     | 입원 정보 확인
+        hr
+        .btn.btn-primary(onclick="history.back(-1);") 돌아가기
 
 
             

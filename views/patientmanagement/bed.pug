@@ -2,17 +2,21 @@ extends ../layoutemp
 
 block content
     .container(style="margin-top:2%;")
-        h1 병실 현황
-        .alert.alert-primary
-            nav.nav
+        h1 #{number} 병실 현황  
+        nav.nav
+            .alert.alert-dark(style="margin-right:2%;")
                 a.nav-link.active(href='/patientmanagement/bed/1') 안과 병실
                 |   
+            .alert.alert-dark(style="margin-right:2%;")
                 a.nav-link.active(href='/patientmanagement/bed/2') 내과 병실
                 |   
+            .alert.alert-dark(style="margin-right:2%;")
                 a.nav-link.active(href='/patientmanagement/bed/3') 외과 병실
                 |   
+            .alert.alert-dark(style="margin-right:2%;")
                 a.nav-link.active(href='/patientmanagement/bed/4') 치과 병실
                 |
+            .alert.alert-dark
                 a.nav-link(href='/patientmanagement/outpatient') 퇴원 기록
                 |   
 

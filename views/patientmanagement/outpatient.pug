@@ -25,3 +25,5 @@ block content
                             td #{record.disease_name} 
                             td #{moment(record.hospital_day).format('YYYY-MM-DD')} 
                             td #{moment(record.discharge_day).format('YYYY-MM-DD')} 
+        
+        .btn.btn-primary(onclick="history.back(-1);") 돌아가기
