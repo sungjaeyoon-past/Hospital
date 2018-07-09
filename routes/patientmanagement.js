@@ -227,7 +227,7 @@ router.get('/inpatient/:id', catchErrors(async (req, res, next) => {
                 }
 
               }
-              res.render('patientmanagement/inpatient', { patient: person[0], bedList: bedList, doctorList1:doctorList1, doctorList2:doctorList2, doctorList3:doctorList3, doctorList4:doctorList4 });
+              res.render('patientmanagement/inpatient', { patient: person[0], bedList: bedList, doctorList1: doctorList1, doctorList2: doctorList2, doctorList3: doctorList3, doctorList4: doctorList4 });
             }
           });
         }
@@ -256,6 +256,7 @@ router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
   } else {
     bed_no = 48 + parseInt(bed_no);
   }
+  console.log(req.body.doctor_employee_id);
   var hospital_room = parseInt((parseInt(bed_no) - 1) / 4) + 1;
   var disease_name = req.body.disease_name;
   var doctor_employee_id = req.body.doctor_employee_id;
@@ -263,6 +264,7 @@ router.post('/inpatient/:id', catchErrors(async (req, res, next) => {
   var insertSql = "SELECT inpatient_id FROM bed WHERE bed_id = " + bed_no;
   var insertSql2 = "INSERT INTO inpatient (patient_id, hospital_room, bed_no, disease_name, doctor_employee_id, hospital_day) VALUES ('" + patient_id + "','" + hospital_room + "','" + bed_no + "','" + disease_name + "','" + doctor_employee_id + "','" + hospital_day + "')";
   var insertSql3 = "UPDATE bed SET inpatient_id=" + patient_id + ", weight_sensor=" + 0 + ", is_wet=" + 0 + ", is_empty=" + 0 + " WHERE (bed_id='" + bed_no + "') AND ( hospital_room='" + hospital_room + "')";
+
   getSqlResult(insertSql, function (err, data) {
     if ((data[0].inpatient_id) != null) {
       req.flash('danger', "사용중인 침대입니다.");
@@ -305,7 +307,42 @@ router.get('/inpatientdetail/:id', catchErrors(async (req, res, next) => {
 //입원 중인 환자 투약, 링거, 기저귀 변경내용 추가눌렀을 경우(완)
 router.get('/inpatientdetail/new/:id', catchErrors(async (req, res, next) => {
   var patient_id = req.params.id;
-  res.render('patientmanagement/newpatient_record', { patient_id: patient_id });
+  var nurseDepartment;
+  var nurseList = [];
+  var insertSql = "SELECT bed_no FROM inpatient WHERE patient_id  ="+ patient_id;
+  getSqlResult(insertSql, function (err, data) {
+    if (err) {
+      console.log("ERROR : ", err);
+    } else {
+      nurseDepartment=data[0].bed_no;
+      if((nurseDepartment>=1)&&(nurseDepartment<=16)){
+        nurseDepartment='안과';
+      }else if((nurseDepartment>=17)&&(nurseDepartment<=32)){
+        nurseDepartment='내과';
+      }else if((nurseDepartment>=33)&&(nurseDepartment<=48)){
+        nurseDepartment='외과';
+      }else{
+        nurseDepartment='치과';
+      }
+      var insertSql2 = "SELECT * FROM medic.nurse_view WHERE department_name = '"+ nurseDepartment +"'"; 
+      getSqlResult(insertSql2, function (err, data) {
+        if (err) {
+          console.log("ERROR : ", err);
+        } else {
+          for (var i in data) {
+            var nurse = {
+              'employee_id': data[i].employee_id,
+              'name': data[i].name,
+              'department_name': data[i].department_name
+            }
+            nurseList.push(nurse);
+            console.log(nurse);
+          }
+        }
+        res.render('patientmanagement/newpatient_record', { patient_id: patient_id, nurseList:nurseList });
+      });
+    }
+  });
 }));
 
 //입원 중인 환자 투약, 링거, 기저귀 변경내용 추가하기(완)

@@ -16,10 +16,12 @@ block content
                                 span#basic-addon1.input-group-text 환자 번호                   
                             input.form-control(type='text',name='patient_id', value=patient_id readonly)          
                     .col-md-4
-                        .input-group.mb-3
-                            .input-group-prepend
-                                span#basic-addon1.input-group-text 담당자 번호                  
-                            input.form-control(type='number',name='employee_id',  placeholder='담당 간호사 번호 입력')          
+                        .input-group-prepend
+                            span#basic-addon1.input-group-text 담당간호사
+                            #choose-doctor1
+                                select#inputState.form-control(name="employee_id", rows="1")
+                                    each nurse in nurseList
+                                        option(name="employee_id", value=`${nurse.employee_id}`) #{nurse.name}         
                     .col-md-4
                         .input-group.mb-3
                             .input-group-prepend

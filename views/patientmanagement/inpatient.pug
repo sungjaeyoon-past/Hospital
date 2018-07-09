@@ -49,19 +49,19 @@ block content
                                     #choose-doctor1
                                         select#inputState.form-control(name="doctor_employee_id", rows="1")
                                             each doctor in doctorList1
-                                                option(selected="Apperance or Signing", name="doctor_employee_id") #{doctor.name}
+                                                option(name="doctor_employee_id", value=`${doctor.employee_id}`) #{doctor.name}
                                     #choose-doctor2(style="display:none;")
                                         select#inputState.form-control(name="doctor", rows="1")
                                             each doctor in doctorList2
-                                                option(selected="Apperance or Signing", name="doctor_employee_id") #{doctor.name}
+                                                option(name="doctor_employee_id", value=`${doctor.employee_id}`) #{doctor.name}
                                     #choose-doctor3(style="display:none;")
                                         select#inputState.form-control(name="doctor", rows="1")
                                             each doctor in doctorList3
-                                                option(selected="Apperance or Signing", name="doctor_employee_id") #{doctor.name}
+                                                option(name="doctor_employee_id", value=`${doctor.employee_id}`) #{doctor.name}
                                     #choose-doctor4(style="display:none;")
                                         select#inputState.form-control(name="doctor", rows="1")
                                             each doctor in doctorList4
-                                                option(selected="Apperance or Signing", name="doctor_employee_id") #{doctor.name}
+                                                option(name="doctor_employee_id", value=`${doctor.employee_id}`) #{doctor.name}
                 br
                 .row
                     .col-md-6
