@@ -62,7 +62,8 @@ body
                                     th 주민번호 
                                     th 전화번호 
                                     th 성별
-                                    th 직급 
+                                    th 직급
+                                    th 과 번호
                                     th 수정
                                 tr
                                     td #{emp.employee_id}
@@ -71,6 +72,7 @@ body
                                     td #{emp.phone_number}
                                     td #{emp.gender}
                                     td #{emp.position}
+                                    td #{emp.department_id}
                                     td.td-actions
                                           a.button.btn.btn-info(href=`/superadmin/edit/${emp.employee_id}`)
                                               i.material-icons edit

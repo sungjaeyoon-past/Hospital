@@ -32,6 +32,16 @@
                                         | 여성
                     .row
                         .col-md-5
-                            .form-group.bmd-form-group 직급
+                            .form-check
+                                    input(type='radio', name='position',value='option1', checked='')
+                                    label.form-check-label(for='doctor')
+                                        | 의사
+                            .form-check
+                                    input(type='radio', name='position',value='option2')
+                                    label.form-check-label(for='nurse')
+                                        | 간호사
+                    .row
+                        .col-md-5
+                            .form-group.bmd-form-group 과 번호
                                 .bmd-label-floating
-                                input.form-control(type=text, placeholder='position', name='position', value = `${emp.position}`)
+                                input.form-control(type='number', placeholder='department_id', name='department_id', value = `${emp.department_id}`)
