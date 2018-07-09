@@ -1,15 +1,10 @@
 var express = require('express');
 var router = express.Router();
+
 const catchErrors = require('../lib/async-error');
-var mysql = require('mysql');
-var conn = mysql.createConnection({
-  host: '58.123.136.107',
-  port: '3308',
-  user: 'web',
-  password: 'mju12345',
-  database: 'medic'
-});
-conn.connect();
+const isAuthenticated = require('../lib/isAuthenticated');
+var mysql_dbc = require('../db/db_con')();
+var conn = mysql_dbc.init();
 
 function validateForm(form, option) {
   var name = form.name || "";
@@ -49,7 +44,7 @@ function getEmp(empList,data){
   return empList;
 }
 
-router.get('/', catchErrors(async (req, res, next) => {
+router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
   res.render('superadmin/main');
 }));
 
@@ -79,7 +74,7 @@ router.get('/list', catchErrors(async (req, res, next) => {
 }));
 
 //사용자 추가
-router.get('/add', catchErrors(async (req, res, next) => {
+router.get('/add', isAuthenticated, catchErrors(async (req, res, next) => {
   res.render('superadmin/add');
 }));
 
@@ -112,34 +107,44 @@ router.post('/add', catchErrors(async (req, res, next) => {
 
 
 //사용자 정보 수정
-router.get('/superadmin/edit/:id', catchErrors(async(req, res, next)=> {
-  var employee_id = req.param.employee_id;
-  res.render('superadmin/edit',{role: res.locals.currentUser.user_role, employee_id: employee_id});
-}));
 
-router.get('/:id/edit', catchErrors(async (req, res, next) => {
-  var empList = [];
-  var reqEmp = req.params.employee_id;
-  conn.query('SELECT * FROM employee WHERE employee_id='+reqEmp, function (err, rows, fields) {
-    var emp;
-    if (err)
-      console.log('Error', err);
-    else {
-      for (var i in rows) {
-        var emp = {
-          'name': rows[i].name,
-          'personal_number': rows[i].personal_number,
-          'phone_number': rows[i].phone_number,
-          'gender': rows[i].gender,
-          'position': rows[i].position,
-          'employee_password': rows[i].employee_password
-        }
-        empList.push(emp);
-      }
-      res.render('superadmin/edit', {role: res.locals.currentUser.user_role, employee: empList, count_emp:rows.length});
+
+router.get('/edit/:id', isAuthenticated, catchErrors(async (req, res, next) => {
+  var employee = [];
+  var reqEmp = req.params.id;
+  var insertSql = 'SELECT * FROM employee WHERE employee_id='+ reqEmp;
+
+  getSql(insertSql, function(err, data){
+    if(err){
+      console.log("error", err);
+    } else {
+      req.flash('success', "추가");
+      employee = getEmp(employee,data);
+      res.render('superadmin/edit', {role: res.locals.currentUser.user_role, emp: employee[0] });
     }
   });
 }));
 
+router.put('/edit/:id', isAuthenticated, catchErrors(async (req, res, next) => {
+  var employee_id = req.params.id;
+  var name = req.body.name;
+  var personal_number = req.body.personal_number;
+  var phone_number = req.body.phone_number;
+  var gender = 0;
+  if (req.body.gender = 'female') { gender = 1; }
+  var position = req.body.position;
+  var insertSql = "UPDATE employee SET name='" + name + "', personal_number='" + personal_number + "', phone_number='" + phone_number + "', gender='" + gender +"', position='" + position + "' WHERE employee_id=" + employee_id;
+  
+  console.log(insertSql);
+  getSql(insertSql, function(err,data){
+    if(err){
+      console.log("error", err);
+      req.flash('danger', "오류가 발생했습니다.");
+    } else {
+      req.flash('success', "수정되었습니다.");
+      res.redirect('/superadmin/list');
+    }
+  });
+}));
 
 module.exports = router;

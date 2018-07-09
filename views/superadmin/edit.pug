@@ -11,7 +11,7 @@ html
     meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')
 
 body
-  nav.navbar.navbar-expand-lg.bg-primary 
+  nav.navbar.navbar-expand-lg.bg-primary
     .container
       ul.navbar-nav
         li.nav-item
@@ -32,7 +32,7 @@ body
                 h2
                     |직원정보 수정
         br
-        form(action=`/superadmin/${emp.employee_id}?_method=PUT`)
+        form(action=`/superadmin/edit/${emp.employee_id}?_method=PUT`)
             input(type="hidden", name="_method", value="PUT")
             include ./_form_edit              
             .row

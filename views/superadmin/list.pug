@@ -72,5 +72,5 @@ body
                                     td #{emp.gender}
                                     td #{emp.position}
                                     td.td-actions
-                                        button.btn.btn-info(type='button' rel='tooltip' onclick="location.href='/superadmin/edit'")
-                                            i.material-icons edit
+                                          a.button.btn.btn-info(href=`/superadmin/edit/${emp.employee_id}`)
+                                              i.material-icons edit
