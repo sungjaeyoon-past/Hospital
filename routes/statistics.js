@@ -21,6 +21,7 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
         if (!err) {
             var department_info = {
                 'department_name': '안과',
+                'eng':'Ophthalmology',
                 'temperature': rows[0].temperature,
                 'humidity':rows[0].humidity
             }
@@ -37,6 +38,7 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
         if (!err) {
             var department_info = {
                 'department_name': '내과',
+                'eng':'Medicine',
                 'temperature': rows[0].temperature,
                 'humidity':rows[0].humidity
             }
@@ -53,6 +55,7 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
         if (!err) {
             var department_info = {
                 'department_name': '외과',
+                'eng':'Surgery',
                 'temperature': rows[0].temperature,
                 'humidity':rows[0].humidity
             }
@@ -68,6 +71,7 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
         if (!err) {
             var department_info = {
                 'department_name': '치과',
+                'eng':'Dentist',
                 'temperature': rows[0].temperature,
                 'humidity':rows[0].humidity
             }
@@ -105,9 +109,9 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
     });
 }));
 
-router.get('/temperatureGraph', isAuthenticated, catchErrors(async (req, res, next) => {
+router.get('/temperatureGraphOphthalmology', isAuthenticated, catchErrors(async (req, res, next) => {
     var historis = [];
-    conn.query('SELECT * FROM temperature_history', function (err, rows, fields) {
+    conn.query('SELECT * FROM temperature_history where hospital_room<5', function (err, rows, fields) {
         var history;
         if (!err) {
             for (var i = 0; i < rows.length; i++) {
@@ -123,7 +127,70 @@ router.get('/temperatureGraph', isAuthenticated, catchErrors(async (req, res, ne
         else {
             console.log(err);
         }
-        res.render('statistics/temperatureGraph', { role: res.locals.currentUser.user_role, histor: historis });
+        res.render('statistics/temperatureGraphOphthalmology', { role: res.locals.currentUser.user_role, histor: historis });
+    });
+}));
+router.get('/temperatureGraphMedicine', isAuthenticated, catchErrors(async (req, res, next) => {
+    var historis = [];
+    conn.query('SELECT * FROM temperature_history where 5<=hospital_room and hospital_room<9', function (err, rows, fields) {
+        var history;
+        if (!err) {
+            for (var i = 0; i < rows.length; i++) {
+                var history = {
+                    'temperature': rows[i].temperature,
+                    'time': rows[i].time,
+                    'hospital_room': rows[i].hospital_room
+                }
+                historis.push(history);
+            }
+            console.log(historis);
+        }
+        else {
+            console.log(err);
+        }
+        res.render('statistics/temperatureGraphMedicine', { role: res.locals.currentUser.user_role, histor: historis });
+    });
+}));
+router.get('/temperatureGraphDentist', isAuthenticated, catchErrors(async (req, res, next) => {
+    var historis = [];
+    conn.query('SELECT * FROM temperature_history where 9<=hospital_room and hospital_room<13', function (err, rows, fields) {
+        var history;
+        if (!err) {
+            for (var i = 0; i < rows.length; i++) {
+                var history = {
+                    'temperature': rows[i].temperature,
+                    'time': rows[i].time,
+                    'hospital_room': rows[i].hospital_room
+                }
+                historis.push(history);
+            }
+            console.log(historis);
+        }
+        else {
+            console.log(err);
+        }
+        res.render('statistics/temperatureGraphDentist', { role: res.locals.currentUser.user_role, histor: historis });
+    });
+}));
+router.get('/temperatureGraphSurgery', isAuthenticated, catchErrors(async (req, res, next) => {
+    var historis = [];
+    conn.query('SELECT * FROM temperature_history where 12<hospital_room', function (err, rows, fields) {
+        var history;
+        if (!err) {
+            for (var i = 0; i < rows.length; i++) {
+                var history = {
+                    'temperature': rows[i].temperature,
+                    'time': rows[i].time,
+                    'hospital_room': rows[i].hospital_room
+                }
+                historis.push(history);
+            }
+            console.log(historis);
+        }
+        else {
+            console.log(err);
+        }
+        res.render('statistics/temperatureGraphSurgery', { role: res.locals.currentUser.user_role, histor: historis });
     });
 }));
 

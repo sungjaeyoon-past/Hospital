@@ -16,7 +16,7 @@ style.
     } 
 
 block top-nav
-    include ../includes/topnavemp
+    include statisticslayout
 block content
     .container
         .row(style={margin:'2%'})
@@ -25,7 +25,7 @@ block content
                     .card-header.card-chart.card-header-warning
                         #dailySalesChart1.ct-chart
                     .card-body
-                        h4.card-title 1번 병실 온도 변화
+                        h4.card-title #{histor[3].hospital_room}번 병실 온도 변화
                         p.card-category
                             span.text-succes
 
@@ -38,7 +38,7 @@ block content
                     .card-header.card-chart.card-header-warning
                         #dailySalesChart2.ct-chart
                     .card-body
-                        h4.card-title 2번 병실 온도 변화
+                        h4.card-title  #{histor[7].hospital_room}번 병실 온도 변화
                         p.card-category
                             span.text-success
                     .card-footer
@@ -51,7 +51,7 @@ block content
                     .card-header.card-chart.card-header-warning
                         #dailySalesChart3.ct-chart
                     .card-body
-                        h4.card-title 3번 병실 온도 변화
+                        h4.card-title  #{histor[11].hospital_room}번 병실 온도 변화
                         p.card-category
                             span.text-succes
 
@@ -64,7 +64,7 @@ block content
                     .card-header.card-chart.card-header-warning
                         #dailySalesChart4.ct-chart
                     .card-body
-                        h4.card-title 4번 병실 온도 변화
+                        h4.card-title #{histor[15].hospital_room}번 병실 온도 변화
                         p.card-category
                             span.text-success
                     .card-footer
