@@ -173,4 +173,9 @@ router.get('/:dept_id/prev/:patient_id&:loc', isAuthenticated, catchErrors(async
     res.redirect('back');
 }));
 
+router.get('/queuelist', isAuthenticated, catchErrors(async (req, res, next) => {
+    //여기서 patient_id얻구 리다이렉트처리
+    res.json({ queuelist: queuelist });
+}));
+
 module.exports = router;
