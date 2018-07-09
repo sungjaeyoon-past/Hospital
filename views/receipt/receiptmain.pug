@@ -1,7 +1,29 @@
-extends ../layoutemp
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous")
+    meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+  body
+    block top-navemp
+      include ../includes/topnavemp
+    if flashMessages
+      each texts, type in flashMessages
+        .container(style="margin-top:3%;")
+          .alert.alert-danger(class='alert-#{type}')
+            each msg in texts
+              p= msg
+    block content
 
-block content
+    script(type='text/javascript' language='javascript' src='https://code.jquery.com/jquery-3.3.1.js')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous")
     include ../includes/topnavemp
+    link(rel='stylesheet', href='/stylesheets/topnav.css')
+    script(src="/js/diagnosis.js")
+    script.
+        $(document).ready(makedeck(#{dept_id}));
     .container
         .row(style="margin-top:20px;")
             .col-md-12
@@ -12,37 +34,9 @@ block content
             .col-md-12
                 h3
                     | 진료 순서
-        .card-deck
-            .card.text-white.bg-info(style='max-width: 18rem;')
-                .card-body
-                    h5.card-title 이정훈1
-                    hr
-                    a.btn.btn-default(type='submit' href=`#`) 진료하기
-            .card.text-white.bg-info(style='max-width: 18rem;')
-                .card-body
-                    h5.card-title 이정훈2
-                    hr
-                    a.btn.btn-default(type='submit' href=`#`) 진료하기            
-            .card.text-white.bg-info(style='max-width: 18rem;')
-                .card-body
-                    h5.card-title 이정훈3
-                    hr
-                    a.btn.btn-default(type='submit' href=`#`) 진료하기
-            .card.text-white.bg-info(style='max-width: 18rem;')
-                .card-body
-                    h5.card-title 이정훈4
-                    hr
-                    a.btn.btn-default(type='submit' href=`#`) 진료하기
-            .card.text-white.bg-info(style='max-width: 18rem;')
-                .card-body
-                    h5.card-title 이정훈5
-                    hr
-                    a.btn.btn-default(type='submit' href=`#`) 진료하기  
-            .card.text-white.bg-info(style='max-width: 18rem;')
-                .card-body
-                    h5.card-title 이정훈6
-                    hr
-                    a.btn.btn-default(type='submit' href=`#`) 진료하기                                                          
+        #namecard.card-deck
+            //include ./_namecard
+
         hr
         form.alert.alert-primary(action="/receipt", method="POST")
             include ./_form

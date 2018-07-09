@@ -56,8 +56,7 @@ function getDate() {
 //진료 접수 메인 페이지
 router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
     var date = getDate();
-
-    res.render('receipt/receiptmain', { date: date, role: res.locals.currentUser.user_role });
+    res.render('receipt/receiptmain', { dept_id: 1, date: date, role: res.locals.currentUser.user_role });
 }));
 
 //리스트에서 진료접수로 넘어왔을 경우 메인 페이지
@@ -79,9 +78,6 @@ router.post('/:id', catchErrors(async (req, res, next) => {
     var date = req.body.date;
     var disease = req.body.disease;
     var description = req.body.description;
-    var medicine_id = req.body.medicine_id;
-    var amount = req.body.amount;
-    var frequency = req.body.frequency;
     var precaution = req.body.precaution;
     var insertSql = "INSERT INTO medical_record (patient_id, doctor_id, date, disease, description, medicine_id, amount, frequency, precaution ) VALUES('" + patient_id + "','" + doctor_id + "','" + date + "','" + disease + "','" + description + "','" + medicine_id + "','" + amount + "','" + frequency + "','" + precaution + "')";
     getSqlResult(insertSql, function (err, date) {
