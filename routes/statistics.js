@@ -100,7 +100,6 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
                 }
                 rooms_info.push(info);
             }
-            console.log(rooms_info);
         }
         else {
             console.log(err);
@@ -122,7 +121,6 @@ router.get('/temperatureGraphOphthalmology', isAuthenticated, catchErrors(async 
                 }
                 historis.push(history);
             }
-            console.log(historis);
         }
         else {
             console.log(err);
@@ -143,7 +141,6 @@ router.get('/temperatureGraphMedicine', isAuthenticated, catchErrors(async (req,
                 }
                 historis.push(history);
             }
-            console.log(historis);
         }
         else {
             console.log(err);
@@ -164,7 +161,6 @@ router.get('/temperatureGraphDentist', isAuthenticated, catchErrors(async (req, 
                 }
                 historis.push(history);
             }
-            console.log(historis);
         }
         else {
             console.log(err);
@@ -185,7 +181,6 @@ router.get('/temperatureGraphSurgery', isAuthenticated, catchErrors(async (req, 
                 }
                 historis.push(history);
             }
-            console.log(historis);
         }
         else {
             console.log(err);
