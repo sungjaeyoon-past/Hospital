@@ -8,38 +8,38 @@ block content
                 button#dropdownMenu2.btn.btn-secondary.dropdown-toggle(type='a' href="#" data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
                     | 외과
                 .dropdown-menu(aria-labelledby='dropdownMenu2')
-                    a.dropdown-item(href='/diagnosis/1') 내과
-                    a.dropdown-item(href='/diagnosis/2') 치과
-                    a.dropdown-item(href='/diagnosis/3') 안과
+                    a.dropdown-item(href='/receipt/1') 내과
+                    a.dropdown-item(href='/receipt/2') 치과
+                    a.dropdown-item(href='/receipt/3') 안과
             -if(dept_id==1)
                 button#dropdownMenu2.btn.btn-secondary.dropdown-toggle(type='a' href="#" data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
                     | 내과
                 .dropdown-menu(aria-labelledby='dropdownMenu2')
-                    a.dropdown-item(href='/diagnosis/0') 외과
-                    a.dropdown-item(href='/diagnosis/2') 치과
-                    a.dropdown-item(href='/diagnosis/3') 안과
+                    a.dropdown-item(href='/receipt/0') 외과
+                    a.dropdown-item(href='/receipt/2') 치과
+                    a.dropdown-item(href='/receipt/3') 안과
             -if(dept_id==2)
                 button#dropdownMenu2.btn.btn-secondary.dropdown-toggle(type='a' href="#" data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
                     | 치과
                 .dropdown-menu(aria-labelledby='dropdownMenu2')
-                    a.dropdown-item(href='/diagnosis/0') 외과
-                    a.dropdown-item(href='/diagnosis/1') 내과
-                    a.dropdown-item(href='/diagnosis/3') 안과
+                    a.dropdown-item(href='/receipt/0') 외과
+                    a.dropdown-item(href='/receipt/1') 내과
+                    a.dropdown-item(href='/receipt/3') 안과
             -if(dept_id==3)
                 button#dropdownMenu2.btn.btn-secondary.dropdown-toggle(type='a' href="#" data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
                     | 안과
                 .dropdown-menu(aria-labelledby='dropdownMenu2')
-                    a.dropdown-item(href='/diagnosis/0') 외과
-                    a.dropdown-item(href='/diagnosis/1') 내과
-                    a.dropdown-item(href='/diagnosis/2') 치과   
+                    a.dropdown-item(href='/receipt/0') 외과
+                    a.dropdown-item(href='/receipt/1') 내과
+                    a.dropdown-item(href='/receipt/2') 치과   
             -if(dept_id==4)
                 button#dropdownMenu2.btn.btn-secondary.dropdown-toggle(type='a' href="#" data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
                     | 과선택
                 .dropdown-menu(aria-labelledby='dropdownMenu2')
-                    a.dropdown-item(href='/diagnosis/0') 외과
-                    a.dropdown-item(href='/diagnosis/1') 내과
-                    a.dropdown-item(href='/diagnosis/2') 치과
-                    a.dropdown-item(href='/diagnosis/3') 안과                                                                 
+                    a.dropdown-item(href='/receipt/0') 외과
+                    a.dropdown-item(href='/receipt/1') 내과
+                    a.dropdown-item(href='/receipt/2') 치과
+                    a.dropdown-item(href='/receipt/3') 안과                                                                 
     .container
         .row(style="margin-bottom:2%;")
             .col-md-12.col-sm-12
@@ -62,9 +62,9 @@ block content
                             | 순서: #{i+1}
                             hr
                             .btn-group.btn-group-sm(role='group' aria-label='Extra-small button group')
-                                a.btn.btn-default(type='submit' href=`/diagnosis/${dept_id}/next/${queue.patient_id}&${i}`) ←
-                                a.btn.btn-default(type='submit' href=`/diagnosis/${dept_id}/dequeue/${queue.patient_id}`) x
-                                a.btn.btn-default(type='submit' href=`/diagnosis/${dept_id}/prev/${queue.patient_id}&${i}`) → 
+                                a.btn.btn-default(type='submit' href=`/receipt/${dept_id}/next/${queue.patient_id}&${i}`) ←
+                                a.btn.btn-default(type='submit' href=`/receipt/${dept_id}/dequeue/${queue.patient_id}`) x
+                                a.btn.btn-default(type='submit' href=`/receipt/${dept_id}/prev/${queue.patient_id}&${i}`) → 
     .container
         -if(queue_number>6)
             p 이외 #{queue_number-6}명의 환자가 대기중입니다.
@@ -85,17 +85,17 @@ block content
                                     a(href='/patientmanagement') 환자 관리
         .row
             .col-sm-4
-                form.form-inline.ml-auto(action="/diagnosis", method="GET")
+                form.form-inline.ml-auto(action="/receipt", method="GET")
                     .form-group.has-white
                         input.form-control(type='text', placeholder='이름으로 검색', name='name')             
                     button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit') search    
             .col-sm-4
-                form.form-inline.ml-auto(action="/diagnosis", method="GET")
+                form.form-inline.ml-auto(action="/receipt", method="GET")
                     .form-group.has-white
                         input.form-control(type='text', placeholder='주민번호로 검색', name='personal_number')              
                     button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit') search              
             .col-sm-4                               
-                form.form-inline.ml-auto(action="/diagnosis", method="GET")
+                form.form-inline.ml-auto(action="/receipt", method="GET")
                     .form-group.has-white
                         input.form-control(type='text', placeholder='환자번호로 검색', name='patient_id')                
                     button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit') search    
@@ -112,6 +112,6 @@ block content
                             .col-md-2(style="margin-top:20px;") 핸드폰번호: #{patient.phone_number}
                             .col-md-3(style="margin-top:20px;")
                                 .btn.btn-light(style="margin-left:4%;")
-                                    a(href=`/diagnosis/${dept_id}/queue/${patient.patient_id}`) 진료 접수 
+                                    a(href=`/receipt/${dept_id}/queue/${patient.patient_id}`) 진료 접수 
                                 .btn.btn-light(style="margin-left:1%;")
-                                    a(href=`/diagnosis/${dept_id}/dequeue/${patient.patient_id}`) 접수 취소
+                                    a(href=`/receipt/${dept_id}/dequeue/${patient.patient_id}`) 접수 취소
