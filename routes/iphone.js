@@ -6,7 +6,7 @@ var connection = mysql_dbc.init();
 router.post('/login', function (req, res, next) {
     var user_id = req.body.user_id;
     var password = req.body.password;
-    await connection.query('select * from medic.iphone_user where user_id = ?', user_id, function (err, result) {
+    connection.query('select * from medic.iphone_user where user_id = ?', user_id, function (err, result) {
         if (err) {
             console.log('err :' + err);
         } else {
@@ -27,7 +27,7 @@ router.post('/login', function (req, res, next) {
 
 router.post('attention', function (req, res, next) {
     var user_fk = req.body.user_fk;
-    await connection.query('select * from medic.patient where user_fk = ?', user_fk, function (err, result) {
+    connection.query('select * from medic.patient where user_fk = ?', user_fk, function (err, result) {
         if (err) {
             console.log('err :' + err);
         } else {
