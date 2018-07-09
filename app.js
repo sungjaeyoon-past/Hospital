@@ -37,7 +37,8 @@ var patientmanagement = require('./routes/patientmanagement');
 var surgery = require('./routes/surgery');
 var superadmin = require('./routes/superadmin');
 var api = require('./routes/api');
-var login = require('./routes/login')
+var login = require('./routes/login');
+var iphone = require('./routes/iphone');
 /*-----------------Routes 파일 불러오기-----------------*/
 var app = express();
 
@@ -102,6 +103,7 @@ app.use(function (req, res, next) {
 /*-----------------------로그인 끝------------------*/
 
 /*-----------------url route-----------------*/
+app.use('/iphone', iphone);
 app.use('/', index);
 app.use('/monitor', monitor);
 app.use('/receipt', receipt);
