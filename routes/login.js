@@ -50,7 +50,8 @@ passport.use(new LocalStrategy({
                     console.log('로그인 성공');
                     return done(null, {
                         user_id: result[0].user_id,
-                        user_role: result[0].role
+                        user_role: result[0].role,
+                        user_information: result[0].employee_id
                     });
                 }
             }

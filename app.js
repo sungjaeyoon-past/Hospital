@@ -9,25 +9,6 @@ var methodOverride = require('method-override');
 var flash = require('connect-flash');
 var passport = require('passport');
 
-/*
-var mysql = require('mysql');
-var conn = mysql.createConnection({
-  host: '58.123.136.107',
-  port: '3308',
-  user: 'web',
-  password: 'mju12345',
-  database : 'medic'
-});
-conn.connect();
-
-쿼리 예시문입니당~~
-conn.query('SELECT * FROM patient',function(err, rows, fields) {
-  if (!err)
-    console.log('The solution is: ', rows);
-  else
-    console.log('Error while performing Query.', err);
-});*/
-
 /*-----------------Routes 파일 불러오기-----------------*/
 var index = require('./routes/statistics');
 var diagnosis = require('./routes/diagnosis');
@@ -74,25 +55,6 @@ app.use(express.static(path.join(__dirname, 'node_modules')));//node 모듈 사�
 /*-----------------------로그인------------------*/
 app.use(passport.initialize());
 app.use(passport.session());
-
-/*
-var isAuthenticated = function (req, res, next) {
-  if (req.isAuthenticated())
-    return next();
-  res.redirect('/login');
-};검증됬는지 확인
-
-router.get('/myinfo', isAuthenticated, function (req, res) {
-  res.render('myinfo',{
-    title: 'My Info',
-    user_info: req.user
-  })
-});사용법 예시
-router.get('/logout', function (req, res) {
-  req.logout();
-  res.redirect('/');
-});
-*/
 
 app.use(function (req, res, next) {
   console.log("REQ USER", req.user);
