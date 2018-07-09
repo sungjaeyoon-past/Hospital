@@ -46,34 +46,7 @@ function findByid(id, x) {
 }
 
 router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
-    /*//환자상세정보 디비에서 가져옴
-    var patientList = [];
-    if (req.query.name) {
-        var Sql = "SELECT * FROM patient WHERE name ='" + req.query.name + "'";
-    } else if (req.query.patient_id) {
-        var Sql = "SELECT * FROM patient WHERE patient_id ='" + req.query.patient_id + "'";
-    } else if (req.query.personal_number) {
-        var Sql = "SELECT * FROM patient WHERE personal_number ='" + req.query.personal_number + "'";
-    } else {
-        var Sql = 'SELECT * FROM medic.patient';
-    }
-    await conn.query(Sql, function (err, rows, fields) {
-        if (err)
-            console.log('Error while performing Query.', err);
-        else {
-            for (var i = 0; i < rows.length; i++) {
-                var person = {
-                    'name': rows[i].name,
-                    'patient_id': rows[i].patient_id,
-                    'personal_number': rows[i].personal_number,
-                    'phone_number': rows[i].phone_number
-                }
-                patientList.push(person);
-            }
-            res.render('diagnosis/receiptmain', { dept_id: 0, role: res.locals.currentUser.user_role, queue_number: queuelist.length, queuelist: queuelist.slice(0.5), patientList: patientList });
-        }
-    });*/
-    res.redirect('/diagnosis/4');
+    res.redirect('/receipt/4');
 }));
 
 router.get('/:dept_id', isAuthenticated, catchErrors(async (req, res, next) => {

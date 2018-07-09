@@ -106,8 +106,8 @@ app.use(function (req, res, next) {
 app.use('/iphone', iphone);
 app.use('/', index);
 app.use('/monitor', monitor);
-app.use('/receipt', receipt);
-app.use('/diagnosis', diagnosis);
+app.use('/receipt', diagnosis);
+app.use('/diagnosis', receipt);
 app.use('/patientmanagement', patientmanagement);
 app.use('/surgery', surgery);
 app.use('/superadmin', superadmin);
