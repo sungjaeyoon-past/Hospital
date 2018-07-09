@@ -92,7 +92,7 @@ router.get('/', catchErrors(async (req, res, next) => {
   } else {
     var insertSql = "SELECT * FROM patient"
     //var insertSql="DELETE FROM inpatient WHERE patient_id='41'";
-    //var insertSql=" UPDATE usage_record SET information ='기저귀' WHERE record_id=2";
+    //var insertSql=" UPDATE usage_record SET information ='링거' WHERE record_id=7";
   }
   var personList = [];
   getSqlResult(insertSql, function (err, data) {
@@ -356,7 +356,8 @@ router.post('/inpatientdetail/:id', catchErrors(async (req, res, next) => {
   var patient_id = req.params.id;
   var employee_id = req.body.employee_id;
   var date = req.body.date;
-  var information = req.body.date;
+  var information = req.body.information;
+  console.log(information);
   if (information == 'option1') {
     information = "링거";
   } else if (information == 'option2') {
@@ -371,7 +372,7 @@ router.post('/inpatientdetail/:id', catchErrors(async (req, res, next) => {
       req.flash('success', "추가 성공!");
     }
   });
-  res.render('patientmanagement/patient_record');
+  res.redirect(req.params.id);
 }));
 
 //퇴원 수속 (완)
@@ -556,8 +557,15 @@ router.get('/edit/:id', catchErrors(async (req, res, next) => {
   });
 }));
 
-//환자 정보 변경 했을 경우 ()
+//환자 정보 변경 했을 경우 (완)
 router.put('/:id', catchErrors(async (req, res, next) => {
+  console.log(req.body);
+  const err = validateFormPatient(req.body);
+  if (err) {
+    req.flash('danger', err);
+    console.log(err);
+    return res.redirect('back');
+  }
   var patient_id = req.params.id;
   var name = req.body.name;
   var phone_number = req.body.phone_number;
