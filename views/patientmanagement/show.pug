@@ -27,22 +27,33 @@ block content
                     else
                         | 여성    
         hr
-            
+        form(action=`/patientmanagement/send/${patient.patient_id}`, method="POST")
+            .row
+                .col-md-2(style="text-align:center; margin-top:1%;")
+                    h5 문자메시지
+                .col-md-10
+                    .input-group.mb-3
+                        input.form-control(type='text', placeholder="보낼 내용 입력(해외 api라 영어만 가능합니다.)", name='textSMS' ,aria-describedby='basic-addon2')
+                        .input-group-append
+                            button.btn.btn-outline-primary(type='submit') 메시지 전송
+        hr
+        .row
+            a.button.btn.btn-primary(href=`/patientmanagement/edit/${patient.patient_id}`, style="margin-right:1%;")
+                | 정보 수정
+            a.btn.btn-danger(href=`/patientmanagement/${patient.patient_id}?_method=DELETE`, style="margin-right:1%;")
+                | 정보 삭제
+            a.btn.btn-success(href=`/patientmanagement/inpatientdetail/${patient.patient_id}`)
+                | 입원 정보 확인
+        hr
         include ./_record
 
         hr
-        .row
-            .col-md-1
-                a.button.btn.btn-primary(href=`/patientmanagement/edit/${patient.patient_id}`)
-                    | 정보 수정
-            .col-md-8
-                a.btn.btn-danger(href=`/patientmanagement/${patient.patient_id}?_method=DELETE`)
-                    | 정보 삭제
-            .col-md-3
-                a.btn.btn-success(href=`/patientmanagement/inpatientdetail/${patient.patient_id}`)
-                    | 입원 정보 확인
-        hr
         .btn.btn-primary(onclick="history.back(-1);") 돌아가기
+
+    script.
+        function sendSMS() {
+            $("#sensSMS").show();
+        }
 
 
             

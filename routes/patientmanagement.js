@@ -496,20 +496,36 @@ router.get('/show/:id', catchErrors(async (req, res, next) => {
   });
 }));
 
-//문자보내기 (x)
-router.get('/send', catchErrors(async (req, res, next) => {
-  var TO_NUMBER = '821089479574';
-  const from = 'Nexmo';
-  const to = TO_NUMBER;
-  const text = 'A text message sent using the Nexmo SMS API';
-  nexmo.message.sendSms(from, to, text, (error, response) => {
-    if (error) {
-      throw error;
-    } else if (response.messages[0].status != '0') {
-      console.error(response);
-      throw 'Nexmo returned back a non-zero status';
-    } else {
-      console.log(response);
+//문자보내기 (완)
+router.post('/send/:id', catchErrors(async (req, res, next) => {
+  var insertSql="SELECT phone_number FROM patient WHERE patient_id = "+req.params.id;
+  var NUMBER;
+  getSqlResult(insertSql, function (err, data) {
+    if (!err) {
+      NUMBER=data[0].phone_number;
+      NUMBER=NUMBER.substring(1,11);
+      var TO_NUMBER = '82'+NUMBER;
+      console.log(TO_NUMBER);
+      const from = 'Nexmo';
+      const to = TO_NUMBER;
+      const text = req.body.textSMS;
+      if(text.length==0){
+        req.flash('danger', "내용을 입력해주세요");
+        return res.redirect('back');
+      }
+      console.log("text:"+text);
+      nexmo.message.sendSms(from, to, text, (error, response) => {
+        if (error) {
+          throw error;
+        } else if (response.messages[0].status != '0') {
+          console.error(response);
+          throw 'Nexmo returned back a non-zero status';
+        } else {
+          console.log(response);
+        }
+      });
+      req.flash('danger', "보내기 성공!");
+      res.redirect('back');
     }
   });
 }));

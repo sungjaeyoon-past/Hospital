@@ -10,7 +10,7 @@ script.
     .col-md-2
         a.button.btn.btn-primary(href=`/receipt/${patient.patient_id}`)
             | 진료기록 추가
-if recordList
+if recordList==null
     - var count =0
     each record in recordList
         .alert.alert-primary
