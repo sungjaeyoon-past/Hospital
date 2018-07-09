@@ -82,9 +82,36 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
 }));
 
 //리스트에서 진료접수로 넘어왔을 경우 메인 페이지
-router.get('/:id', catchErrors(async (req, res, next) => {
+router.get('/:patient_id', catchErrors(async (req, res, next) => {
+    var patient_id = req.params.patient_id;
     var date = getDate();
-    res.render('receipt/receiptmain', { date: date, role: res.locals.currentUser.user_role });
+    var doc;
+    var patient;
+    var sql = "SELECT * FROM medic.employee where employee_id=" + res.locals.currentUser.user_information;
+    await conn.query(sql, function (err, result) {
+        if (err)
+            console.log('Error while performing Query.', err);
+        else {
+            doc = {
+                dept_id: result[0].department_id - 1,
+                name: result[0].name,
+                department: getDeptName(result[0].department_id)
+            }
+        }
+    })
+    sql = "SELECT * FROM medic.patient where patient_id=" + patient_id;
+    await conn.query(sql, function (err, result) {
+        if (err)
+            console.log('Error while performing Query.', err);
+        else {
+            patient = {
+                name: result[0].name,
+                patient_id: patient_id
+            }
+        }
+    })
+    //patient_id로 patient_name얻은 다음 patient로 render에 보내고
+    res.render('receipt/receiptmain', { doc: doc, patient: patient, date: date, role: res.locals.currentUser.user_role });
 }));
 
 //진료기록 작성 완료
