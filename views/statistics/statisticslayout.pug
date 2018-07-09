@@ -1,0 +1,56 @@
+// Required meta tags
+meta(charset='utf-8')
+meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport')
+meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')
+// Fonts and icons
+link(rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons')
+link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css')
+// Material Dashboard CSS
+link(rel='stylesheet' href='/assets/css/material-dashboard.css')
+
+nav.navbar.navbar-expand.navbar-light.bg-info.flex-column.flex-md-row.bd-navbar
+    .container-fluid
+        a.navbar-brand(href="/") Medic Top
+    
+        div#navbarNav.navbar-nav-scroll.ml-md-auto
+            ul.nav.navbar-nav
+                li.nav-item 
+                    a.nav-link(href='/monitor') 모니터링     
+                li.nav-item 
+                    a.nav-link(href='/patientmanagement/bed/1') 입/퇴원 환자
+                li.nav-item 
+                    a.nav-link(href='/patientmanagement') 환자관리
+                li.nav-item 
+                    a.nav-link(href='/diagnosis') 진료작성
+                li.nav-item 
+                    a.nav-link(href='/surgery') 수술실 예약
+                -if(role==0||role==1)
+                    li.nav-item
+                        a.nav-link(href='/receipt') 진료접수
+                -if(role==0)
+                    li.nav-item
+                        a.nav-link(href='/superadmin') 최고관리자
+                li.nav-item 
+                    a.nav-link(href='/login/logout') 로그아웃
+                
+
+
+
+
+
+
+// Core JS Files
+script(src='/assets/js/core/jquery.min.js')
+script(src='/assets/js/core/popper.min.js')
+script(src='/assets/js/core/bootstrap-material-design.min.js')
+// Notifications Plugin, full documentation here: http://bootstrap-notify.remabledesigns.com/
+script(src='/assets/js/plugins/bootstrap-notify.js')
+// Charts Plugin, full documentation here: https://gionkunz.github.io/chartist-js/
+script(src='/assets/js/plugins/chartist.min.js')
+// Plugin for Scrollbar documentation here: https://github.com/utatti/perfect-scrollbar
+script(src='/assets/js/plugins/perfect-scrollbar.jquery.min.js')
+// Demo init
+script(src='/assets/demo/demo.js')
+// Material Dashboard Core initialisations of plugins and Bootstrap Material Design Library
+script(src='/assets/js/material-dashboard.js?v=2.1.0')
+script(type='text/javascript' language='javascript' src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
