@@ -116,6 +116,7 @@ router.post('/', catchErrors(async (req, res, next) => {
     var disease = req.body.disease;
     var description = req.body.description;
     var precaution = req.body.precaution;
+    var doctorSql = "SELECT department_id FROM medic.employee where employee_id=" + res.locals.currentUser.user_information;
     var insertSql = "INSERT INTO medical_record (patient_id, doctor_id, date, disease, description, precaution) VALUES('" + patient_id + "','" + doctor_id + "','" + date + "','" + disease + "','" + description + "','" + precaution + "')";
     checkValidate(req.body)
         .then(query(insertSql))
@@ -124,7 +125,15 @@ router.post('/', catchErrors(async (req, res, next) => {
         })
         .then(() => {
             //url 환자 번호로 dequeue요청
-            res.redirect('back');
+            query(doctorSql)
+                .then(rows => {
+                    dept_id = rows[0].department_id;
+                    dept_id -= 1;
+                    console.log(dept_id);
+                    var url = dept_id + '/dequeue/' + patient_id;
+                    res.redirect('/receipt/' + url + '/re');
+                })
+                .catch()
         })
         .catch(err => {
             console.log(err);

@@ -133,6 +133,17 @@ router.get('/:dept_id/dequeue/:patient_id', isAuthenticated, catchErrors(async (
     res.redirect('back');
 }));
 
+//환자 접수 취소함
+router.get('/:dept_id/dequeue/:patient_id/re', isAuthenticated, catchErrors(async (req, res, next) => {
+    //여기서 patient_id얻구 리다이렉트처리
+    console.log("dequeue에다 넣음");
+    var requestPatient = req.params.patient_id;
+    if (!deleteByid(requestPatient, queuelist[dept_id])) {
+        req.flash('danger', "진료 환자가 대기 목록에 없습니다.");
+    }
+    res.redirect('/diagnosis');
+}));
+
 router.get('/:dept_id/next/:patient_id&:loc', isAuthenticated, catchErrors(async (req, res, next) => {
     //여기서 patient_id얻구 리다이렉트처리
     console.log("next 넣음");
