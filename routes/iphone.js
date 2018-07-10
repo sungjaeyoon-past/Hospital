@@ -4,6 +4,10 @@ var mysql_dbc = require('../db/db_con')();
 var connection = mysql_dbc.init();
 const catchErrors = require('../lib/async-error');
 
+router.post('/', catchErrors(async (req, res, next) => {
+    res.json({ success: true, msg: 'con이 제대로 작동중입니다.' });
+}));
+
 router.post('/login', catchErrors(async (req, res, next) => {
     var user_id = req.body.user_id;
     var password = req.body.password;
@@ -15,12 +19,12 @@ router.post('/login', catchErrors(async (req, res, next) => {
             console.log('err :' + err);
         } else {
             if (result.length === 0) {
-                res.json({ success: false, msg: '해당 유저가 존재하지 않습니다.' })
+                res.json({ success: false, msg: '해당 유저가 존재하지 않습니다.' });
             } else {
                 if (password != result[0].password) {
-                    res.json({ success: false, msg: '비밀번호가 일치하지 않습니다.' })
+                    res.json({ success: false, msg: '비밀번호가 일치하지 않습니다.' });
                 } else {
-                    res.json({ success: true, msg: '로그인 성공 하였습니다.', patient_id: result[0].patient_id })
+                    res.json({ success: true, msg: '로그인 성공 하였습니다.', patient_id: result[0].patient_id });
                 }
             }
         }
