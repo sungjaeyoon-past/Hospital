@@ -4,16 +4,6 @@ const catchErrors = require('../lib/async-error');
 const isAuthenticated = require('../lib/isAuthenticated');
 var mysql_dbc = require('../db/db_con')();
 var conn = mysql_dbc.init();
-//var queryProm = require('../db/db_prom');
-
-function getSqlResult(insertSql, callback) {
-    conn.query(insertSql, function (err, result) {
-        if (err)
-            callback(err, null);
-        else
-            callback(null, result);
-    });
-}
 
 function query(sql, args) {
     return new Promise((resolve, reject) => {
@@ -25,27 +15,27 @@ function query(sql, args) {
     });
 }
 
-function validateFormReceipt(form, option) {
-    var patient_id = form.patient_id || "";
-    var doctor_id = form.doctor_id || "";
-    var date = form.date || "";
-    var disease = form.disease || "";
-    var description = form.description || "";
-    var medicine_id = form.medicine_id || "";
-    var amount = form.amount || "";
-    var frequency = form.frequency || "";
-    var precaution = form.precaution || "";
+function checkValidate(form) {
+    return new Promise((resolve, reject) => {
+        var msg = validateFormReceipt(form);
+        if (msg != "")
+            return reject();
+        resolve();
+    })
+}
 
-    if (!patient_id) { return "환자 번호를 입력해주세요!"; }
-    if (!doctor_id) { return "담당의사 번호를 입력해주세요!"; }
-    if (!date) { return "날짜를 입력해주세요!"; }
-    if (!disease) { return "질병 이름을 입력해주세요!"; }
-    if (!description) { return "진료 내용를 입력해주세요!"; }
-    if (!medicine_id) { return "약 번호를 입력해주세요!"; }
-    if (!amount) { return "약의 양를 입력해주세요!"; }
-    if (!frequency) { return "약 복용횟수를 입력해주세요!"; }
-    if ((patient_id < 0) || (doctor_id < 0) || (medicine_id < 0) || (amount < 0) || (frequency < 0)) { return "0이상의 수를를 입력해주세요!"; }
-    if (!precaution) { return "주의사항을 입력해주세요!"; }
+function validateFormReceipt(form) {
+    var errlog = "";
+    var patient_id = form.patient_id;
+    var date = form.date;
+    var disease = form.disease;
+    var description = form.description;
+
+    if (date == null) errlog += "날짜 "
+    if (disease == null) errlog += "질병 이름 "
+    if (description == null) errlog += "진료 내용 "
+    if (patient_id == null) errlog += "환자 번호 "
+    return errlog;
 }
 
 function getDate() {
@@ -100,7 +90,7 @@ router.get('/:patient_id', isAuthenticated, catchErrors(async (req, res, next) =
     var patientSql = "SELECT * FROM medic.patient where patient_id=" + patient_id;
     query(doctorSql)
         .then(rows => { docRow = rows; return query(patientSql); }, err => { console.log('Error while performing Query.', err); })
-        .then(rows => { patRow = rows }, err => { console.log('Error while performing Query.', err); })
+        .then(rows => { patRow = rows; }, err => { console.log('Error while performing Query.', err); })
         .then(() => {
             var doc = {
                 dept_id: docRow[0].department_id - 1,
@@ -111,31 +101,37 @@ router.get('/:patient_id', isAuthenticated, catchErrors(async (req, res, next) =
                 name: patRow[0].name,
                 patient_id: patient_id
             }
-            console.log(selectPatient);
-            console.log(doc);
             res.render('receipt/receiptmain', { selectPatient: selectPatient, doc: doc, date: date, role: res.locals.currentUser.user_role });
         })
         .catch(err => {
-            console.log('catching error' + err);
+            console.log(err);
         })
 }));
 
 //진료기록 작성 완료
 router.post('/', catchErrors(async (req, res, next) => {
-    console.log('이 쪽입니다');
-    var patient_id = req.body.patient_id;
     var doctor_id = res.locals.currentUser.user_information;
+    var patient_id = req.body.patient_id;
     var date = req.body.date;
     var disease = req.body.disease;
     var description = req.body.description;
     var precaution = req.body.precaution;
     var insertSql = "INSERT INTO medical_record (patient_id, doctor_id, date, disease, description, precaution) VALUES('" + patient_id + "','" + doctor_id + "','" + date + "','" + disease + "','" + description + "','" + precaution + "')";
-    getSqlResult(insertSql, function (err, date) {
-        if (!err) {
-            req.flash('success', "추가 성공");
-        }
-        res.redirect('back');
-    });
+    checkValidate(req.body)
+        .then(query(insertSql))
+        .then(rows => {
+            console.log(rows);
+        })
+        .then(() => {
+            //url 환자 번호로 dequeue요청
+            res.redirect('back');
+        })
+        .catch(err => {
+            console.log(err);
+            var errlog = validateFormReceipt(req.body);
+            req.flash('danger', "안채운 항목이 있습니다." + errlog);
+            res.redirect('back')
+        })
 }));
 
 module.exports = router;
