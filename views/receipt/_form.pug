@@ -1,34 +1,46 @@
 -if(selectPatient==null)
     .row
-        .col-md-6
+        .col-md-1(style="margin-right:-3%;")
+                img.rounded-0(src='/images/number.png', alt='...', style="width:40px;")
+        .col-md-5
             .input-group.mb-3
                 .input-group-prepend
                     span#basic-addon1.input-group-text 환자 번호                    
                 input.form-control(type='text', placeholder='34',name='disease')
-        .col-md-6
+        .col-md-1(style="margin-right:-3%;")
+                img.rounded-0(src='/images/name.png', alt='...', style="width:40px;")
+        .col-md-5
             .input-group.mb-3
                 .input-group-prepend
                     span#basic-addon1.input-group-text 환자 이름                    
                 input.form-control(type='text', placeholder='이정훈',name='disease')
 -if(selectPatient!=null)
     .row
-        .col-md-6
+        .col-md-1(style="margin-right:-3%;")
+                img.rounded-0(src='/images/number.png', alt='...', style="width:40px;")
+        .col-md-5
             .input-group.mb-3
                 .input-group-prepend
                     span#basic-addon1.input-group-text 환자 번호                    
                 input.form-control(type='text', value=selectPatient.patient_id,name='disease')
-        .col-md-6
+        .col-md-1(style="margin-right:-3%;")
+                img.rounded-0(src='/images/name.png', alt='...', style="width:40px;")
+        .col-md-5
             .input-group.mb-3
                 .input-group-prepend
                     span#basic-addon1.input-group-text 환자 이름                    
                 input.form-control(type='text', value=selectPatient.name,name='disease')
 .row
-    .col-md-6
+    .col-md-1(style="margin-right:-3%;")
+        img.rounded-0(src='/images/date.png', alt='...', style="width:40px;")
+    .col-md-5
         .input-group.mb-3
             .input-group-prepend
                 span#basic-addon1.input-group-text 진료 날짜
             input.form-control(type='date', value=date, name='date', aria-describedby='basic-addon1')
-    .col-md-6
+    .col-md-1(style="margin-right:-3%;")
+        img.rounded-0(src='/images/disease.png', alt='...', style="width:40px;")
+    .col-md-5
         .input-group.mb-3
             .input-group-prepend
                 span#basic-addon1.input-group-text 질병 이름                    
@@ -49,7 +61,9 @@ hr
 
 hr                         
 .row
-    .col-md-12
+    .col-md-1(style="margin-right:-3%;")
+        img.rounded-0(src='/images/warning.png', alt='...', style="width:40px;")
+    .col-md-11
         .input-group.mb-3
             .input-group-prepend
                 span#basic-addon1.input-group-text 주의 사항                  

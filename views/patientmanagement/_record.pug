@@ -24,18 +24,24 @@ if recordList.length
             .record-detail
                 .alert.alert-secondary
                     .row
-                        .col-md-4
+                        .col-md-1(style="margin-right:-3%;")
+                                img.rounded-0(src='/images/disease.png', alt='...', style="width:40px;")
+                        .col-md-3
                             .input-group.mb-3
                                 .input-group-prepend
                                     span#basic-addon1.input-group-text  질병 이름:
                                 |   
                                 input.form-control(type='text', placeholder='Username', value=record.disease ,readonly)
-                        .col-md-4
+                        .col-md-1(style="margin-right:-3%;")
+                            img.rounded-0(src='/images/doctor.png', alt='...', style="width:40px;")
+                        .col-md-3
                             .input-group.mb-3
                                 .input-group-prepend
-                                    span#basic-addon1.input-group-text  담당 의사 번호:
+                                    span#basic-addon1.input-group-text  담당 의사:
                                 |   
-                                input.form-control(type='text', placeholder='Username', value=record.doctor_id, readonly)
+                                input.form-control(type='text', placeholder='Username', value=record.name, readonly)
+                        .col-md-1(style="margin-right:-3%;")
+                            img.rounded-0(src='/images/date.png', alt='...', style="width:40px;")
                         .col-md-4
                             .input-group.mb-3
                                 .input-group-prepend
@@ -43,7 +49,9 @@ if recordList.length
                                 |   
                                 input.form-control(type='text', placeholder='Username', value=moment(record.date).format('YYYY-MM-DD'), readonly)
                     .row
-                        .col-md-12
+                        .col-md-1(style="margin-right:-3%;")
+                            img.rounded-0(src='/images/content.png', alt='...', style="width:40px;")
+                        .col-md-11
                             .input-group.mb-3
                                 .input-group-prepend
                                     span#basic-addon1.input-group-text  진료 내용:
@@ -51,10 +59,12 @@ if recordList.length
                                 input.form-control(type='text', placeholder='Username', value=record.description, readonly)
                     
                     .row
-                        .col-md-12
+                        .col-md-1(style="margin-right:-3%;")
+                            img.rounded-0(src='/images/warning.png', alt='...', style="width:40px;")
+                        .col-md-11
                             .input-group.mb-3
                                 .input-group-prepend
-                                    span#basic-addon1.input-group-text 복용시 주의사항
+                                    span#basic-addon1.input-group-text 주의사항
                                 |   
                                 input.form-control(type='text', placeholder='Username', value=record.precaution, readonly)
 else

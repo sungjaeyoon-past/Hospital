@@ -45,39 +45,47 @@ block content
                                     | 치과 
                     .col-md-4
                         .row
-                            .col-md-12
+                            .col-md-1(style="margin-right:-3%;")
+                                img.rounded-0(src='/images/doctor.png', alt='...', style="width:40px;")
+                            .col-md-11
                                 .input-group-prepend
-                                    span#basic-addon1.input-group-text 담당의사 선택
+                                    span#basic-addon1.input-group-text(style="margin-left:10%;") 담당의사 선택
                                     #choose-doctor1
-                                        select#inputState.form-control(name="doctor_employee_id", rows="1")
-                                            each doctor in doctorList1
-                                                option(name="doctor_employee_id", value=`${doctor.employee_id}`) #{doctor.name}
+                                        select#inputState.form-control(name="doctor_employee_id1", rows="1")
+                                                each doctor1 in doctorList1
+                                                    option(name="doctor_employee_id1", value=`${doctor1.employee_id}`) #{doctor1.name}
                                     #choose-doctor2(style="display:none;")
-                                        select#inputState.form-control(name="doctor", rows="1")
-                                            each doctor in doctorList2
-                                                option(name="doctor_employee_id", value=`${doctor.employee_id}`) #{doctor.name}
+                                        select#inputState.form-control(name="doctor_employee_id2", rows="1")
+                                                each doctor2 in doctorList2
+                                                    option(name="doctor_employee_id2", value=`${doctor2.employee_id}`) #{doctor2.name}
                                     #choose-doctor3(style="display:none;")
-                                        select#inputState.form-control(name="doctor", rows="1")
-                                            each doctor in doctorList3
-                                                option(name="doctor_employee_id", value=`${doctor.employee_id}`) #{doctor.name}
+                                        select#inputState.form-control(name="doctor_employee_id3", rows="1")
+                                                each doctor3 in doctorList3
+                                                    option(name="doctor_employee_id3", value=`${doctor3.employee_id}`) #{doctor3.name}
                                     #choose-doctor4(style="display:none;")
-                                        select#inputState.form-control(name="doctor", rows="1")
-                                            each doctor in doctorList4
-                                                option(name="doctor_employee_id", value=`${doctor.employee_id}`) #{doctor.name}
+                                        select#inputState.form-control(name="doctor_employee_id4", rows="1")
+                                                each doctor4 in doctorList4
+                                                    option(name="doctor_employee_id4", value=`${doctor4.employee_id}`) #{doctor4.name}
                 br
                 .row
-                    .col-md-6
+                    .col-md-1(style="margin-right:-3%;")
+                        img.rounded-0(src='/images/inpatient2.png', alt='...', style="width:40px;")
+                    .col-md-5
                         .input-group.mb-3
                             .input-group-prepend
                                 span#basic-addon1.input-group-text 침대 번호
                             input.form-control(type='number', placeholder='1~16', name='bed_no', aria-describedby='basic-addon1')               
-                    .col-md-6
+                    .col-md-1(style="margin-right:-3%;")
+                        img.rounded-0(src='/images/date.png', alt='...', style="width:40px;")
+                    .col-md-5
                         .input-group.mb-3
                             .input-group-prepend
                                 span#basic-addon1.input-group-text 입원 날짜
                             input.form-control(type='date', placeholder='2018-06-30', name='hospital_day', aria-describedby='basic-addon1')
                 .row
-                    .col-md-12
+                    .col-md-1(style="margin-right:-3%;")
+                        img.rounded-0(src='/images/disease.png', alt='...', style="width:40px;")
+                    .col-md-11
                         .input-group.mb-3
                             .input-group-prepend
                                 span#basic-addon1.input-group-text 주요 질병 

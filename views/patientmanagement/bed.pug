@@ -32,12 +32,16 @@ block content
         include ./_bed
         
         hr
-        h4  사용중인 침대 정보
+        .row(style="margin-bottom:2%;")
+            .col-md-1
+                img.rounded-0(src='/images/bed.png', alt='...', style="width:60px;")
+            .col-md-4(style="margin-top:1.5%;")
+                h4  사용중인 침대 정보
             
-        table.table.usedbedtable
+        table.table.usedbedtable(style="text-align:center;")
             thead
                 tr
-                    th(scope="col") 과
+                    th(scope="col") 부서
                     th(scope="col") 침대번호
                     th(scope="col") 환자이름 
                     th(scope="col") 담당의사 
