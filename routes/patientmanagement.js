@@ -91,8 +91,8 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
     var insertSql = "SELECT * FROM patient WHERE name ='" + req.query.name + "'";
   } else {
     var insertSql = "SELECT * FROM patient"
-    //var insertSql="DELETE FROM inpatient WHERE patient_id='41'";
-    //var insertSql=" UPDATE usage_record SET information ='링거' WHERE record_id=7";
+    //var insertSql="DELETE FROM inpatient WHERE patient_id='46'";
+    //var insertSql="UPDATE bed SET inpatient_id ='46' WHERE bed_id=1";
     //var insertSql="INSERT INTO medical_record (patient_id, doctor_id, date, disease, description, precaution) VALUES ('34','1','2018-07-20','정신병','정신약 처방','하루 한알만')";
   }
   var personList = [];
@@ -216,7 +216,7 @@ router.get('/inpatient/:id', isAuthenticated, catchErrors(async (req, res, next)
                 break;
               default:
             }
-            console.log(doctor);
+            //console.log(doctor);
           }
         }
       });
@@ -229,12 +229,14 @@ router.get('/inpatient/:id', isAuthenticated, catchErrors(async (req, res, next)
             if (err) {
               console.log("ERROR : ", err);
             } else {
+              console.log(data);
               for (var i in data) {
                 if (data[i].inpatient_id > 0) {
                   bedList[data[i].bed_id - 1] = 1;
                 }
 
               }
+              console.log(bedList);
               res.render('patientmanagement/inpatient', { patient: person[0], bedList: bedList, doctorList1: doctorList1, doctorList2: doctorList2, doctorList3: doctorList3, doctorList4: doctorList4, role: res.locals.currentUser.user_role });
             }
           });
