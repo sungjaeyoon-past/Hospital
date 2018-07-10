@@ -2,7 +2,11 @@ extends ../layoutemp
 
 block content
     .container(style="margin-top:2%;")
-        h1 수술실 예약 현황
+        h1 수술실 현황
+
+        include ./oproom
+        hr
+        h2 예약 현황
         table.table.surgerytable
             thead
                 tr
@@ -10,6 +14,7 @@ block content
                     th(scope="col") 환자 id
                     th(scope="col") 의사 id 
                     th(scope="col") 수술 예정일
+                    th(scope="col") 수술실
                     th(scope="col") 비고
 
             tbody
@@ -19,6 +24,7 @@ block content
                         td #{surgery.patient_id}
                         td #{surgery.doctor_id}
                         td #{moment(surgery.reserved_datetime).format('YYYY-MM-DD hh:mm:ss a')}
+                        td #{oproomList.operating_room_id}
                         td #{surgery.description}
         br
         .row

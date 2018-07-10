@@ -16,7 +16,13 @@
                 span#basic-addon1.input-group-text 수술 예정일
             input.form-control(type='date', placeholder='수술 일시', name='reserved_datetime')
 
-hr                         
+br
+.row
+    .col-md-6
+        .input-group.mb-3
+            .input-group-prepend
+                span#basic-addon1.input-group-text 수술실 번호
+            input.form-control(type='number', placeholder='1~4', name='operation_room_id', aria-describedby='basic-addon1')                         
 .row
     .col-md-12
         .input-group.mb-3
