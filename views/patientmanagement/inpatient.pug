@@ -3,12 +3,14 @@ extends ../layoutemp
 block content
     include ../includes/topnavemp
     .container
-        .row(style="margin-top:20px;")
-            .col-md-6
+        .row(style="margin-top:3%; margin-bottom:2%;")
+            .col-md-1
+                img.rounded-0(src='/images/inpatient.png', alt='...', style="width:70px;")
+            .col-md-6(style="margin-top:1%;")
                 h1
                     #{patient.name}
                     | 환자 입원 수속
-            .col-md-6(style="margin-top:1%;")
+            .col-md-5(style="margin-top:2%;")
                 h3
                     | 주민번호 :
                     #{patient.personal_number}
@@ -16,7 +18,7 @@ block content
     .container
         br
         form(action=`/patientmanagement/inpatient/${patient.patient_id}`, method="POST")
-            .alert.alert-primary
+            .alert.alert-success
                 br
                 .row
                     .col-md-5

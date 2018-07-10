@@ -2,41 +2,35 @@ extends ../includes/layoutemp
 
 block content
     .container(style="margin-top:3%;")
-        h1 환자 정보
-        .alert.alert-primary
+        .row(style="margin-bottom:2%;")
+            .col-md-1
+                img.rounded-0(src='/images/diagn.png', alt='...', style="width:70px;")
+            .col-md-3(style="margin-top:1%;")
+                h1 환자 정보
+        .alert.alert-info
             .row
-                .col-md-12
-                    | 환자 이름:
-                    #{patient.name}
-            br
-            .row
-                .com-md-12(style="margin-left:1.5%;")
-                    | 주민 번호:
-                    #{patient.personal_number}
-            br
-            .row
-                .col-md-12
-                    | 핸드폰 번호:
-                    #{patient.phone_number}   
-            br
-            .row
-                .col-md-12
-                    | 성별:
+                .col-md-2
                     if !patient.gender
-                        | 남성
+                        img.rounded-0(src='/images/patientman.png', alt='...', style="width:170px;")           
                     else
-                        | 여성    
-        hr
-        form(action=`/patientmanagement/send/${patient.patient_id}`, method="POST")
-            .row
-                .col-md-2(style="text-align:center; margin-top:1%;")
-                    h5 문자메시지
-                .col-md-10(style="margin-top:1%;")
-                    .input-group.mb-3
-                        input.form-control(type='text', placeholder="보낼 내용 입력(해외 api라 영어만 가능합니다.)", name='textSMS' ,aria-describedby='basic-addon2')
-                        .input-group-append
-                            button.btn.btn-outline-primary(type='submit') 메시지 전송
-        hr
+                        img.rounded-0(src='/images/patientwoman.png', alt='...', style="width:170px;")                    
+                .col-md-9(style="margin-top:1.5%;")             
+                    table.table(style="margin-left:2%; margin-top:2%; text-align:center;")
+                        tbody
+                            tr
+                                td 환자 이름
+                                td 주민 번호
+                                td 핸드폰 번호
+                                td 성별
+                            tr.success
+                                td #{patient.name}
+                                td #{patient.personal_number}
+                                td #{patient.phone_number}   
+                                td 
+                                    if !patient.gender
+                                        | 남성
+                                    else
+                                        | 여성 
         .row
             a.button.btn.btn-primary(href=`/patientmanagement/edit/${patient.patient_id}`, style="margin-left:1.5%; margin-right:1%;")
                 | 정보 수정
@@ -44,6 +38,18 @@ block content
                 | 정보 삭제
             a.btn.btn-success(href=`/patientmanagement/inpatientdetail/${patient.patient_id}`)
                 | 입원 정보 확인
+        hr
+        form(action=`/patientmanagement/send/${patient.patient_id}`, method="POST")
+            .row
+                .col-md-1
+                    img.rounded-0(src='/images/sms.png', alt='...', style="width:70px;")
+                .col-md-2(style="margin-top:2%; margin-right:-3%;")
+                    h4 문자메시지
+                .col-md-9(style="margin-top:2%;")
+                    .input-group.mb-3
+                        input.form-control(type='text', placeholder="보낼 내용 입력", name='textSMS' ,aria-describedby='basic-addon2')
+                        .input-group-append
+                            button.btn.btn-outline-primary(type='submit') 메시지 전송
         hr
         include ./_record
 

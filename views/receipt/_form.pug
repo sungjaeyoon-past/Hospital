@@ -1,15 +1,27 @@
-.row
-    .col-md-6
-        .input-group.mb-3
-            .input-group-prepend
-                span#basic-addon1.input-group-text 환자 번호                    
-            input.form-control(type='text', value='34',name='disease')
-    .col-md-6
-        .input-group.mb-3
-            .input-group-prepend
-                span#basic-addon1.input-group-text 환자 이름                    
-            input.form-control(type='text', value='이정훈',name='disease')
-
+-if(selectPatient==null)
+    .row
+        .col-md-6
+            .input-group.mb-3
+                .input-group-prepend
+                    span#basic-addon1.input-group-text 환자 번호                    
+                input.form-control(type='text', placeholder='34',name='disease')
+        .col-md-6
+            .input-group.mb-3
+                .input-group-prepend
+                    span#basic-addon1.input-group-text 환자 이름                    
+                input.form-control(type='text', placeholder='이정훈',name='disease')
+-if(selectPatient!=null)
+    .row
+        .col-md-6
+            .input-group.mb-3
+                .input-group-prepend
+                    span#basic-addon1.input-group-text 환자 번호                    
+                input.form-control(type='text', value=selectPatient.patient_id,name='disease')
+        .col-md-6
+            .input-group.mb-3
+                .input-group-prepend
+                    span#basic-addon1.input-group-text 환자 이름                    
+                input.form-control(type='text', value=selectPatient.name,name='disease')
 .row
     .col-md-6
         .input-group.mb-3

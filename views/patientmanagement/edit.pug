@@ -3,10 +3,12 @@ extends ../layoutemp
 block content
     include ../includes/topnavemp
     .container
-        .row(style="margin-top:20px;")
-            .col-md-12
-                h1
-                    |환자 추가
+        .row(style="margin-top:2%;")
+            .col-md-1
+                img.rounded-0(src='/images/addpatient.png', alt='...', style="width:70px;")
+            .col-md-10
+                h1(style="margin-top:1%;")
+                    |환자 변경
         br
         form(action=`/patientmanagement/${patient.patient_id}?_method=PUT`,  method="POST")
             input(type="hidden", name="_method", value="PUT")

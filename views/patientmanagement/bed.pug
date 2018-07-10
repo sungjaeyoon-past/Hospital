@@ -1,24 +1,33 @@
 extends ../layoutemp
 
 block content
-    .container(style="margin-top:2%;")
-        h1 #{number} 병실 현황  
-        nav.nav
-            .alert.alert-dark(style="margin-right:2%;")
-                a.nav-link.active(href='/patientmanagement/bed/1') 안과 병실
-                |   
-            .alert.alert-dark(style="margin-right:2%;")
-                a.nav-link.active(href='/patientmanagement/bed/2') 내과 병실
-                |   
-            .alert.alert-dark(style="margin-right:2%;")
-                a.nav-link.active(href='/patientmanagement/bed/3') 외과 병실
-                |   
-            .alert.alert-dark(style="margin-right:2%;")
-                a.nav-link.active(href='/patientmanagement/bed/4') 치과 병실
-                |
-            .alert.alert-dark
-                a.nav-link(href='/patientmanagement/outpatient') 퇴원 기록
-                |   
+    .container
+        nav.navbar.navbar-expand-lg.navbar-light.bg-primary(style="margin-top:0.5%; margin-bottom:2%;")
+            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+                span.navbar-toggler-icon
+            #navbarSupportedContent.collapse.navbar-collapse
+                ul.navbar-nav.mr-auto
+                    li.nav-item(style="margin-top:1%;")
+                        a.nav-link(href='/patientmanagement/bed/1') 
+                            h5(style="color:white;") 안과병실
+                    li.nav-item(style="margin-top:1%;")
+                        a.nav-link(href='/patientmanagement/bed/2') 
+                            h5(style="color:white;") 내과병실
+                    li.nav-item(style="margin-top:1%;")
+                        a.nav-link(href='/patientmanagement/bed/3') 
+                            h5(style="color:white;") 외과병실
+                    li.nav-item(style="margin-top:1%;")
+                        a.nav-link(href='/patientmanagement/bed/4') 
+                            h5(style="color:white;") 치과병실
+                ul.navbar-nav.mr-right
+                    li.nav-item(style="margin-top:1%;")
+                        a.nav-link(href='/patientmanagement/outpatient') 
+                            h5(style="color:white;") 퇴원기록보기
+        .row(style="margin-bottom:2%;")
+            .col-md-1
+                img.rounded-0(src='/images/inpatient.png', alt='...', style="width:70px;")
+            .col-md-4(style="margin-top:1%;")
+                h1 #{number} 병실 현황   
 
         include ./_bed
         
@@ -54,6 +63,7 @@ block content
                             a(href=`/patientmanagement/inpatientdetail/${patient.patient_id}`) 상세정보
                         td 
                             .btn.btn-dark(style="text-align:center;")
+                                img.rounded-0(src='/images/medicine.png', alt='...', style="width:20px;")
                                 a(href=`/patientmanagement/inpatientdetail/new/${patient.patient_id}`) +
                         td  
                             .btn.btn-light(style="text-align:center;")

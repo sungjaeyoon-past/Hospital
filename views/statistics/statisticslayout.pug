@@ -20,13 +20,13 @@ nav.navbar.navbar-expand.navbar-light.bg-info.flex-column.flex-md-row.bd-navbar
                     a.nav-link(href='/patientmanagement/bed/1') 입/퇴원 환자
                 li.nav-item 
                     a.nav-link(href='/patientmanagement') 환자관리
-                li.nav-item 
-                    a.nav-link(href='/diagnosis') 진료작성
+                -if(role==1)
+                    li.nav-item 
+                        a.nav-link(href='/diagnosis') 진료작성
                 li.nav-item 
                     a.nav-link(href='/surgery') 수술실 예약
-                -if(role==0||role==1)
-                    li.nav-item
-                        a.nav-link(href='/receipt') 진료접수
+                li.nav-item
+                    a.nav-link(href='/receipt') 진료접수
                 -if(role==0)
                     li.nav-item
                         a.nav-link(href='/superadmin') 최고관리자

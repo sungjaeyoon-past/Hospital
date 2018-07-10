@@ -3,9 +3,11 @@ extends ../layoutemp
 block content
     include ../includes/topnavemp
     .container
-        .row(style="margin-top:20px;")
-            .col-md-12
-                h1
+        .row(style="margin-top:2%;")
+            .col-md-1
+                img.rounded-0(src='/images/addpatient.png', alt='...', style="width:70px;")
+            .col-md-10
+                h1(style="margin-top:1%;")
                     |환자 추가
         br
         form(action="/patientmanagement/new", method="POST")
@@ -14,4 +16,4 @@ block content
                                 
                 .row
                     .col-md-1
-                            button.btn.btn-primary(type='submit' ,style="margin-left:20%; margin-top:20%;") 환자 추가
+                            button.btn.btn-primary(type='submit' ,style="margin-left:20%; margin-top:20%;") 추가
