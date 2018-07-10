@@ -36,15 +36,19 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
 //예약 현황 받아오기
     var surgeryList=[];
     var insertSql='SELECT * FROM surgery_schedule';
-    var insertSqlop = 'SELECT * FROM operating_room';
+    var insertSql2 = 'SELECT operating_room_id FROM operating_room';
 
-    getSql(insertSqlop, function(err, data){
+    getSql(insertSql2, function(err, data){
         if(err){
             console.log("error", err);
         } else {
             for (var i in data){
-                if(data[i].operating_room_id > 0){
-                    oproomList[parseInt(data[i].operating_room_id) % 4 - 1] = 1;
+                if(data[i].surgery_schedule_id > 0){
+                    var r = parseInt(data[i].operating_room_id) % 4;
+                    if(r==0){
+                        r=16;
+                    }
+                    oproomList[r-1] = 1;
                 }
             }
             getSql(insertSql, function(err, data){
@@ -58,6 +62,7 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
                             'doctor_id': data[i].doctor_id,
                             'reserved_datetime': data[i].reserved_datetime,
                             'end_datetime': data[i].end_datetime,
+                            'operating_room_id': data[i].operating_room_id,
                             'description': data[i].description
                         }
                         surgeryList.push(surgery);
@@ -90,14 +95,14 @@ router.post('/new', catchErrors(async (req, res, next) => {
     var description = req.body.description;
 
     var insertSql = "INSERT INTO surgery_schedule (patient_id, doctor_id, reserved_datetime, end_datetime, description) VALUES ('" +patient_id+" ', ' "+doctor_id+" ', '"+reserved_datetime+"','"+end_datetime+"','"+description+"')";
-    var insertSqlop = "INSERT INTO operating_room (operating_room) VALUES ('"+operating_room_id+"')";
+    var insertSqlop = "INSERT INTO operating_room (operating_room_id) VALUES ('"+operating_room_id+"')";
     console.log(insertSql);
     getSql(insertSql, function(err,data){
       if (err) {
           console.log("error",err);
           req.flash('danger', "오류가 발생했습니다.");            
       } else {
-          getSql(insertSql, function(err, data){
+          getSql(insertSqlop, function(err, data){
               if(!err){
                 req.flash('success', "수술실 예약이 추가되었습니다.");
               }
