@@ -25,16 +25,25 @@ html
     script.
         $(document).ready(makedeck(#{doc.dept_id}));
     .container
-        .row(style="margin-top:20px;")
-            .col-md-12
+        .row
+            .col-md-1
+                img.rounded-0(src='/images/receipt.png', alt='...', style="width:70px;")
+            .col-md-4(style="margin-top:1%;")
                 h1
                     | 진료 기록 작성
+            .col-md-1
+                img.rounded-0(src='/images/doctor.png', alt='...', style="width:70px;")
+            .col-md-3(style="margin-top:1.5%;")
                 h3
                     | 의사이름 : #{doc.name}
+            .col-md-2(style="margin-top:1.5%;")
+                h3(style="margin-left:2%;")
                     | 부서 : #{doc.department}
         hr
         .row(style="margin-top:20px;")
-            .col-md-12
+            .col-md-1
+                img.rounded-0(src='/images/next.png', alt='...', style="width:70px;")
+            .col-md-11(style="margin-top:1%;")
                 h3
                     | 진료 순서
         #namecard.card-deck
