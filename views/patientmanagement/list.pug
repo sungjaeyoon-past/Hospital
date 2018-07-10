@@ -1,58 +1,59 @@
 extends ../layoutemp
 
 block content
-    nav.navbar.navbar-expand-lg.bg-rose(style="margin-top:1%;")
-        .container
-            .alert.alert-primary
-                nav.nav
-                    a.nav-link.active(href='/patientmanagement/new') 환자 추가
-                    |   
-                    a.nav-link(href='/monitor') 환자 모니터링
-                    |   
-                    a.nav-link(href='/') 통계
-                    |
-                    a.nav-link(href='/patientmanagement/bed') 병실 현황
-                    |                 
-                    a.nav-link(href='/patientmanagement/outpatient') 퇴원 환자
-                    |                 
-            form.form-inline.ml-auto(action="/patientmanagement", method="GET")
-                .form-group.has-white
-                    input.form-control(type='text', placeholder='이름으로 검색', name='name')
-                    |                 
-                button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit')
-                    i.material-icons search
+    .container
+        nav.navbar.navbar-expand-lg.navbar-light.bg-success(style="margin-top:0.5%; margin-bottom:2%;")
+            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+                span.navbar-toggler-icon
+            #navbarSupportedContent.collapse.navbar-collapse
+                ul.navbar-nav.mr-auto
+                    li.nav-item(style="margin-top:1%;")
+                        a.nav-link(href='/patientmanagement/new') 
+                            h5(style="color:white;") 환자추가
+                    li.nav-item(style="margin-top:1%;")
+                        a.nav-link(href='/') 
+                            h5(style="color:white;") 통계
+                    li.nav-item(style="margin-top:1%;")
+                        a.nav-link(href='/patientmanagement/bed/1') 
+                            h5(style="color:white;") 병실현황
+                    li.nav-item(style="margin-top:1%;")
+                        a.nav-link(href='/patientmanagement/outpatient') 
+                            h5(style="color:white;") 퇴원내역
+            form.form-inline.my-2.my-lg-0(action="/patientmanagement", method="GET")
+                input.form-control.mr-sm-2(type='search', placeholder='이름으로 검색',name='name', aria-label='Search')
+                button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
     .container
         .row(style="margin-bottom:2%;")
-            .col-md-12.col-sm-12
+            .col-md-2(style="margin-left:1%;")
+                img.rounded-0(src='/images/hospital.png', alt='...', style="width:120px;")
+            .col-md-9.col-sm-9
                 .card.card-stats
                     .card-header.card-header-warning.card-header-icon
                         p.card-category 조회된 환자수
                         h3.card-title
                             #{count_patient}
                             small 명
-                    
-        .alert.alert-primary
-            .row
-                .col-md-12
-                    each patient in patients
-                        .alert.alert-success(role='alert', style="margin-bottom:10px; text-align: center;")
-                            .row
-                                .col-md-3
-                                    .alert.alert-warning(role='alert')
-                                        | 환자 이름 :
-                                        #{patient.name}
-                                .col-md-3(style="margin-top:20px;")
-                                    | 환자번호  :
-                                    #{patient.patient_id}
-                                .col-md-3(style="margin-top:20px;")
-                                    | 핸드폰번호 :
-                                    #{patient.phone_number}
-                                .col-md-3(style="margin-top:20px;")
-                                    .btn.btn-light
-                                        a(href=`/patientmanagement/show/${patient.patient_id}`) 상세보기
-                                    .btn.btn-light(style="margin-left:4%;")
-                                        a(href=`/patientmanagement/inpatient/${patient.patient_id}`) 입원
-                                    .btn.btn-light(style="margin-left:1%;")
-                                        a(href=`/patientmanagement/inpatient/${patient.patient_id}?_method=DELETE`) 퇴원
-                                        
-                        hr
+        .row
+            .col-md-12
+                each patient in patients
+                    .alert.alert-success(role='alert', style="margin-bottom:10px; text-align: center;")
+                        .row
+                            .col-md-3(style="margin-bottom:-1%;")
+                                .alert.alert-warning(role='alert')
+                                    | 환자 이름 :
+                                    #{patient.name}
+                            .col-md-3(style="margin-top:1.5%;")
+                                | 환자번호  :
+                                #{patient.patient_id}
+                            .col-md-3(style="margin-top:1.5%;")
+                                | 핸드폰번호 :
+                                #{patient.phone_number}
+                            .col-md-3(style="margin-top:1.5%;")
+                                .btn.btn-light
+                                    a(href=`/patientmanagement/show/${patient.patient_id}`) 상세보기
+                                .btn.btn-light(style="margin-left:4%;")
+                                    a(href=`/patientmanagement/inpatient/${patient.patient_id}`) 입원
+                                .btn.btn-light(style="margin-left:1%;")
+                                    a(href=`/patientmanagement/inpatient/${patient.patient_id}?_method=DELETE`) 퇴원
+                                    
+                    hr

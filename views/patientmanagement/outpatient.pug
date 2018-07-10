@@ -2,7 +2,11 @@ extends ../layoutemp
 
 block content
     .container
-        h1(style="margin-top:2%;") 퇴원 기록
+        .row(style="margin-top:2%; margin-bottom:2%;")
+            .col-md-1
+                img.rounded-0(src='/images/inpatient2.png', alt='...', style="width:70px;")
+            .col-md-3(style="margin-top:1%;")
+                h1(style="margin-top:2%;") 퇴원 기록
         table.table.usedbedtable
             thead
                 tr

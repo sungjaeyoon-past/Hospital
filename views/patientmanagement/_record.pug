@@ -4,9 +4,11 @@ script.
             $(".record-detail ").show();
         });
     });
-.row
-    .col-md-10
-        h3 진료기록
+.row(style="margin-bottom:2%;")
+    .col-md-1
+        img.rounded-0(src='/images/receipt.png', alt='...', style="width:70px;")
+    .col-md-9(style="margin-top:2%;")
+        h4 진료기록
     .col-md-2
         a.button.btn.btn-primary(href=`/receipt/${patient.patient_id}`)
             | 진료기록 추가

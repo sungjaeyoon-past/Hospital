@@ -88,7 +88,7 @@ function formatDate(date) {
 //환자관리 눌렀을 때 보여주는곳+ 환자 검색 (완)
 router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
   if (req.query.name) {
-    //var insertSql="SELECT * FROM patient WHERE name ='"+req.query.name+"'";
+    var insertSql="SELECT * FROM patient WHERE name ='"+req.query.name+"'";
   } else {
     var insertSql = "SELECT * FROM patient"
     //var insertSql="DELETE FROM inpatient WHERE patient_id='41'";
@@ -309,22 +309,22 @@ router.get('/inpatientdetail/new/:id', isAuthenticated, catchErrors(async (req, 
   var patient_id = req.params.id;
   var nurseDepartment;
   var nurseList = [];
-  var insertSql = "SELECT bed_no FROM inpatient WHERE patient_id  ="+ patient_id;
+  var insertSql = "SELECT bed_no FROM inpatient WHERE patient_id  =" + patient_id;
   getSqlResult(insertSql, function (err, data) {
     if (err) {
       console.log("ERROR : ", err);
     } else {
-      nurseDepartment=data[0].bed_no;
-      if((nurseDepartment>=1)&&(nurseDepartment<=16)){
-        nurseDepartment='안과';
-      }else if((nurseDepartment>=17)&&(nurseDepartment<=32)){
-        nurseDepartment='내과';
-      }else if((nurseDepartment>=33)&&(nurseDepartment<=48)){
-        nurseDepartment='외과';
-      }else{
-        nurseDepartment='치과';
+      nurseDepartment = data[0].bed_no;
+      if ((nurseDepartment >= 1) && (nurseDepartment <= 16)) {
+        nurseDepartment = '안과';
+      } else if ((nurseDepartment >= 17) && (nurseDepartment <= 32)) {
+        nurseDepartment = '내과';
+      } else if ((nurseDepartment >= 33) && (nurseDepartment <= 48)) {
+        nurseDepartment = '외과';
+      } else {
+        nurseDepartment = '치과';
       }
-      var insertSql2 = "SELECT * FROM medic.nurse_view WHERE department_name = '"+ nurseDepartment +"'"; 
+      var insertSql2 = "SELECT * FROM medic.nurse_view WHERE department_name = '" + nurseDepartment + "'";
       getSqlResult(insertSql2, function (err, data) {
         if (err) {
           console.log("ERROR : ", err);
@@ -339,7 +339,7 @@ router.get('/inpatientdetail/new/:id', isAuthenticated, catchErrors(async (req, 
             console.log(nurse);
           }
         }
-        res.render('patientmanagement/newpatient_record', { patient_id: patient_id, nurseList:nurseList, role: res.locals.currentUser.user_role });
+        res.render('patientmanagement/newpatient_record', { patient_id: patient_id, nurseList: nurseList, role: res.locals.currentUser.user_role });
       });
     }
   });
@@ -498,22 +498,22 @@ router.get('/show/:id', isAuthenticated, catchErrors(async (req, res, next) => {
 
 //문자보내기 (완)
 router.post('/send/:id', isAuthenticated, catchErrors(async (req, res, next) => {
-  var insertSql="SELECT phone_number FROM patient WHERE patient_id = "+req.params.id;
+  var insertSql = "SELECT phone_number FROM patient WHERE patient_id = " + req.params.id;
   var NUMBER;
   getSqlResult(insertSql, function (err, data) {
     if (!err) {
-      NUMBER=data[0].phone_number;
-      NUMBER=NUMBER.substring(1,11);
-      var TO_NUMBER = '82'+NUMBER;
+      NUMBER = data[0].phone_number;
+      NUMBER = NUMBER.substring(1, 11);
+      var TO_NUMBER = '82' + NUMBER;
       console.log(TO_NUMBER);
       const from = 'Nexmo';
       const to = TO_NUMBER;
       const text = req.body.textSMS;
-      if(text.length==0){
+      if (text.length == 0) {
         req.flash('danger', "내용을 입력해주세요");
         return res.redirect('back');
       }
-      console.log("text:"+text);
+      console.log("text:" + text);
       nexmo.message.sendSms(from, to, text, (error, response) => {
         if (error) {
           throw error;
@@ -532,7 +532,7 @@ router.post('/send/:id', isAuthenticated, catchErrors(async (req, res, next) => 
 
 //환자 추가눌렀을 때 (완)
 router.get('/new', isAuthenticated, catchErrors(async (req, res, next) => {
-  res.render('patientmanagement/new', {role: res.locals.currentUser.user_role});
+  res.render('patientmanagement/new', { role: res.locals.currentUser.user_role });
 }));
 
 //환자 추가를 했을 때 (완)
@@ -603,14 +603,18 @@ router.put('/:id', isAuthenticated, catchErrors(async (req, res, next) => {
 
 //환자 정보를 삭제 (완)
 router.delete('/:id', isAuthenticated, catchErrors(async (req, res, next) => {
-  var insertSql = "DELETE FROM patient WHERE patient_id = " + req.params.id;
-  getSqlResult(insertSql, function (err, data) {
-    if (err) {
-      console.log("ERROR : ", err);
-      req.flash('success', "삭제 실패");
-    }
-    req.flash('success', "삭제 완료");
-    res.redirect('/patientmanagement');
+  //진료기록도 다 지워버려야함 
+  var insertSql1 = "DELETE FROM hospital_record WHERE patient_id=" + req.params.id;
+  var insertSql2 = "DELETE FROM patient WHERE patient_id = " + req.params.id;
+  getSqlResult(insertSql1, function (err, data) {
+    getSqlResult(insertSql2, function (err, data) {
+      if (err) {
+        console.log("ERROR : ", err);
+        req.flash('success', "삭제 실패");
+      }
+      req.flash('success', "삭제 완료");
+      res.redirect('/patientmanagement');
+    });
   });
 }));
 

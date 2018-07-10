@@ -2,7 +2,11 @@ extends ../layoutemp
 
 block content
     .container(style="margin-top:2%;")
-        h1 #{number} 병실 현황  
+        .row(style="margin-bottom:2%;")
+            .col-md-1
+                img.rounded-0(src='/images/inpatient.png', alt='...', style="width:70px;")
+            .col-md-4(style="margin-top:1%;")
+                h1 #{number} 병실 현황  
         nav.nav
             .alert.alert-dark(style="margin-right:2%;")
                 a.nav-link.active(href='/patientmanagement/bed/1') 안과 병실
@@ -54,6 +58,7 @@ block content
                             a(href=`/patientmanagement/inpatientdetail/${patient.patient_id}`) 상세정보
                         td 
                             .btn.btn-dark(style="text-align:center;")
+                                img.rounded-0(src='/images/medicine.png', alt='...', style="width:20px;")
                                 a(href=`/patientmanagement/inpatientdetail/new/${patient.patient_id}`) +
                         td  
                             .btn.btn-light(style="text-align:center;")
