@@ -176,7 +176,6 @@ router.get('/:dept_id/prev/:patient_id&:loc', isAuthenticated, catchErrors(async
 router.get('/queuelist/:dept_id', isAuthenticated, catchErrors(async (req, res, next) => {
     //여기서 patient_id얻구 리다이렉트처리
     var dept_id = req.params.dept_id;
-    console.log(queuelist[dept_id]);
     res.json(queuelist[dept_id]);
 }));
 

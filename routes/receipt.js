@@ -4,6 +4,7 @@ const catchErrors = require('../lib/async-error');
 const isAuthenticated = require('../lib/isAuthenticated');
 var mysql_dbc = require('../db/db_con')();
 var conn = mysql_dbc.init();
+//var queryProm = require('../db/db_prom');
 
 function getSqlResult(insertSql, callback) {
     conn.query(insertSql, function (err, result) {
@@ -11,6 +12,16 @@ function getSqlResult(insertSql, callback) {
             callback(err, null);
         else
             callback(null, result);
+    });
+}
+
+function query(sql, args) {
+    return new Promise((resolve, reject) => {
+        conn.query(sql, args, (err, rows) => {
+            if (err)
+                return reject(err);
+            resolve(rows);
+        });
     });
 }
 
@@ -69,71 +80,61 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
         if (err)
             console.log('Error while performing Query.', err);
         else {
-
             var doc = {
                 dept_id: result[0].department_id - 1,
                 name: result[0].name,
                 department: getDeptName(result[0].department_id)
             }
-            console.log(result);
             res.render('receipt/receiptmain', { doc: doc, date: date, role: res.locals.currentUser.user_role });
         }
     })
 }));
 
 //리스트에서 진료접수로 넘어왔을 경우 메인 페이지
-router.get('/:patient_id', catchErrors(async (req, res, next) => {
+router.get('/:patient_id', isAuthenticated, catchErrors(async (req, res, next) => {
     var patient_id = req.params.patient_id;
     var date = getDate();
-    var doc;
-    var patient;
-    var sql = "SELECT * FROM medic.employee where employee_id=" + res.locals.currentUser.user_information;
-    await conn.query(sql, function (err, result) {
-        if (err)
-            console.log('Error while performing Query.', err);
-        else {
-            doc = {
-                dept_id: result[0].department_id - 1,
-                name: result[0].name,
-                department: getDeptName(result[0].department_id)
+    let docRow;
+    let patRow;
+    var doctorSql = "SELECT * FROM medic.employee where employee_id=" + res.locals.currentUser.user_information;
+    var patientSql = "SELECT * FROM medic.patient where patient_id=" + patient_id;
+    query(doctorSql)
+        .then(rows => { docRow = rows; return query(patientSql); }, err => { console.log('Error while performing Query.', err); })
+        .then(rows => { patRow = rows }, err => { console.log('Error while performing Query.', err); })
+        .then(() => {
+            var doc = {
+                dept_id: docRow[0].department_id - 1,
+                name: docRow[0].name,
+                department: getDeptName(docRow[0].department_id)
             }
-        }
-    })
-    sql = "SELECT * FROM medic.patient where patient_id=" + patient_id;
-    await conn.query(sql, function (err, result) {
-        if (err)
-            console.log('Error while performing Query.', err);
-        else {
-            patient = {
-                name: result[0].name,
+            var selectPatient = {
+                name: patRow[0].name,
                 patient_id: patient_id
             }
-        }
-    })
-    //patient_id로 patient_name얻은 다음 patient로 render에 보내고
-    res.render('receipt/receiptmain', { doc: doc, patient: patient, date: date, role: res.locals.currentUser.user_role });
+            console.log(selectPatient);
+            console.log(doc);
+            res.render('receipt/receiptmain', { selectPatient: selectPatient, doc: doc, date: date, role: res.locals.currentUser.user_role });
+        })
+        .catch(err => {
+            console.log('catching error' + err);
+        })
 }));
 
 //진료기록 작성 완료
-router.post('/:id', catchErrors(async (req, res, next) => {
-    const err = validateFormReceipt(req.body);
-    if (err) {
-        req.flash('danger', err);
-        console.log(err);
-        return res.redirect('back');
-    }
+router.post('/', catchErrors(async (req, res, next) => {
+    console.log('이 쪽입니다');
     var patient_id = req.body.patient_id;
     var doctor_id = res.locals.currentUser.user_information;
     var date = req.body.date;
     var disease = req.body.disease;
     var description = req.body.description;
     var precaution = req.body.precaution;
-    var insertSql = "INSERT INTO medical_record (patient_id, doctor_id, date, disease, description, medicine_id, amount, frequency, precaution ) VALUES('" + patient_id + "','" + doctor_id + "','" + date + "','" + disease + "','" + description + "','" + medicine_id + "','" + amount + "','" + frequency + "','" + precaution + "')";
+    var insertSql = "INSERT INTO medical_record (patient_id, doctor_id, date, disease, description, precaution) VALUES('" + patient_id + "','" + doctor_id + "','" + date + "','" + disease + "','" + description + "','" + precaution + "')";
     getSqlResult(insertSql, function (err, date) {
         if (!err) {
             req.flash('success', "추가 성공");
         }
-        res.redirect('receipt/receiptmain');
+        res.redirect('back');
     });
 }));
 
