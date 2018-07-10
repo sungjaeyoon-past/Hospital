@@ -43,13 +43,20 @@ html
         }, 3000);
       } );
     .center-block
-      table#example.table.table-striped.table-bordered(style='width:100%')
-        thead
-          tr
-            th 이름
-            th 환자번호
-            th 과
-            th 병실
-            th 병실 온도
-            th 병실 습도
-            th 주의 사항
+      .container
+        .row(style="margin-bottom:3%; margin-top:-2%;")
+          .col-md-1
+            img.rounded-0(src='/images/monitor.png', alt='...', style="width:70px;")
+          .col-md-4(style="margin-top:1.5%;")
+            h2 입원환자 모니터링
+
+        table#example.table.table-striped.table-bordered(style='width:100%')
+          thead
+            tr
+              th 이름
+              th 환자번호
+              th 과
+              th 병실
+              th 병실 온도
+              th 병실 습도
+              th 주의 사항

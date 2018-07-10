@@ -10,28 +10,18 @@ script.
     .col-md-9(style="margin-top:2%;")
         h4 진료기록
     .col-md-2
-        a.button.btn.btn-primary(href=`/receipt/${patient.patient_id}`)
+        a.button.btn.btn-primary(href=`/diagnosis/${patient.patient_id}`)
             | 진료기록 추가
-if recordList==null
-    - var count =0
+if recordList.length
+    - var count =1
     each record in recordList
         .alert.alert-primary
-            .row(style="margin-top:1%;")
+            .row(style="margin-top:1%; margin-bottom:1%;")
                 .col-md-4
                     | 번호.
                     #{count}
                     - count++
-                .col-md-3
-                    | 질병:
-                    #{record.disease}
-                .col-md-3
-                    | 진료날짜:
-                    #{moment(record.date).format('YYYY-MM-DD')}
-                .col-md-2
-                    .record-detail-btn
-                        .button.btn.btn-primary
-                            | 상세보기
-            .record-detail(style="display:none;")
+            .record-detail
                 .alert.alert-secondary
                     .row
                         .col-md-4
@@ -59,23 +49,7 @@ if recordList==null
                                     span#basic-addon1.input-group-text  진료 내용:
                                 |   
                                 input.form-control(type='text', placeholder='Username', value=record.description, readonly)
-                    .row
-                        .col-md-4
-                            .input-group.mb-3
-                                .input-group-prepend
-                                    span#basic-addon1.input-group-text  처방된 약 번호 :
-                                |   
-                                input.form-control(type='text', placeholder='Username', value=record.medicine_id, readonly)
-                        .col-md-4
-                            .input-group.mb-3
-                                .input-group-prepend
-                                    span#basic-addon1.input-group-text  양( 한번 복용시) :
-                                input.form-control(type='text', placeholder='Username', value=record.amount, readonly)
-                        .col-md-4
-                            .input-group.mb-3
-                                .input-group-prepend
-                                    span#basic-addon1.input-group-text  1일 복용 회수 :  
-                                input.form-control(type='text', placeholder='Username', value=record.frequency, readonly)
+                    
                     .row
                         .col-md-12
                             .input-group.mb-3

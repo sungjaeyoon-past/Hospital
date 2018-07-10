@@ -3,32 +3,44 @@ extends ../layoutemp
 block content
      .container
         .row(style="margin-top:20px;")
-            .col-md-12
+            .col-md-1
+                img.rounded-0(src='/images/addpatient.png', alt='...', style="width:70px;")
+            .col-md-11(style="margin-top:1%;")
                 h1
                     |정보 추가
         br
         form(action=`/patientmanagement/inpatientdetail/${patient_id}`, method="POST")
             .alert.alert-primary
                 .row
-                    .col-md-2
+                    .col-md-1
+                        img.rounded-0(src='/images/patientnew.png', alt='...', style="width:50px; margin-right:-3%;")
+                    .col-md-4
                         .input-group.mb-3
                             .input-group-prepend
                                 span#basic-addon1.input-group-text 환자 번호                   
                             input.form-control(type='text',name='patient_id', value=patient_id readonly)          
-                    .col-md-4
+                .row(style="margin-top:1%;")
+                    .col-md-1
+                        img.rounded-0(src='/images/nurse.png', alt='...', style="width:50px; margin-right:-3%;")
+                    .col-md-4(style="margin-top:1%;")
                         .input-group-prepend
                             span#basic-addon1.input-group-text 담당간호사
                             #choose-doctor1
                                 select#inputState.form-control(name="employee_id", rows="1")
                                     each nurse in nurseList
                                         option(name="employee_id", value=`${nurse.employee_id}`) #{nurse.name}         
-                    .col-md-4
+                .row(style="margin-top:2%;")
+                    .col-md-1
+                        img.rounded-0(src='/images/date.png', alt='...', style="width:50px; margin-right:-3%;")
+                    .col-md-4(style="margin-top:1%;")
                         .input-group.mb-3
                             .input-group-prepend
                                 span#basic-addon1.input-group-text 날짜                    
                             input.form-control(type='date',name='date',  placeholder='변경 시간') 
                 .row
-                    .col-md-8
+                    .col-md-1
+                        img.rounded-0(src='/images/select.png', alt='...', style="width:50px; margin-right:-3%;")
+                    .col-md-8(style="margin-top:1.5%;")
                         .row
                             .col-md-2
                                 .form-check
@@ -46,6 +58,8 @@ block content
                                     label.form-check-label(for='medicine')
                                         | 투약
                 .row(style="margin-top:2%;")
+                    .col-md-1
+                        img.rounded-0(src='/images/content.png', alt='...', style="width:50px; margin-right:-3%;")
                     .col-md-10
                         .input-group.mb-3
                             .input-group-prepend

@@ -31,6 +31,13 @@ block content
                                         | 남성
                                     else
                                         | 여성 
+        .row
+            a.button.btn.btn-primary(href=`/patientmanagement/edit/${patient.patient_id}`, style="margin-left:1.5%; margin-right:1%;")
+                | 정보 수정
+            a.btn.btn-danger(href=`/patientmanagement/${patient.patient_id}?_method=DELETE`, style="margin-right:1%;")
+                | 정보 삭제
+            a.btn.btn-success(href=`/patientmanagement/inpatientdetail/${patient.patient_id}`)
+                | 입원 정보 확인
         hr
         form(action=`/patientmanagement/send/${patient.patient_id}`, method="POST")
             .row
@@ -43,14 +50,6 @@ block content
                         input.form-control(type='text', placeholder="보낼 내용 입력", name='textSMS' ,aria-describedby='basic-addon2')
                         .input-group-append
                             button.btn.btn-outline-primary(type='submit') 메시지 전송
-        hr
-        .row
-            a.button.btn.btn-primary(href=`/patientmanagement/edit/${patient.patient_id}`, style="margin-left:1.5%; margin-right:1%;")
-                | 정보 수정
-            a.btn.btn-danger(href=`/patientmanagement/${patient.patient_id}?_method=DELETE`, style="margin-right:1%;")
-                | 정보 삭제
-            a.btn.btn-success(href=`/patientmanagement/inpatientdetail/${patient.patient_id}`)
-                | 입원 정보 확인
         hr
         include ./_record
 
