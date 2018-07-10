@@ -13,7 +13,8 @@ block content
                     th(scope="col") 접수번호
                     th(scope="col") 환자 id
                     th(scope="col") 의사 id 
-                    th(scope="col") 수술 예정일
+                    th(scope="col") 수술 예정일시
+                    th(scope="col") 수술 완료 예정일시
                     th(scope="col") 수술실
                     th(scope="col") 비고
 
@@ -24,6 +25,7 @@ block content
                         td #{surgery.patient_id}
                         td #{surgery.doctor_id}
                         td #{moment(surgery.reserved_datetime).format('YYYY-MM-DD hh:mm:ss a')}
+                        td #{moment(surgery.end_datetime).format('YYYY-MM-DD hh:mm:ss a')}
                         td #{oproomList.operating_room_id}
                         td #{surgery.description}
         br
