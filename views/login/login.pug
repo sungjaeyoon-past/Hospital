@@ -5,7 +5,11 @@
       .modal-dialog
         .modal-content
           .modal-header
-            h1.text-center Medical Top Team
+            .row
+              .col-md-2
+                img.rounded-0(src='/images/login.png', alt='...', style="width:60px;")
+              .col-md-10
+                h1.text-center Medical Top Team
           .modal-body
             .form-group
               input#username.form-control.input-lg(type='text' name='username' placeholder='ID' required='required' autocomplete='off')
@@ -15,6 +19,8 @@
             .errorTxt
             .form-group
               input.btn.btn-block.btn-lg.btn-primary.btn_login(type='submit' value='Login')
+    img.rounded-0(src='/images/hospital2.png', alt='...', style="width:350px; display:block; margin-left:auto; margin-right:auto;" )
+    
 
 
 link(rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css")
