@@ -12,12 +12,14 @@ function validateForm(form, option){
     var doctor_id = form.doctor_id || "";
     var reserved_datetime = form.reserved_datetime || "";
     var end_datetime = form.end_datetime || "";
+    var operating_room_id = form.operating_room_id || "";
     var description = form.description || "";
 
     if(!patient_id) { return "환자 id 미입력"; }
     if(!doctor_id) { return "의사 id 미입력"; }
     if(!reserved_datetime) { return "수술 예정일 미입력"; }
     if(!end_datetime) { return "수술 완료 예정일 미입력"; }
+    if(!operating_room_id) { return "수술실 미입력"; }
     if(!description) { return "비고 미입력"; }
 }
 
@@ -43,8 +45,8 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
             console.log("error", err);
         } else {
             for (var i in data){
-                if(data[i].operating_room_id > 0){
-                    oproomList[parseInt(data[i].operating_room_id) % 4 - 1] = 1;
+                if(data[i].operating_room_id != null){
+                    oproomList[parseInt(data[i].operating_room_id) % 4 ] = 1;
                 }
             }
             getSql(insertSql, function(err, data){
@@ -60,6 +62,7 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
                             'end_datetime': data[i].end_datetime,
                             'description': data[i].description
                         }
+
                         surgeryList.push(surgery);
                     }
                 }
@@ -104,6 +107,11 @@ router.post('/new', catchErrors(async (req, res, next) => {
           })
       }
     });
+    getSql(insertSqlop, function(err,data){
+        if(!err){
+            req.flash('success', "수술실 예약이 추가되었습니다.");
+        }
+    })
     res.redirect('/surgery');
   }));
 
