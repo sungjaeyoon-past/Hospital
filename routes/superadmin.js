@@ -90,6 +90,11 @@ router.post('/add', catchErrors(async (req, res, next) => {
   var phone_number = req.body.phone_number;
   var gender = 0;
   if (req.body.gender = 'female') { gender = 1; }
+  if (gender == '1' ){
+    gender = "여자";
+  } else {
+    gender = "남자";
+  }
   var position = 0;
   if (req.body.position = 'nurse') { position = 1;}
   var department_id = req.body.department_id;
