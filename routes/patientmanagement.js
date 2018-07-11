@@ -3,7 +3,7 @@ var router = express.Router();
 var mysql = require('mysql');
 const isAuthenticated = require('../lib/isAuthenticated');
 var conn = mysql.createConnection({
-  host: '58.123.136.107',
+  host: 'newticker.iptime.org',
   port: '3308',
   user: 'web',
   password: 'mju12345',
