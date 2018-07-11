@@ -6,14 +6,14 @@
             .input-group.mb-3
                 .input-group-prepend
                     span#basic-addon1.input-group-text 환자 번호                    
-                input.form-control(type='text', placeholder='34',name='disease')
+                input.form-control(type='text', placeholder='34',name='patient_id')
         .col-md-1(style="margin-right:-3%;")
                 img.rounded-0(src='/images/name.png', alt='...', style="width:40px;")
         .col-md-5
             .input-group.mb-3
                 .input-group-prepend
                     span#basic-addon1.input-group-text 환자 이름                    
-                input.form-control(type='text', placeholder='이정훈',name='disease')
+                input.form-control(type='text', placeholder='이정훈',name='name')
 -if(selectPatient!=null)
     .row
         .col-md-1(style="margin-right:-3%;")
@@ -22,14 +22,14 @@
             .input-group.mb-3
                 .input-group-prepend
                     span#basic-addon1.input-group-text 환자 번호                    
-                input.form-control(type='text', value=selectPatient.patient_id,name='disease')
+                input.form-control(type='text', value=selectPatient.patient_id,name='patient_id')
         .col-md-1(style="margin-right:-3%;")
                 img.rounded-0(src='/images/name.png', alt='...', style="width:40px;")
         .col-md-5
             .input-group.mb-3
                 .input-group-prepend
                     span#basic-addon1.input-group-text 환자 이름                    
-                input.form-control(type='text', value=selectPatient.name,name='disease')
+                input.form-control(type='text', value=selectPatient.name,name='name')
 .row
     .col-md-1(style="margin-right:-3%;")
         img.rounded-0(src='/images/date.png', alt='...', style="width:40px;")
