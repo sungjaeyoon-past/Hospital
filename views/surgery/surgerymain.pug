@@ -6,8 +6,43 @@ block content
 
         //include ./oproom
         hr
-        h2 수술 예약 현황
-        table.table.surgerytable
+        .row(style="margin-bottom:1%;")
+            .col-md-1
+                img.rounded-0(src='/images/surgery.png', alt='...', style="width:70px;")
+            .col-md-10(style="margin-top:1%;")
+                h2 수술 예약 현황
+
+        hr
+        .row(style="text-align:center;")
+            .col-md-3
+                .card(style='width: 18rem;')
+                    img.card-img-top(src='/images/surgery2.png', alt='Card image cap')
+                    .card-body
+                        h5.card-title 1번 수술실
+                        p.card-text
+                            | 사용 중
+            .col-md-3
+                .card(style='width: 18rem;')
+                    img.card-img-top(src='/images/empty.png', alt='Card image cap')
+                    .card-body
+                        h5.card-title 2번 수술실
+                        p.card-text
+                            | 미 사용
+            .col-md-3
+                .card(style='width: 18rem;')
+                    img.card-img-top(src='/images/surgery2.png', alt='Card image cap')
+                    .card-body
+                        h5.card-title 3번 수술실
+                        p.card-text
+                            | 사용 중
+            .col-md-3
+                .card(style='width: 18rem;')
+                    img.card-img-top(src='/images/empty.png', alt='Card image cap')
+                    .card-body
+                        h5.card-title 4번 수술실
+                        p.card-text
+                            | 미 사용
+        table.table.surgerytable(style="text-align:center;")
             thead
                 tr
                     th(scope="col") 접수번호

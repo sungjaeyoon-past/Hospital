@@ -48,6 +48,7 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
                 if(data[i].operating_room_id != null){
                     oproomList[parseInt(data[i].operating_room_id) % 4 ] = 1;
                 }
+                console.log(oproomList);
             }
             getSql(insertSql, function(err, data){
                 if(err){
