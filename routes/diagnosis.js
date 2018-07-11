@@ -13,14 +13,14 @@ queuelist[4] = [];
 function moveByid(id, action, z) {
     for (var i = 0; i < z.length; i++) {
         if (z[i].patient_id == id) {
-            var x = queuelist[dept_id].splice(i, 1);
+            var x = z.splice(i, 1);
             var person = {
                 name: x[0].name,
                 patient_id: x[0].patient_id,
                 personal_number: x[0].personal_number,
                 phone_number: x[0].phone_number
             }
-            queuelist[dept_id].splice(i + action, 0, person);
+            z.splice(i + action, 0, person);
             return;
         }
     }
@@ -46,10 +46,11 @@ function findByid(id, x) {
 }
 
 router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
+    console.log('here');
     res.redirect('/receipt/4');
 }));
 
-router.get('/:dept_id', isAuthenticated, catchErrors(async (req, res, next) => {
+router.get('/:dept_id/', isAuthenticated, catchErrors(async (req, res, next) => {
     //환자상세정보 디비에서 가져옴
     var patientList = [];
     var dept_id = req.params.dept_id;
@@ -137,6 +138,7 @@ router.get('/:dept_id/dequeue/:patient_id', isAuthenticated, catchErrors(async (
 router.get('/:dept_id/dequeue/:patient_id/re', isAuthenticated, catchErrors(async (req, res, next) => {
     //여기서 patient_id얻구 리다이렉트처리
     console.log("dequeue에다 넣음");
+    var dept_id = req.params.dept_id;
     var requestPatient = req.params.patient_id;
     if (!deleteByid(requestPatient, queuelist[dept_id])) {
         req.flash('danger', "진료 환자가 대기 목록에 없습니다.");
@@ -147,6 +149,7 @@ router.get('/:dept_id/dequeue/:patient_id/re', isAuthenticated, catchErrors(asyn
 router.get('/:dept_id/next/:patient_id&:loc', isAuthenticated, catchErrors(async (req, res, next) => {
     //여기서 patient_id얻구 리다이렉트처리
     console.log("next 넣음");
+    var dept_id = req.params.dept_id;
     var requestPatient = req.params.patient_id;
     var loc = req.params.loc;
     var dept_id = req.params.dept_id;
