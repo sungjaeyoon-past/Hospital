@@ -85,17 +85,17 @@ block content
                                     a(href='/patientmanagement') 환자 관리
         .row
             .col-sm-4
-                form.form-inline.ml-auto(action="/receipt", method="GET")
+                form.form-inline.ml-auto(action=`/receipt/${dept_id}`, method="GET")
                     .form-group.has-white
                         input.form-control(type='text', placeholder='이름으로 검색', name='name')             
                     button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit') search    
             .col-sm-4
-                form.form-inline.ml-auto(action="/receipt", method="GET")
+                form.form-inline.ml-auto(action=`/receipt/${dept_id}`, method="GET")
                     .form-group.has-white
                         input.form-control(type='text', placeholder='주민번호로 검색', name='personal_number')              
                     button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit') search              
             .col-sm-4                               
-                form.form-inline.ml-auto(action="/receipt", method="GET")
+                form.form-inline.ml-auto(action=`/receipt/${dept_id}`, method="GET")
                     .form-group.has-white
                         input.form-control(type='text', placeholder='환자번호로 검색', name='patient_id')                
                     button.btn.btn-white.btn-raised.btn-fab.btn-fab-mini.btn-round(type='submit') search    
