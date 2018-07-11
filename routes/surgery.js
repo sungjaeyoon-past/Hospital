@@ -37,7 +37,7 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
     
 //예약 현황 받아오기
     var surgeryList=[];
-    var insertSql='SELECT * FROM surgery_schedule';
+    var insertSql='SELECT * FROM surgery_schedule_view';
     var insertSqlop = 'SELECT * FROM operating_room';
 
     getSql(insertSqlop, function(err, data){
@@ -56,11 +56,12 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
                     for(var i in data){
                         var surgery = {
                             'surgery_schedule_id': data[i].surgery_schedule_id,
-                            'patient_id': data[i].patient_id,
-                            'doctor_id': data[i].doctor_id,
+                            'patient_name': data[i].patient_name,
+                            'doctor_name': data[i].doctor_name,
                             'reserved_datetime': data[i].reserved_datetime,
                             'end_datetime': data[i].end_datetime,
-                            'description': data[i].description
+                            'description': data[i].description,
+                            'patient_id': data[i].patient_id
                         }
 
                         surgeryList.push(surgery);
