@@ -39,16 +39,24 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
     var surgeryList=[];
     var insertSql='SELECT * FROM surgery_schedule_view';
     var insertSqlop = 'SELECT * FROM operating_room';
+    var today = new Date();
+    var date = today.getDate();
+    var month = today.getMonth() + 1; //January is 0!
+    var year = today.getFullYear();
+    var hours = today.getHours();
+    var minutes = today.getMinutes();
+    var currenttime=new Date(year, month, date, hours, minutes);
+    console.log(currenttime);
 
     getSql(insertSqlop, function(err, data){
         if(err){
             console.log("error", err);
         } else {
-            for (var i in data){
+            for (var i in data){               
                 if(data[i].operating_room_id != null){
                     oproomList[parseInt(data[i].operating_room_id) % 4 ] = 1;
                 }
-                console.log(oproomList);
+                console.log(data);
             }
             getSql(insertSql, function(err, data){
                 if(err){
@@ -64,6 +72,12 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
                             'description': data[i].description,
                             'patient_id': data[i].patient_id
                         }
+                        console.log("r:"+surgery.reserved_datetime);
+                        console.log("e:"+surgery.end_datetime);
+                        if((currenttime>=surgery.reserved_datetime)&&(currenttime<=surgery.end_datetime)){
+                            oproomList[i]=1;
+                        }
+                        console.log(oproomList);
 
                         surgeryList.push(surgery);
                     }
