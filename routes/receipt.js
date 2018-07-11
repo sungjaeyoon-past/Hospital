@@ -64,6 +64,7 @@ function getDeptName(dept_id) {
 
 //진료 접수 메인 페이지
 router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
+    if (res.locals.currentUser.user_role != 1) res.redirect('/');
     var date = getDate();
     var sql = "SELECT * FROM medic.employee where employee_id=" + res.locals.currentUser.user_information;
     await conn.query(sql, function (err, result) {
@@ -82,6 +83,7 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
 
 //리스트에서 진료접수로 넘어왔을 경우 메인 페이지
 router.get('/:patient_id', isAuthenticated, catchErrors(async (req, res, next) => {
+    if (res.locals.currentUser.user_role != 1) res.redirect('/');
     var patient_id = req.params.patient_id;
     var date = getDate();
     let docRow;

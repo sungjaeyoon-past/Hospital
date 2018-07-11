@@ -46,7 +46,6 @@ function findByid(id, x) {
 }
 
 router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
-    console.log('here');
     res.redirect('/receipt/4');
 }));
 
