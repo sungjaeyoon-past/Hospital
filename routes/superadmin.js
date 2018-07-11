@@ -89,17 +89,14 @@ router.post('/add', catchErrors(async (req, res, next) => {
   var personal_number = req.body.personal_number;
   var phone_number = req.body.phone_number;
   var gender = 0;
-  if (req.body.gender = 'female') { gender = 1; }
-  if (gender == '1' ){
-    gender = "여자";
-  } else {
-    gender = "남자";
-  }
+  var gen = "남자";
+  if (req.body.gender = 'female') { gender = 1; gen = "여자";}
+
   var position = 0;
   if (req.body.position = 'nurse') { position = 1;}
   var department_id = req.body.department_id;
   var insertSql = "INSERT INTO employee (name, personal_number, phone_number, gender, position, department_id) VALUES (' "+name+" ', '" +personal_number+" ', ' "+phone_number+" ', ' "+gender+" ','"+position+"','"+department_id+"')";
-
+  
   getSql(insertSql, function(err,data){
     if (err) {
         console.log("error",err);
