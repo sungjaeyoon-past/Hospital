@@ -430,24 +430,28 @@ router.delete('/inpatient/:id', isAuthenticated, catchErrors(async (req, res, ne
                 getSqlResult(insertSql5, function (err, data) {
                   if (!err) {
                     req.flash('success', "퇴원 성공!");
+                    res.redirect('back');
                   } else {
                     console.log(err);
                     req.flash('danger', "퇴원 불가!");
+                    res.redirect('back');
                   }
                 });
               } else {
                 req.flash('danger', "퇴원 불가!");
+                res.redirect('back');
               }
             });
           });
         } else {
           req.flash('danger', "퇴원 불가!");
+          res.redirect('back');
         }
       });
     } else {
       req.flash('danger', "입원한 환자가 아닙니다!");
+      res.redirect('back');
     }
-    res.redirect('back');
   });
 }));
 
