@@ -418,23 +418,27 @@ router.delete('/inpatient/:id', isAuthenticated, catchErrors(async (req, res, ne
         department_id = 4;
       }
       var insertSql2 = "UPDATE bed SET inpatient_id = null ,weight_sensor=0, is_wet=0, is_empty=0 WHERE inpatient_id = " + req.params.id;
-      var insertSql3 = "DELETE FROM inpatient WHERE patient_id = " + req.params.id;
-      var insertSql4 = "INSERT INTO hospital_record ( patient_id, doctor_id, department_id, disease_name, hospital_day, discharge_day) VALUES ('" + req.params.id + "','" + doctor_id + "','" + department_id + "','" + disease_name + "','" + hospital_day + "','" + today + "' )";
+      var insertSql3 = "DELETE FROM surgery_schedule WHERE patient_id=" + req.params.id;
+      var insertSql4 = "DELETE FROM inpatient WHERE patient_id = " + req.params.id;
+      var insertSql5 = "INSERT INTO hospital_record ( patient_id, doctor_id, department_id, disease_name, hospital_day, discharge_day) VALUES ('" + req.params.id + "','" + doctor_id + "','" + department_id + "','" + disease_name + "','" + hospital_day + "','" + today + "' )";
+      
       getSqlResult(insertSql2, function (err, data) {
         if (!err) {
-          getSqlResult(insertSql3, function (err, data) {
-            if (!err) {
-              getSqlResult(insertSql4, function (err, data) {
-                if (!err) {
-                  req.flash('success', "퇴원 성공!");
-                } else {
-                  console.log(err);
-                  req.flash('danger', "퇴원 불가!");
-                }
-              });
-            } else {
-              req.flash('danger', "퇴원 불가!");
-            }
+          getSqlResult(insertSql3,function(err,data){
+            getSqlResult(insertSql4, function (err, data) {
+              if (!err) {
+                getSqlResult(insertSql5, function (err, data) {
+                  if (!err) {
+                    req.flash('success', "퇴원 성공!");
+                  } else {
+                    console.log(err);
+                    req.flash('danger', "퇴원 불가!");
+                  }
+                });
+              } else {
+                req.flash('danger', "퇴원 불가!");
+              }
+            });
           });
         } else {
           req.flash('danger', "퇴원 불가!");
@@ -615,18 +619,36 @@ router.delete('/:id', isAuthenticated, catchErrors(async (req, res, next) => {
   var insertSql1 = "SELECT * FROM inpatient WHERE patient_id=" + req.params.id;
   var insertSql2 = "DELETE FROM hospital_record WHERE patient_id=" + req.params.id;
   var insertSql3 = "DELETE FROM usage_record WHERE patient_id=" + req.params.id;
-  var insertSql4 = "DELETE FROM medical_record WHERE patient_id" + req.params.id;
-  var insertSql5 = "DELETE FROM surgery_schedule WHERE patient_id" + req.params.id;
+  var insertSql4 = "DELETE FROM medical_record WHERE patient_id=" + req.params.id;
+  var insertSql5 = "DELETE FROM surgery_schedule WHERE patient_id=" + req.params.id;
   var insertSql6 = "DELETE FROM patient WHERE patient_id = " + req.params.id;
+  console.log("1:"+insertSql1);
+  console.log("2:"+insertSql2);
+  console.log("3:"+insertSql3);
+  console.log("4:"+insertSql4);
+  console.log("5:"+insertSql5);
+  console.log("6:"+insertSql6);
   getSqlResult(insertSql1, function (err, data) {
     if (data.length >= 1) {
       req.flash('danger', "입원중인 환자는 삭제할수 없습니다!");
       return res.redirect('back');
     }
     getSqlResult(insertSql2, function (err, data) {
+      if(err){
+        console.log("ERROR : ", err);
+      }
       getSqlResult(insertSql3, function (err, data) {
+        if(err){
+          console.log("ERROR : ", err);
+        }
         getSqlResult(insertSql4, function (err, data) {
+          if(err){
+            console.log("ERROR : ", err);
+          }
           getSqlResult(insertSql5, function (err, data) {
+            if(err){
+              console.log("ERROR : ", err);
+            }
             getSqlResult(insertSql6, function (err, data) {
               if (err) {
                 console.log("ERROR : ", err);
