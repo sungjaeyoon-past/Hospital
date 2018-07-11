@@ -48,7 +48,7 @@ block content
                     th(scope="col") 출생년도 
                     th(scope="col") 질병
                     th(scope="col") 입원일
-                    th(scope="col") 입원 정보
+                    th(scope="col") 입원중 사용 정보
                     th(scope="col") 정보 추가
                     th(scope="col") 퇴원
             tbody
@@ -66,9 +66,8 @@ block content
                         td 
                             a(href=`/patientmanagement/inpatientdetail/${patient.patient_id}`) 상세정보
                         td 
-                            .btn.btn-dark(style="text-align:center;")
+                            a.btn.btn-dark(role='tooltip' href=`/patientmanagement/inpatientdetail/new/${patient.patient_id}`)
                                 img.rounded-0(src='/images/medicine.png', alt='...', style="width:20px;")
-                                a(href=`/patientmanagement/inpatientdetail/new/${patient.patient_id}`) +
                         td  
                             .btn.btn-light(style="text-align:center;")
                                 a(href=`/patientmanagement/inpatient/${patient.patient_id}?_method=DELETE`) 퇴원
