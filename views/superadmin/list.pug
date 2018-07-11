@@ -57,20 +57,20 @@ body
                         table.table.table-hover
                             thead.text-success
                                 tr
-                                    th.text-center id
+                                    th.text-center 직원 id
                                     th 이름 
                                     th 주민번호 
                                     th 전화번호 
                                     th 성별
                                     th 직급
-                                    th 과 번호
+                                    th 재직 과
                                     th 수정
                                 tr
                                     td #{emp.employee_id}
                                     td #{emp.name}
                                     td #{emp.personal_number}
                                     td #{emp.phone_number}
-                                    td #{gen}
+                                    td #{emp.gender}
                                     td #{emp.position}
                                     td #{emp.department_id}
                                     td.td-actions

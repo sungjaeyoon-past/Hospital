@@ -66,6 +66,30 @@ router.get('/list', catchErrors(async (req, res, next) => {
           'position': rows[i].position,
           'department_id': rows[i].department_id
         }
+
+        if(rows[i].gender==0){
+          emp.gender='남성';
+        }else{
+          emp.gender='여성';
+        }
+
+        if(rows[i].position==0){
+          emp.position = 'doctor';
+        } else{
+          emp.position = 'nurse';
+        }
+
+        if(rows[i].department_id==0){
+          emp.department_id='안과';
+        } else if(rows[i].department_id==1){
+          emp.department_id='내과';
+        } else if(rows[i].department_id==2){
+          emp.department_id='외과';
+        } else if(rows[i].department_id==4){
+          emp.department_id='치과';
+        }
+
+
         empList.push(emp);
       }
       res.render('superadmin/list', {role: res.locals.currentUser.user_role, employee: empList, count_emp:rows.length});
@@ -89,8 +113,7 @@ router.post('/add', catchErrors(async (req, res, next) => {
   var personal_number = req.body.personal_number;
   var phone_number = req.body.phone_number;
   var gender = 0;
-  var gen = "남자";
-  if (req.body.gender = 'female') { gender = 1; gen = "여자";}
+  if (req.body.gender = 'female') { gender = 1; }
 
   var position = 0;
   if (req.body.position = 'nurse') { position = 1;}
@@ -136,6 +159,7 @@ router.put('/edit/:id', isAuthenticated, catchErrors(async (req, res, next) => {
   var gender = 0;
   if (req.body.gender = 'female') { gender = 1; }
   var position = req.body.position;
+  if (req.body.position = 'nurse') { position = 1;}
   var insertSql = "UPDATE employee SET name='" + name + "', personal_number='" + personal_number + "', phone_number='" + phone_number + "', gender='" + gender +"', position='" + position + "' WHERE employee_id=" + employee_id;
   
   console.log(insertSql);
