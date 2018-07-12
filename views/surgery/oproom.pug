@@ -1,35 +1,16 @@
 .row(style="text-align:center;")
-    .col-md-6
-        .alert.alert-primary
-            .row
-                .col-md-6
-                    if oproomList[0]
-                        .alert.alert-danger
-                            | 예약됨
+    each val in [0, 1, 2, 3]
+        .col-md-6
+            .card(style='width: 18rem;')
+                if(oproomList[val]===1)
+                    img.rounded-0(src='/images/surgery.png', alt='...', style="width:70px;")
+                else
+                    img.rounded-0(src='/images/surgery.png', alt='...', style="width:70px;")
+            .card_body
+                h5.card-title #{val}번 수술실
+                p.card-text
+                    if(oproomList[val]===1)
+                        | 사용중
                     else
-                        .alert.alert-success
-                            | 예약 가능
-
-                .col-md-6
-                    if oproomList[1]
-                        .alert.alert-danger
-                            | 예약됨
-                    else
-                        .alert.alert-success
-                            | 예약 가능
-
-                .col-md-6
-                    if oproomList[2]
-                        .alert.alert-danger
-                            | 예약됨
-                    else
-                        .alert.alert-success
-                            | 예약 가능
-
-                .col-md-6
-                    if oproomList[3]
-                        .alert.alert-danger
-                            | 예약됨
-                    else
-                        .alert.alert-success
-                            | 예약 가능
+                        | 미 사용
+                        

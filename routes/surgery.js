@@ -41,7 +41,7 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
     var insertSqlop = 'SELECT * FROM operating_room';
     var today = new Date();
     var date = today.getDate();
-    var month = today.getMonth() + 1; //January is 0!
+    var month = today.getMonth();
     var year = today.getFullYear();
     var hours = today.getHours();
     var minutes = today.getMinutes();
@@ -54,7 +54,7 @@ router.get('/', isAuthenticated, catchErrors(async (req, res, next) => {
         } else {
             for (var i in data){               
                 if(data[i].operating_room_id != null){
-                    oproomList[parseInt(data[i].operating_room_id) % 4 ] = 1;
+                    oproomList[parseInt(data[i].operating_room_id) % 4 +1] = 1;
                 }
                 console.log(data);
             }
@@ -109,7 +109,7 @@ router.post('/new', catchErrors(async (req, res, next) => {
     var description = req.body.description;
 
     var insertSql = "INSERT INTO surgery_schedule (patient_id, doctor_id, reserved_datetime, end_datetime, description) VALUES ('" +patient_id+" ', ' "+doctor_id+" ', '"+reserved_datetime+"','"+end_datetime+"','"+description+"')";
-    var insertSqlop = "INSERT INTO operating_room (operating_room) VALUES ('"+operating_room_id+"')";
+
     console.log(insertSql);
     getSql(insertSql, function(err,data){
       if (err) {
@@ -123,11 +123,6 @@ router.post('/new', catchErrors(async (req, res, next) => {
           })
       }
     });
-    getSql(insertSqlop, function(err,data){
-        if(!err){
-            req.flash('success', "수술실 예약이 추가되었습니다.");
-        }
-    })
     res.redirect('/surgery');
   }));
 

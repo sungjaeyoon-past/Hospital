@@ -2,46 +2,27 @@ extends ../layoutemp
 
 block content
     .container(style="margin-top:2%;")
-        //h1 수술실 현황
-
-        //include ./oproom
+        h1 수술실 현황
         hr
         .row(style="margin-bottom:1%;")
             .col-md-1
                 img.rounded-0(src='/images/surgery.png', alt='...', style="width:70px;")
             .col-md-10(style="margin-top:1%;")
                 h2 수술 예약 현황
-
         hr
-        .row(style="text-align:center;")
-            .col-md-3
-                .card(style='width: 18rem;')
-                    img.card-img-top(src='/images/surgery2.png', alt='Card image cap')
-                    .card-body
-                        h5.card-title 1번 수술실
+        .row(style="margin-bottom:1%;")
+            each val in [0, 1, 2, 3]
+                .col-md-3
+                    .card(style='width: 18rem;')
+                        img.rounded-0(src='/images/surgery2.png', alt='Card Image Cap', style="width:150px;")
+
+                    .card_body
+                        h5.card-title #{val + 1}번 수술실
                         p.card-text
-                            | 사용 중
-            .col-md-3
-                .card(style='width: 18rem;')
-                    img.card-img-top(src='/images/empty.png', alt='Card image cap')
-                    .card-body
-                        h5.card-title 2번 수술실
-                        p.card-text
-                            | 미 사용
-            .col-md-3
-                .card(style='width: 18rem;')
-                    img.card-img-top(src='/images/surgery2.png', alt='Card image cap')
-                    .card-body
-                        h5.card-title 3번 수술실
-                        p.card-text
-                            | 사용 중
-            .col-md-3
-                .card(style='width: 18rem;')
-                    img.card-img-top(src='/images/empty.png', alt='Card image cap')
-                    .card-body
-                        h5.card-title 4번 수술실
-                        p.card-text
-                            | 미 사용
+                            if(oproomList[val]===1)
+                                | 예약중
+                            else
+                                | 예약 가능
         table.table.surgerytable(style="text-align:center;")
             thead
                 tr
@@ -50,7 +31,6 @@ block content
                     th(scope="col") 의사 이름
                     th(scope="col") 수술 예정일시
                     th(scope="col") 수술 완료 예정일시
-                    //th(scope="col") 수술실
                     th(scope="col") 수술 사유
 
             tbody
@@ -62,7 +42,6 @@ block content
                         td #{surgery.doctor_name}
                         td #{moment(surgery.reserved_datetime).format('YYYY-MM-DD hh:mm:ss a')}
                         td #{moment(surgery.end_datetime).format('YYYY-MM-DD hh:mm:ss a')}
-                        //td #{oproomList.operating_room_id}
                         td #{surgery.description}
         br
         .row
