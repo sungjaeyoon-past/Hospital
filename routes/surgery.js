@@ -109,7 +109,7 @@ router.post('/new', catchErrors(async (req, res, next) => {
     var description = req.body.description;
 
     var insertSql = "INSERT INTO surgery_schedule (patient_id, doctor_id, reserved_datetime, end_datetime, description) VALUES ('" +patient_id+" ', ' "+doctor_id+" ', '"+reserved_datetime+"','"+end_datetime+"','"+description+"')";
-
+    var insertSqlop = "INSERT INTO operating_room (operating_room) VALUES ('"+operating_room_id+"')";
     console.log(insertSql);
     getSql(insertSql, function(err,data){
       if (err) {
@@ -123,6 +123,11 @@ router.post('/new', catchErrors(async (req, res, next) => {
           })
       }
     });
+    getSql(insertSqlop, function(err,data){
+        if(!err){
+            req.flash('success', "수술실 예약이 추가되었습니다.");
+        }
+    })
     res.redirect('/surgery');
   }));
 
